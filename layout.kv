@@ -5,4 +5,413 @@
 		Image: 
 			source: "assets/app_bg.png"
 			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+		Image:
+			source: "assets/primary_logo.png"
+			size_hint: 0.7, 0.7
+			pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+
+		MDLabel:
+			text: "@YourExpense"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+			halign: 'center'
+			color: 255, 204, 0
+			font_size: "20sp"
+			font_name: "Montserrat"
+			bold: True
+
+		MDLabel:
+			text: "We keep you from \ngoing broke."
+			pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "15sp"
+			font_name: "Open Sans"
+			bold: True
+
+		MDLabel:
+			text: "In partnership with Banco De Oro"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "5sp"
+			font_name: "Roboto"
+			
+
+<LoadingPage>:
+	name: "Loading_Page"
+	id: loadingpage
+	MDFloatLayout:
+		Image:
+			source: "assets/secondary_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+		Image:
+			source: "assets/primary_logo.png"
+			size_hint: 0.5, 0.5
+			pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+
+		Image:
+			source: "assets/loading.png"
+			size_hint: 0.2, 0.2
+			pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+
+		MDLabel:
+			text: "Please wait..."
+			pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "10sp"
+			font_name: "Roboto"
+
+<LoadingPage_2>:
+	name: "Loading_Page_2"
+	id: loadingpage_2
+	MDFloatLayout:
+		Image:
+			source: "assets/secondary_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+
+<LoginPage>:
+	name: "Login_Page"
+	id: loginpage
+	MDFloatLayout:
+		Image:
+			source: "assets/secondary_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+	    Image:
+			source: "assets/primary_logo.png"
+			size_hint: 0.6, 0.6
+			pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+
+	    MDLabel:
+			text: "LOGIN"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+			halign: 'center'
+			color: 0, 0, 0
+			font_size: "10sp"
+			font_name: "Montserrat"
+			bold: True
+
+	    MdTextFieldRound: 
+			hint_text: "Username/Email"
+			icon_right: "account"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .4}
+
+	    MdTextFieldRound: 
+			hint_text: "Password"
+			icon_right: "eye-off"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .35 }
+
+		Image: 
+			source: "assets/fb.png"
+			size_hint: 0.3, 0.3
+			pos_hint:{"center_x":.4, "center_y": .3}
+
+		Image: 
+			source: "assets/google.png"
+			size_hint: 0.3, 0.3
+			pos_hint:{"center_x":.6, "center_y": .3}
+
+		MDRaisedButton:
+    		text: "Log In"
+    		font_size: '15dp'
+    		padding: [15, 3]
+    		font_name: "Montserrat"
+    		pos_hint: {'center_x': .5, 'center_y': .25}
+    		md_bg_color: 255/255, 255/255, 128/255, 1
+
+    	MDRaisedButton:
+    		text: "Create New Account"
+    		font_size: '15dp'
+    		padding: [15, 3]
+    		font_name: "Montserrat"
+    		pos_hint: {'center_x': .5, 'center_y': .20}
+    		md_bg_color: 255/255, 255/255, 128/255, 1
+
+<RegisterPage>:
+	name: "Register_Page"
+	id: registerpage
+	MDFloatLayout:
+		Image:
+			source: "assets/secondary_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+	    Image:
+			source: "assets/primary_logo.png"
+			size_hint: 0.6, 0.6
+			pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+
+	    MDLabel:
+			text: "REGISTER"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+			halign: 'center'
+			color: 0, 0, 0
+			font_size: "10sp"
+			font_name: "Montserrat"
+			bold: True
+
+	    MdTextFieldRound: 
+			hint_text: "First Name"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .75}
+
+	    MdTextFieldRound: 
+			hint_text: "Last Name"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .73}
+
+		MdTextFieldRound: 
+			hint_text: "Username"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .71}
+
+		MdTextFieldRound: 
+			hint_text: "Email"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .65}
+
+        MdTextFieldRound: 
+			hint_text: "Password"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .59}
+
+		MdTextFieldRound: 
+			hint_text: "Confirm Password"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .53}
+
+		Image: 
+			source: "assets/fb.png"
+			size_hint: 0.3, 0.3
+			pos_hint:{"center_x":.4, "center_y": .47}
+
+		Image: 
+			source: "assets/google.png"
+			size_hint: 0.3, 0.3
+			pos_hint:{"center_x":.6, "center_y": .47}
+
+
+		MDRaisedButton:
+    		text: "Register"
+    		font_size: '15dp'
+    		padding: [15, 3]
+    		font_name: "Montserrat"
+    		pos_hint: {'center_x': .5, 'center_y': .25}
+    		md_bg_color: 255/255, 255/255, 128/255, 1
+
+    	MDRaisedButton:
+    		text: "Create New Account"
+    		font_size: '15dp'
+    		padding: [15, 3]
+    		font_name: "Montserrat"
+    		pos_hint: {'center_x': .5, 'center_y': .20}
+    		md_bg_color: 255/255, 255/255, 128/255, 1 
+
+<CurrencyPage>:
+	name: "Currency_Page"
+	id: currencypage
+	MDFloatLayout:
+		Image:
+			source: "assets/secondary_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+		
+		Image:
+			source: "assets/primary_logo.png"
+			size_hint: 0.3, 0.3
+			pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+
+		MdLabel:
+			text: "CHOOSE YOUR \nCURRENCY"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+			halign: 'center'
+			color: 0, 0, 0
+			font_size: "10sp"
+			font_name: "Montserrat"
+			bold: True
+
+		MDDropDownItem
+			pos_hint: {'center_x': 0.5, 'center_y': 0.5 }
+			text: 'Select Currency'
+			font_size: 20
+			on_release: self.set_item("New Item")
+
+		MDRaisedButton:
+    		text: "CONFIRM"
+    		font_size: '15dp'
+    		padding: [15, 3]
+    		font_name: "Montserrat"
+    		pos_hint: {'center_x': .5, 'center_y': .25}
+    		md_bg_color: 255/255, 255/255, 128/255, 1
+
+<InitialAmountPage>:
+	name: "InitialAmount_Page"
+	id: initialamountpage
+	MDFloatLayout:
+		Image:
+			source: "assets/secondary_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+		
+		Image:
+			source: "assets/primary_logo.png"
+			size_hint: 0.3, 0.3
+			pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+
+		MdLabel:
+			text: "INPUT INITIAL \nAMOUNT"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+			halign: 'center'
+			color: 0, 0, 0
+			font_size: "10sp"
+			font_name: "Montserrat"
+			bold: True
+
+		MdTextFieldRound: 
+			hint_text: "Enter amount"
+			normal_color: app.theme_cls.accent_color
+        	color_active: 204, 204, 204, 1
+			size_hint_x: None 	
+			width: 200
+			font size: 20 
+			pos_hint: {"center_x":.5, "center_y": .4}
+
+		MDRaisedButton:
+    		text: "Get Started"
+    		font_size: '15dp'
+    		padding: [15, 3]
+    		font_name: "Montserrat"
+    		pos_hint: {'center_x': .5, 'center_y': .25}
+    		md_bg_color: 255/255, 255/255, 128/255, 1
+
+<WelcomePage>
+	name: "Welcome_Page"
+	id: welcomepage
+	MDFloatLayout:
+		Image:
+			source: "assets/secondary_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+		Image:
+			source: "assets/primary_logo.png"
+			size_hint: 0.7, 0.7
+			pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+
+		MDLabel: 
+			text: "WELCOME"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.60}
+			halign: 'center'
+			color: 0, 0, 0
+			font_size: "8sp"
+			font_name: "Montserrat"
+			bold: True
+
+		MDLabel:
+			text: "(Name)"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.57}
+			halign: 'center'
+			color: 0, 0, 0
+			font_size: "15sp"
+			font_name: "Open Sans"
+
+		MDRaisedButton:
+    		text: "Get Started"
+    		font_size: '15dp'
+    		padding: [15, 3]
+    		font_name: "Montserrat"
+    		pos_hint: {'center_x': .5, 'center_y': .25}
+    		md_bg_color: 255/255, 255/255, 128/255, 1
+
+<WelcomeBackPage>
+	name: "WelcomeBack_Page"
+	id: welcomebackpage
+	MDFloatLayout:
+		Image:
+			source: "assets/secondary_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+		Image:
+			source: "assets/primary_logo.png"
+			size_hint: 0.7, 0.7
+			pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+
+		MDLabel: 
+			text: "WELCOME BACK"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.60}
+			halign: 'center'
+			color: 0, 0, 0
+			font_size: "8sp"
+			font_name: "Montserrat"
+			bold: True
+
+		MDLabel:
+			text: "(Name)"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.57}
+			halign: 'center'
+			color: 0, 0, 0
+			font_size: "15sp"
+			font_name: "Open Sans"
+
+		MDRaisedButton:
+    		text: "Get Started"
+    		font_size: '15dp'
+    		padding: [15, 3]
+    		font_name: "Montserrat"
+    		pos_hint: {'center_x': .5, 'center_y': .25}
+    		md_bg_color: 255/255, 255/255, 128/255, 1
+
+
+			
+
+
+
+
+
+
+
+
+
