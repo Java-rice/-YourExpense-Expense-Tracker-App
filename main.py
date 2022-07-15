@@ -59,6 +59,7 @@ class LoginScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
+	#To make password visible
 	def show_password(self, checkbox, value):
 		if value:
 			self.ids.password.password = False
@@ -70,18 +71,21 @@ class RegisterScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
+	#To make password visible
 	def show_Rpassword(self, checkbox, value):
 		if value:
 			self.ids.Rpassword.password = False
 		else:
 			self.ids.Rpassword.password = True
 
+	#To make password visible
 	def show_RCpassword(self, checkbox, value):
 		if value:
 			self.ids.RCpassword.password = False
 		else:
 			self.ids.RCpassword.password = True
 
+	#To make password visible
 	def check_email(self, value):
 		if(re.fullmatch(regex, value)):
 			self.ids.Reg_Email.helper_text = "Valid Email"
