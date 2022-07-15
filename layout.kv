@@ -68,22 +68,55 @@
 			color: 0/255, 0/255, 0/255
 			font_size: "27sp"
 			font_name: "LatoB"
+
+		MDFlatButton:
+			text: "            Continue with Google"
+			font_size: "13sp"
+			font_name: "LatoB"
+			padding: [20, 3]
+			mode: "rectangle"
+			pos_hint: {'center_x': .5, 'center_y': .35}
+			md_bg_color: 235/255, 255/255, 255/255, 1
+
+			MDFloatLayout:
+				Image:
+					source: "assets/Google.ico"
+					size_hint: .85, .85
+					pos_hint: {'center_x': 0.02, 'center_y': 0.5}
+
+		MDFlatButton:
+			text: "          Continue with Facebook"
+			font_size: "13sp"
+			font_name: "LatoB"
+			theme_text_color: "Custom"
+			text_color: 255/255, 255/255, 255/255
+			padding: [16, 3]
+			mode: "rectangle"
+			pos_hint: {'center_x': .5, 'center_y': .28}
+			md_bg_color: 66/255, 103/255, 178/255, 1
+
+			MDFloatLayout:
+				Image:
+					source: "assets/Facebook.ico"
+					size_hint: .85, .85
+					pos_hint: {'center_x': 0.03, 'center_y': 0.5}
+
 		MDRaisedButton:
     		text: "Log In"
     		font_size: '15dp'
     		text_color: 0/255, 0/255, 0/255
-    		padding: [80, 3]
-    		font_name: "Montserrat"
-    		pos_hint: {'center_x': .5, 'center_y': .25}
+    		padding: [90, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .5, 'center_y': .19}
     		md_bg_color: 235/255, 233/255, 187/255, 1
 
     	MDRaisedButton:
     		text: "Create New Account"
     		font_size: '15dp'
     		text_color: 0/255, 0/255, 0/255
-    		padding: [27, 3]
-    		font_name: "Montserrat"
-    		pos_hint: {'center_x': .5, 'center_y': .18}
+    		padding: [39.3, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .5, 'center_y': .12}
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
     			root.manager.transition.direction = "left"
@@ -101,6 +134,15 @@
 			source: "assets/App_logo.png"
 			size_hint: 0.4, 0.4
 			pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+
+		MDIconButton:
+			icon: "arrow-left"
+			pos_hint: {"center_x": .1 ,"center_y": .95}
+			user_font_size: "30sp"
+			on_release:
+				root.manager.transition.direction = "right"
+				root.manager.current = "Login_Screen"
+
 		Label:
 			text: "REGISTER"
 			pos_hint: {'center_x': 0.5, 'center_y': 0.70}
@@ -109,14 +151,14 @@
 			font_size: "27sp"
 			font_name: "LatoB"
 
-<RegisterScreen>:
-	name: "Register_Screen"
-	id: register
-	MDFloatLayout
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		MDRaisedButton:
+    		text: "Register"
+    		font_size: '15dp'
+    		text_color: 0/255, 0/255, 0/255
+    		padding: [70, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .5, 'center_y': .13}
+    		md_bg_color: 255/255, 222/255, 89/255, 1
 
 <CurrencyScreen>:
 	name: "Currency_Screen"
