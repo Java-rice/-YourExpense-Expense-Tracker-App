@@ -13,6 +13,7 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.icon_definitions import md_icons
 from kivy.properties import ListProperty
 from kivy.clock import Clock
+import re
 #layout Libraries
 
 ##database libraries
@@ -20,13 +21,14 @@ import pymongo
 from pymongo import MongoClient
 ##database libraries
 
-##google and facebook acc api
+##validation api
 from kivyauth.google_auth import initialize_google, login_google, logout_google
 #235651464495-v9qn51gb53394mig64avc51ijaf1q439.apps.googleusercontent.com
 #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
 ##google and facebook acc api
 
 Builder.load_file('layout.kv')
+regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 
 #Screens
@@ -57,10 +59,35 @@ class LoginScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
+	def show_password(self, checkbox, value):
+		if value:
+			self.ids.password.password = False
+		else:
+			self.ids.password.password = True
+
 class RegisterScreen(Screen):
 
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+
+	def show_Rpassword(self, checkbox, value):
+		if value:
+			self.ids.Rpassword.password = False
+		else:
+			self.ids.Rpassword.password = True
+
+	def show_RCpassword(self, checkbox, value):
+		if value:
+			self.ids.RCpassword.password = False
+		else:
+			self.ids.RCpassword.password = True
+
+	def check_email(self, value):
+		if(re.fullmatch(regex, value)):
+			self.ids.Reg_Email.helper_text = "Valid Email"
+		else:
+			self.ids.Reg_Email.helper_text = "Invalid Email"
+
 
 class CurrencyScreen(Screen):
 	def __init__(self, **kwargs):
@@ -93,10 +120,6 @@ class YourExpense(MDApp):
 		sc_manager.add_widget(CurrencyScreen(name="Welcome_Screen"))
 		sc_manager.add_widget(CurrencyScreen(name="WelcomeBack_Screen"))
 		return sc_manager
-
-	def show_password(self, checkbox, value):
-		pass
-
 
 
 #MAIN FUNCTION
