@@ -57,121 +57,10 @@ class LoginScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
-		#Username Textfield
-		self.L_username = MDTextField(
-			hint_text = "Username/Email",
-			font_name = "OpenSansR",
-			font_size = "13dp",
-			icon_right= "account",
-			height= 100,
-			size_hint = (None , None) ,
-			line_color_normal = (0, 0, 0, 1),
-			width = 200,
-			pos_hint = {"center_x": .5, "center_y": .55},
-			helper_text =  "",
-			)
-
-		#Password textfield
-		self.L_password = MDTextField(
-			hint_text = "Password",
-			font_name = "OpenSansR",
-			font_size = "13dp",
-			icon_right= "account",
-			size_hint_x = None ,
-			line_color_normal = (0, 0, 0, 1),
-			width = 200,
-			pos_hint = {"center_x": .5, "center_y": .45},
-			helper_text =  "",
-			)
-
-		#add the widgets (textfields)
-		self.add_widget(self.L_username)
-		self.add_widget(self.L_password)
-
 class RegisterScreen(Screen):
 
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
-
-		#Register Texfields
-		self.R_FirstName = MDTextField(
-			hint_text = "First Name",
-			font_name = "OpenSansR",
-			font_size = "13dp",
-			icon_right= "account",
-			size_hint_x = None ,
-			line_color_normal = (0, 0, 0, 1),
-			width = 200,
-			pos_hint = {"center_x": .5, "center_y": .63},
-			helper_text =  "",
-			)
-
-		self.R_LastName = MDTextField(
-			hint_text = "Last Name",
-			font_name = "OpenSansR",
-			font_size = "13dp",
-			icon_right= "account",
-			size_hint_x = None ,
-			line_color_normal = (0, 0, 0, 1),
-			width = 200,
-			pos_hint = {"center_x": .5, "center_y": .55},
-			helper_text =  "",
-			)
-
-		self.R_Username = MDTextField(
-			hint_text = "Username",
-			font_name = "OpenSansR",
-			font_size = "13dp",
-			icon_right= "account",
-			size_hint_x = None ,
-			line_color_normal = (0, 0, 0, 1),
-			width = 200,
-			pos_hint = {"center_x": .5, "center_y": .47},
-			helper_text =  "",
-			)
-
-		self.R_Email = MDTextField(
-			hint_text = "Email",
-			font_name = "OpenSansR",
-			font_size = "13dp",
-			icon_right= "account",
-			size_hint_x = None ,
-			line_color_normal = (0, 0, 0, 1),
-			width = 200,
-			pos_hint = {"center_x": .5, "center_y": .39},
-			helper_text =  "",
-			)
-
-		self.R_Password = MDTextField(
-			hint_text = "Password",
-			font_name = "OpenSansR",
-			font_size = "13dp",
-			icon_right= "account",
-			size_hint_x = None ,
-			line_color_normal = (0, 0, 0, 1),
-			width = 200,
-			pos_hint = {"center_x": .5, "center_y": .31},
-			helper_text =  "",
-			)
-
-		self.R_ConfirmPassword = MDTextField(
-			hint_text = "Confirm Password",
-			font_name = "OpenSansR",
-			font_size = "13dp",
-			icon_right= "account",
-			size_hint_x = None ,
-			line_color_normal = (0, 0, 0, 1),
-			width = 200,
-			pos_hint = {"center_x": .5, "center_y": .23},
-			helper_text =  "",
-			)
-
-		self.add_widget(self.R_FirstName)
-		self.add_widget(self.R_LastName)
-		self.add_widget(self.R_Username)
-		self.add_widget(self.R_Email)
-		self.add_widget(self.R_Password) 
-		self.add_widget(self.R_ConfirmPassword)
 
 class CurrencyScreen(Screen):
 	def __init__(self, **kwargs):
@@ -205,6 +94,8 @@ class YourExpense(MDApp):
 		sc_manager.add_widget(CurrencyScreen(name="WelcomeBack_Screen"))
 		return sc_manager
 
+	def show_password(self, checkbox, value):
+		pass
 
 
 
