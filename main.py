@@ -85,12 +85,50 @@ class RegisterScreen(Screen):
 		else:
 			self.ids.RCpassword.password = True
 
-	#To make password visible
-	def check_email(self, value):
-		if(re.fullmatch(regex, value)):
-			self.ids.Reg_Email.helper_text = "Valid Email"
+	def regverification(self, Fname, Lname, Uname, Evalue, Rpass, RCpass):
+
+		x = 0
+
+		#No Input
+		if len(Fname) == 0:
+			self.ids.Fname.helper_text = "Required"
+			x += 1
+		if len(Lname) == 0:
+			self.ids.Lname.helper_text = "Required"
+			x += 1
+		if len(Uname) == 0: 
+			self.ids.Uname.helper_text = "Required"
+			x += 1
+		if len(Rpass) == 0:
+			self.ids.Rpassword.helper_text = "Required"
+			x += 1
+		if len(RCpass) == 0:
+			self.ids.RCpassword.helper_text = "Required"
+			x += 1
+
+		#Confirm Password Checker
+		if Rpass != RCpass:
+			self.ids.Rpassword.helper_text = "Password do not match"
+			self.ids.RCpassword.helper_text = "Password do not match"
+			x += 1
+
+		#Email Checker
+		if (re.fullmatch(regex, Evalue)):
+			x += 0
 		else:
 			self.ids.Reg_Email.helper_text = "Invalid Email"
+			x += 1
+
+		
+		if x > 0:
+			self.manager.current = "Register_Screen"
+		else:
+			self.ids.Fname.text = ""
+			self.ids.Lname.text = ""
+			self.ids.Uname.text = ""
+			self.ids.Reg_Email.text = ""
+			self.ids.Rpassword.text = ""
+			self.ids.RCpassword.text = ""
 
 
 class CurrencyScreen(Screen):
