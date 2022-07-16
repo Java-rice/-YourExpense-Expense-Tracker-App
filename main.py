@@ -30,7 +30,6 @@ from kivyauth.google_auth import initialize_google, login_google, logout_google
 Builder.load_file('layout.kv')
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
-
 #Screens
 class LogoScreen(Screen):
 	#Start Screen
@@ -87,9 +86,16 @@ class RegisterScreen(Screen):
 
 	def regverification(self, Fname, Lname, Uname, Email, Rpass, RCpass):
 
+		self.ids.Fname.helper_text = ""
+		self.ids.Lname.helper_text = ""
+		self.ids.Uname.helper_text = ""
+		self.ids.Rpassword.helper_text = ""
+		self.ids.RCpassword.helper_text = ""
+		self.ids.Reg_Email.helper_text = ""
+
 		x = 0
 
-		#No Input
+		#No Input Error
 		if len(Fname) == 0:
 			self.ids.Fname.helper_text = "Required"
 			x += 1
@@ -106,7 +112,7 @@ class RegisterScreen(Screen):
 			self.ids.RCpassword.helper_text = "Required"
 			x += 1
 
-		#Confirm Password Checker
+		#Confirm Password Checker Error
 		if Rpass != RCpass:
 			self.ids.Rpassword.helper_text = "Password do not match"
 			self.ids.RCpassword.helper_text = "Password do not match"
@@ -123,7 +129,7 @@ class RegisterScreen(Screen):
 		if x > 0:
 			self.manager.current = "Register_Screen"
 		else:
-			user = {"_id": Uname,"Email": Evalue, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}
+			user = {"_id": Uname,"Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}
 			userprofile.insert_one(user)
 
 			self.ids.Fname.text = ""
@@ -132,7 +138,7 @@ class RegisterScreen(Screen):
 			self.ids.Reg_Email.text = ""
 			self.ids.Rpassword.text = ""
 			self.ids.RCpassword.text = ""
-			
+
 			self.manager.current = "Currency_Screen"
 
 
