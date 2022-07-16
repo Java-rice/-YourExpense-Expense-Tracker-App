@@ -85,7 +85,7 @@ class RegisterScreen(Screen):
 		else:
 			self.ids.RCpassword.password = True
 
-	def regverification(self, Fname, Lname, Uname, Evalue, Rpass, RCpass):
+	def regverification(self, Fname, Lname, Uname, Email, Rpass, RCpass):
 
 		x = 0
 
@@ -113,22 +113,27 @@ class RegisterScreen(Screen):
 			x += 1
 
 		#Email Checker
-		if (re.fullmatch(regex, Evalue)):
+		if (re.fullmatch(regex, Email)):
 			x += 0
 		else:
 			self.ids.Reg_Email.helper_text = "Invalid Email"
 			x += 1
 
-		
+
 		if x > 0:
 			self.manager.current = "Register_Screen"
 		else:
+			user = {"_id": Uname,"Email": Evalue, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}
+			userprofile.insert_one(user)
+
 			self.ids.Fname.text = ""
 			self.ids.Lname.text = ""
 			self.ids.Uname.text = ""
 			self.ids.Reg_Email.text = ""
 			self.ids.Rpassword.text = ""
 			self.ids.RCpassword.text = ""
+			
+			self.manager.current = "Currency_Screen"
 
 
 class CurrencyScreen(Screen):
@@ -173,7 +178,7 @@ if __name__ == '__main__':
 	#DataBase
 	clusterdata = MongoClient("mongodb+srv://Java-rice:Fs6EMINE5Dm9YaFj@finalproject.p08n5.mongodb.net/?retryWrites=true&w=majority")
 	db = clusterdata["Application"]
-	collection = db["Profiles"]
+	userprofile = db["Profiles"]
 
 	#Fonts Styles
 	LabelBase.register(name = "LatoB", fn_regular= "assets/txt/Lato-Bold.ttf")
