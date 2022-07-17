@@ -70,10 +70,12 @@
 			font_name: "LatoB"
 
 		MDTextField:
+			id: Lusername
 			hint_text: "Username/Email"
 			font_name: "OpenSansR"
 			font_size: "13dp"
 			icon_right: "account"
+			helper_text_mode: "persistent"
 			height: 100
 			size_hint: None , None
 			line_color_normal: (0, 0, 0, 1)
@@ -82,11 +84,12 @@
 			helper_text:  ""
 
 		MDTextField:
-			id: password
+			id: Lpassword
 			hint_text: "Password"
 			font_name: "OpenSansR"
 			font_size: "13dp"
 			icon_right: "account"
+			helper_text_mode: "persistent"
 			height: 100
 			size_hint: None , None
 			line_color_normal: (0, 0, 0, 1)
@@ -150,6 +153,8 @@
     		font_name: "LatoB"
     		pos_hint: {'center_x': .5, 'center_y': .14}
     		md_bg_color: 235/255, 233/255, 187/255, 1
+    		on_release:
+    			root.loginverification(Lusername.text, Lpassword.text)
 
     	MDRaisedButton:
     		text: "Create New Account"
@@ -323,10 +328,33 @@
 
 <WelcomeScreen>:
 	name: "Welcome_Screen"
-	id: welcome
+	id: Welcome
+	MDFloatLayout
+		Image:
+			source: "assets/blue_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+<WelcomeBackScreen>:
+	name: "WelcomeBack_Screen"
+	id: WelcomeBack
 	MDFloatLayout
 		Image: 
 			source: "assets/blue_bg.png"
 			size_hint: 1, 1
 			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		Image:
+			source: "assets/App_logo.png"
+			size_hint: 0.5, 0.5
+			pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+		MDRaisedButton:
+    		text: "Get Started"
+    		font_size: '15dp'
+    		text_color: 0/255, 0/255, 0/255
+    		padding: [39.3, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .5, 'center_y': .08}
+    		md_bg_color: 255/255, 222/255, 89/255, 1
+
+
 

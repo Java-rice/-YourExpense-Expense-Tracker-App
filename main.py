@@ -65,6 +65,50 @@ class LoginScreen(Screen):
 		else:
 			self.ids.password.password = True
 
+	def loginverification(self, Luname, Lpass):
+
+		self.ids.Lusername.helper_text = ""
+		self.ids.Lpassword.helper_text = ""
+
+		currentUsername = userprofile.find_one({"_id": Luname})
+
+		l = 0
+
+		#username and email doesnt exist
+		if len(Luname) == 0:
+			self.ids.Lusername.helper_text = "Required"
+			l += 1
+		else:
+			if (re.fullmatch(regex, Luname)):
+				if userprofile["Email"] != Luname:
+					self.ids.Lusername.helper_text = "Email doesn't exist"
+					l += 1
+			elif currentUsername is None:
+				self.ids.Lusername.helper_text = "Username doesn't exist"
+				l += 1	
+
+		if len(Lpass) == 0:
+			self.ids.Lpassword.helper_text = "Required"	
+			l += 1
+		else:
+			if currentUsername["Password"] != Lpass:
+				self.ids.Lpassword.helper_text = "Wrong Password"
+				l += 1
+
+		if l > 0:
+			self.manager.current = "Login_Screen"
+			
+		else:
+			self.ids.Lusername.text = ""
+			self.ids.Lpassword.text = ""
+
+			global User_name, User_password
+			User_name = Luname
+			User_password = Lpass
+
+			self.manager.current = "WelcomeBack_Screen"
+
+
 class RegisterScreen(Screen):
 
 	def __init__(self, **kwargs):
@@ -128,6 +172,7 @@ class RegisterScreen(Screen):
 
 		if x > 0:
 			self.manager.current = "Register_Screen"
+			
 		else:
 			user = {"_id": Uname,"Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}
 			userprofile.insert_one(user)
