@@ -178,7 +178,7 @@
 			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 		Image:
 			source: "assets/App_logo.png"
-			size_hint: 0.3, 0.3
+			size_hint: 0.25, 0.25
 			pos_hint: {'center_x': 0.5, 'center_y': 0.85}
 
 		MDIconButton:
@@ -191,7 +191,7 @@
 
 		Label:
 			text: "REGISTER"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.74}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.76}
 			halign: 'center'
 			color: 0/255, 0/255, 0/255
 			font_size: "22sp"
@@ -206,7 +206,7 @@
 			line_color_normal: (0, 0, 0, 1)
 			helper_text_mode: "persistent"
 			width: 200
-			pos_hint: {"center_x": .5, "center_y": .67}
+			pos_hint: {"center_x": .5, "center_y": .70}
 			helper_text:  ""
 
 		MDTextField:
@@ -218,7 +218,7 @@
 			line_color_normal: (0, 0, 0, 1)
 			helper_text_mode: "persistent"
 			width: 200
-			pos_hint: {"center_x": .5, "center_y": .59}
+			pos_hint: {"center_x": .5, "center_y": .61}
 			helper_text:  ""
 
 		MDTextField:
@@ -230,7 +230,7 @@
 			line_color_normal: (0, 0, 0, 1)
 			helper_text_mode: "persistent"
 			width: 200
-			pos_hint: {"center_x": .5, "center_y": .51}
+			pos_hint: {"center_x": .5, "center_y": .52}
 			helper_text:  ""
 
 		MDTextField:
@@ -303,7 +303,7 @@
     		text_color: 0/255, 0/255, 0/255
     		padding: [70, 3]
     		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .09}
+    		pos_hint: {'center_x': .5, 'center_y': .07}
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
     			root.regverification(Fname.text, Lname.text, Uname.text, Reg_Email.text, Rpassword.text, RCpassword.text)
@@ -317,7 +317,40 @@
 			size_hint: 1, 1
 			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-<InitialAmountScreen>:
+		Image:
+			source: "assets/App_logo.png"
+			size_hint: 0.4, 0.4
+			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
+		Label:
+			text: "CHOOSE YOUR CURRENCY"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.62}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "22sp"
+			font_name: "LatoB"
+
+		MDTextField:
+			id: field
+			text: "Select Currency Type"
+			pos_hint: {'center_x': .5, 'center_y': .5}
+			size_hint_x: None
+			width: "200dp"
+			hint_text: ""
+			on_focus: root.currency()
+
+		MDRaisedButton:
+    		text: "Confirm"
+    		font_size: '15dp'
+    		text_color: 0/255, 0/255, 0/255
+    		padding: [70, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .5, 'center_y': .10}
+    		md_bg_color: 255/255, 222/255, 89/255, 1
+			on_release:
+				root.manager.current = "InitialAmount_Screen"
+
+<InitialAmount>:
 	name: "InitialAmount_Screen"
 	id: initial_amount
 	MDFloatLayout
@@ -330,15 +363,6 @@
 	name: "Welcome_Screen"
 	id: Welcome
 	MDFloatLayout
-		Image:
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-
-<WelcomeBackScreen>:
-	name: "WelcomeBack_Screen"
-	id: WelcomeBack
-	MDFloatLayout
 		Image: 
 			source: "assets/blue_bg.png"
 			size_hint: 1, 1
@@ -346,15 +370,84 @@
 		Image:
 			source: "assets/App_logo.png"
 			size_hint: 0.5, 0.5
-			pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+		Label:
+			text: "WELCOME BACK"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "22sp"
+			font_name: "LatoB"
+		Label:
+			id: Rname
+			text: "KA-BDO"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.48}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "22sp"
+			font_name: "OpenSansR"
+
 		MDRaisedButton:
     		text: "Get Started"
     		font_size: '15dp'
     		text_color: 0/255, 0/255, 0/255
     		padding: [39.3, 3]
     		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .08}
+    		pos_hint: {'center_x': .5, 'center_y': .2}
     		md_bg_color: 255/255, 222/255, 89/255, 1
+    		on_release:
+    			root.manager.transition.direction = "left"
+    			root.manager.current = "Home_Screen"
+
+<WelcomeBackScreen>:
+	name: "WelcomeBack_Screen"
+	id: WelcomeBack
+	MDFloatLayout:
+		Image: 
+			source: "assets/blue_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		Image:
+			source: "assets/App_logo.png"
+			size_hint: 0.5, 0.5
+			pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+		Label:
+			text: "WELCOME BACK"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "22sp"
+			font_name: "LatoB"
+		Label:
+			id: name
+			text: "KA-BDO"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.48}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "22sp"
+			font_name: "OpenSansR"
+
+		MDRaisedButton:
+    		text: "Get Started"
+    		font_size: '15dp'
+    		text_color: 0/255, 0/255, 0/255
+    		padding: [39.3, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .5, 'center_y': .2}
+    		md_bg_color: 255/255, 222/255, 89/255, 1
+    		on_release:
+    			root.manager.transition.direction = "left"
+    			root.manager.current = "Home_Screen"
+
+<HomeScreen>:
+	name: "Home_Screen"
+	id: HomeScreen
+	MDFloatLayout:
+		Image: 
+			source: "assets/blue_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
 
 
 

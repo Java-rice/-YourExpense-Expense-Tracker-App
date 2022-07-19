@@ -12,6 +12,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.textfield import MDTextField
 from kivymd.icon_definitions import md_icons
 from kivy.properties import ListProperty
+from kivymd.uix.menu import MDDropdownMenu
+from kivy.metrics import dp
 from kivy.clock import Clock
 import re
 #layout Libraries
@@ -70,8 +72,7 @@ class LoginScreen(Screen):
 		self.ids.Lusername.helper_text = ""
 		self.ids.Lpassword.helper_text = ""
 
-		currentUsername = userprofile.find_one({"_id": Luname})
-
+		currentUsername = userprofile.find_one({})
 		l = 0
 
 		#username and email doesnt exist
@@ -80,9 +81,11 @@ class LoginScreen(Screen):
 			l += 1
 		else:
 			if (re.fullmatch(regex, Luname)):
-				if userprofile["Email"] != Luname:
+				if currentUsername[Luname]["Email"] != Luname:
 					self.ids.Lusername.helper_text = "Email doesn't exist"
 					l += 1
+				else:
+					l += 0
 			elif currentUsername is None:
 				self.ids.Lusername.helper_text = "Username doesn't exist"
 				l += 1	
@@ -91,7 +94,7 @@ class LoginScreen(Screen):
 			self.ids.Lpassword.helper_text = "Required"	
 			l += 1
 		else:
-			if currentUsername["Password"] != Lpass:
+			if currentUsername[Luname]["Password"] != Lpass:
 				self.ids.Lpassword.helper_text = "Wrong Password"
 				l += 1
 
@@ -102,11 +105,11 @@ class LoginScreen(Screen):
 			self.ids.Lusername.text = ""
 			self.ids.Lpassword.text = ""
 
-			global User_name, User_password
 			User_name = Luname
 			User_password = Lpass
 
 			self.manager.current = "WelcomeBack_Screen"
+			self.manager.get_screen("WelcomeBack_Screen").ids.name.text = str(currentUsername[Luname]["First_Name"])
 
 
 class RegisterScreen(Screen):
@@ -130,12 +133,15 @@ class RegisterScreen(Screen):
 
 	def regverification(self, Fname, Lname, Uname, Email, Rpass, RCpass):
 
+
 		self.ids.Fname.helper_text = ""
 		self.ids.Lname.helper_text = ""
 		self.ids.Uname.helper_text = ""
 		self.ids.Rpassword.helper_text = ""
 		self.ids.RCpassword.helper_text = ""
 		self.ids.Reg_Email.helper_text = ""
+
+		collection = userprofile.find_one({Uname:{}})
 
 		x = 0
 
@@ -146,9 +152,17 @@ class RegisterScreen(Screen):
 		if len(Lname) == 0:
 			self.ids.Lname.helper_text = "Required"
 			x += 1
+
 		if len(Uname) == 0: 
 			self.ids.Uname.helper_text = "Required"
 			x += 1
+		#else:
+			#for x in listofuser:
+				#if (x == Uname):
+				#	self.ids.Uname.helper_text = "Username Already Exists"
+				#	x += 1
+				#	break
+
 		if len(Rpass) == 0:
 			self.ids.Rpassword.helper_text = "Required"
 			x += 1
@@ -169,12 +183,11 @@ class RegisterScreen(Screen):
 			self.ids.Reg_Email.helper_text = "Invalid Email"
 			x += 1
 
-
 		if x > 0:
 			self.manager.current = "Register_Screen"
 			
 		else:
-			user = {"_id": Uname,"Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}
+			user = { Uname : {"Uname": Uname, "Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}}
 			userprofile.insert_one(user)
 
 			self.ids.Fname.text = ""
@@ -191,6 +204,27 @@ class CurrencyScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
+	def currency(self, **kwargs):
+		self.menu_list = [
+			{
+				"viewclass": "OneLineListItem",
+				"text": "PHP",
+				"on_release": lambda x = "PHP" : self.test1()
+			},
+			{
+				"viewclass": "OneLineListItem",
+				"text": "USD",
+				"on_release": lambda x = "USD" : self.test2()
+			}
+		]
+		self.menu = MDDropdownMenu(
+			caller = self.ids.field,
+			items = self.menu_list,
+			position = "bottom",
+			border_margin = dp(0),
+		)
+		self.menu.open()
+
 class InitialAmount(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
@@ -199,7 +233,11 @@ class WelcomeScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
-class WekcomeBackScreen(Screen):
+class WelcomeBackScreen(Screen):
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+
+class HomeScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
@@ -214,9 +252,10 @@ class YourExpense(MDApp):
 		sc_manager.add_widget(LoginScreen(name="Login_Screen"))
 		sc_manager.add_widget(RegisterScreen(name="Register_Screen"))
 		sc_manager.add_widget(CurrencyScreen(name="Currency_Screen"))
-		sc_manager.add_widget(CurrencyScreen(name="InitialAmount_Screen"))
-		sc_manager.add_widget(CurrencyScreen(name="Welcome_Screen"))
-		sc_manager.add_widget(CurrencyScreen(name="WelcomeBack_Screen"))
+		sc_manager.add_widget(InitialAmount(name="InitialAmount_Screen"))
+		sc_manager.add_widget(WelcomeScreen(name="Welcome_Screen"))
+		sc_manager.add_widget(WelcomeBackScreen(name="WelcomeBack_Screen"))
+		sc_manager.add_widget(HomeScreen(name="Home_Screen"))
 		return sc_manager
 
 
@@ -230,6 +269,9 @@ if __name__ == '__main__':
 	clusterdata = MongoClient("mongodb+srv://Java-rice:Fs6EMINE5Dm9YaFj@finalproject.p08n5.mongodb.net/?retryWrites=true&w=majority")
 	db = clusterdata["Application"]
 	userprofile = db["Profiles"]
+	userbalance = db["Balance"]
+
+	global User_name, User_password
 
 	#Fonts Styles
 	LabelBase.register(name = "LatoB", fn_regular= "assets/txt/Lato-Bold.ttf")
