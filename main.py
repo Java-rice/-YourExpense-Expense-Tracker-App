@@ -15,6 +15,7 @@ from kivy.properties import ListProperty
 from kivymd.uix.menu import MDDropdownMenu
 from kivy.metrics import dp
 from kivy.clock import Clock
+from kivy.uix.screenmanager import NoTransition
 import re
 #layout Libraries
 
@@ -241,6 +242,10 @@ class HomeScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
+class Home(Screen):
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+
 
 #MAIN APPLICATION
 class YourExpense(MDApp):
@@ -256,6 +261,7 @@ class YourExpense(MDApp):
 		sc_manager.add_widget(WelcomeScreen(name="Welcome_Screen"))
 		sc_manager.add_widget(WelcomeBackScreen(name="WelcomeBack_Screen"))
 		sc_manager.add_widget(HomeScreen(name="Home_Screen"))
+		sc_manager.add_widget(Home(name="Home"))
 		return sc_manager
 
 

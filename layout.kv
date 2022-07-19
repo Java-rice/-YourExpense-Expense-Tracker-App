@@ -1,3 +1,5 @@
+
+
 <LogoScreen>:
 	name: "Logo_Page"
 	id: Logopage
@@ -443,10 +445,78 @@
 	name: "Home_Screen"
 	id: HomeScreen
 	MDFloatLayout:
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		MDBottomNavigation:
+			panel_color: 153/255, 230/255, 255/255, 1
+			selected_color: "#97ecf8"
+			text_color_active: 0, 0, 0, 1
+
+			MDBottomNavigationItem:
+				name: 'screen 1'
+				text: 'Mail'
+            	icon: 'gmail'
+            	badge_icon: "numeric-10"
+
+            	Image: 
+					source: "assets/blue_bg.png"
+					size_hint: 1, 1
+					pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            	MDLabel:
+            		text: 'Mail'
+            		halign: 'center'
+
+        	MDBottomNavigationItem:
+            	name: 'screen 2'
+            	text: 'Discord'
+            	icon: 'discord'
+            	badge_icon: "numeric-5"
+
+            	MDLabel:
+                	text: 'Discord'
+                	halign: 'center'
+
+        	MDBottomNavigationItem:
+            	name: 'screen 3'
+            	text: 'LinkedIN'
+            	icon: 'linkedin'
+
+            	MDLabel:
+                	text: 'LinkedIN'
+                	halign: 'center'
+
+            MDBottomNavigationItem:
+            	name: 'screen 4'
+            	text: 'LinkedIN'
+            	icon: 'linkedin'
+
+            	MDLabel:
+                	text: 'LinkedIN'
+                	halign: 'center'
+
+            MDBottomNavigationItem:
+            	name: 'screen 5'
+            	text: 'LinkedIN'
+            	icon: 'linkedin'
+
+            	MDLabel:
+                	text: 'LinkedIN'
+                	halign: 'center'
+
+        MDBoxLayout:
+			id: TopContainer
+			orientation: "vertical"
+			spacing: "12dp"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.95}
+			adaptive_height: True
+			MDToolbar:
+				margin: .8
+				title: "HOME"
+				font_size: '18dp'
+				left_action_items: [["menu", lambda x: root.menubutton()]]
+		Image:
+			source: "assets/App_logo.ico"
+			size_hint: 0.13, 0.13
+			pos_hint: {'center_x': 0.9, 'center_y': 0.95}
+
 
 
 
