@@ -350,6 +350,7 @@
     		pos_hint: {'center_x': .5, 'center_y': .10}
     		md_bg_color: 255/255, 222/255, 89/255, 1
 			on_release:
+				root.manager.transition.direction = "left"
 				root.manager.current = "InitialAmount_Screen"
 
 <InitialAmount>:
@@ -359,7 +360,41 @@
 		Image: 
 			source: "assets/blue_bg.png"
 			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.5}	
+		Image:
+			source: "assets/App_logo.png"
+			size_hint: 0.3, 0.3
+			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+		Label:
+			text: "INPUT INITIAL \nAMOUNT"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "30sp"
+			font_name: "LatoB"	
+		MDTextField:
+			hint_text: "Enter amount"
+			mode: "rectangle"
+			font_name: "OpenSansR"
+			font_size: "15dp"
+			height: 100
+			size_hint: None , None
+			line_color_normal: (0, 0, 0, 1)
+			width: 200
+			pos_hint: {"center_x": .5, "center_y": .45}
+			helper_text:  ""
+		MDRaisedButton:
+    		text: "GET STARTED"
+    		font_size: '15dp'
+    		text_color: 0, 0, 26
+    		padding: [39.3, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .5, 'center_y': .3}
+    		md_bg_color: 255/255, 222/255, 89/255, 1
+    		on_release:
+    			root.manager.transition.direction = "left"
+    			root.manager.current = "Welcome_Screen"
+
 
 <WelcomeScreen>:
 	name: "Welcome_Screen"
@@ -372,30 +407,28 @@
 		Image:
 			source: "assets/App_logo.png"
 			size_hint: 0.5, 0.5
-			pos_hint: {'center_x': 0.5, 'center_y': 0.75}
-		Label:
-			text: "WELCOME BACK"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+			pos_hint: {'center_x': 0.5, 'center_y':0.7}
+		Label: 
+			text: "Welcome"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.53}
 			halign: 'center'
 			color: 0/255, 0/255, 0/255
-			font_size: "22sp"
+			font_size: "27sp"
 			font_name: "LatoB"
-		Label:
-			id: Rname
-			text: "KA-BDO"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.48}
+		Label: 
+			text: "Ka-BDO"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.47}
 			halign: 'center'
 			color: 0/255, 0/255, 0/255
-			font_size: "22sp"
-			font_name: "OpenSansR"
-
+			font_size: "40sp"
+			font_name: "LatoB"
 		MDRaisedButton:
-    		text: "Get Started"
+    		text: "GET STARTED"
     		font_size: '15dp'
-    		text_color: 0/255, 0/255, 0/255
+    		text_color: 0, 0, 26
     		padding: [39.3, 3]
     		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .2}
+    		pos_hint: {'center_x': .5, 'center_y': .3}
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
     			root.manager.transition.direction = "left"
@@ -412,35 +445,32 @@
 		Image:
 			source: "assets/App_logo.png"
 			size_hint: 0.5, 0.5
-			pos_hint: {'center_x': 0.5, 'center_y': 0.75}
-		Label:
-			text: "WELCOME BACK"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+			pos_hint: {'center_x': 0.5, 'center_y':0.7}
+		Label: 
+			text: "Welcome Back"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.53}
 			halign: 'center'
 			color: 0/255, 0/255, 0/255
-			font_size: "22sp"
+			font_size: "27sp"
 			font_name: "LatoB"
-		Label:
-			id: name
-			text: "KA-BDO"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.48}
+		Label: 
+			text: "Ka-BDO"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.47}
 			halign: 'center'
 			color: 0/255, 0/255, 0/255
-			font_size: "22sp"
-			font_name: "OpenSansR"
-
+			font_size: "40sp"
+			font_name: "LatoB"
 		MDRaisedButton:
-    		text: "Get Started"
+    		text: "GET STARTED"
     		font_size: '15dp'
-    		text_color: 0/255, 0/255, 0/255
+    		text_color: 0, 0, 26
     		padding: [39.3, 3]
     		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .2}
+    		pos_hint: {'center_x': .5, 'center_y': .3}
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
     			root.manager.transition.direction = "left"
     			root.manager.current = "Home_Screen"
-
 <HomeScreen>:
 	name: "Home_Screen"
 	id: HomeScreen
@@ -451,55 +481,230 @@
 			text_color_active: 0, 0, 0, 1
 
 			MDBottomNavigationItem:
-				name: 'screen 1'
-				text: 'Mail'
-            	icon: 'gmail'
-            	badge_icon: "numeric-10"
+				name: 'Calendar'
+				text: 'Calendar'
+            	icon: 'calendar'
+            	font_size: 8
+            	text_color_active: 0, 0, 0, 1
+            	selected_color_background: 0, 0, 1, .4
 
-            	Image: 
-					source: "assets/blue_bg.png"
-					size_hint: 1, 1
-					pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            	MDLabel:
-            		text: 'Mail'
-            		halign: 'center'
+            	MDBoxLayout:
+            		orientation: "vertical"
+            		size_hint: 1, 0.89
+            		pos_hint:  {'center_x': .5, 'center_y': .445}
+            		md_bg_color: 202/255, 246/255, 255/255, 1
+
+            		ScrollView:
+            			do_scroll_y: True
+            			do_scroll_x: False
+            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
+            			size_hint: 1, 1
+
+            			GridLayout:
+            				row: 5
+            				adaptive_size: True
+            				cols: 1
+            				size_hint_y: None
+            				height: self.minimum_height
+            				row_default_height: 100
+
+            				MDBoxLayout:
+
+							Label:
+								id: dasdas
+								text: "KA-BDO"
+								halign: 'center'
+								color: 0/255, 0/255, 0/255
+								font_size: "22sp"
+								font_name: "OpenSansR"
+							Label:
+								id: dasdaf
+								text: "KA-BDO"
+								halign: 'center'
+								color: 0/255, 0/255, 0/255
+								font_size: "22sp"
+								font_name: "OpenSansR"
+							Label:
+								id: dsad
+								text: "KA-BDO"
+								halign: 'center'
+								color: 0/255, 0/255, 0/255
+								font_size: "22sp"
+								font_name: "OpenSansR"
+
+
+
 
         	MDBottomNavigationItem:
-            	name: 'screen 2'
-            	text: 'Discord'
-            	icon: 'discord'
-            	badge_icon: "numeric-5"
+            	name: 'Portfolio'
+            	text: 'Portfolio'
+            	font_size: "8sp"
+            	icon: 'folder-multiple'
+            	text_color_active: 0, 0, 0, 1
+            	selected_color_background: 0, 0, 1, .4
 
-            	MDLabel:
-                	text: 'Discord'
-                	halign: 'center'
+            	MDBoxLayout:
+            		orientation: "vertical"
+            		size_hint: 1, 0.89
+            		pos_hint:  {'center_x': .5, 'center_y': .445}
+            		md_bg_color: 202/255, 246/255, 255/255, 1
+
+            		ScrollView:
+            			do_scroll_y: True
+            			do_scroll_x: False
+            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
+            			size_hint: 1, 1
+
+            			GridLayout:
+            				row: 5
+            				adaptive_size: True
+            				cols: 1
+            				size_hint_y: None
+            				height: self.minimum_height
+            				row_default_height: 100
+
+							Label:
+								id: dasdas
+								text: "KA-BDO"
+								halign: 'center'
+								color: 0/255, 0/255, 0/255
+								font_size: "22sp"
+								font_name: "OpenSansR"
+							Label:
+								id: dasdaf
+								text: "KA-BDO"
+								halign: 'center'
+								color: 0/255, 0/255, 0/255
+								font_size: "22sp"
+								font_name: "OpenSansR"
+							Label:
+								id: dsad
+								text: "KA-BDO"
+								halign: 'center'
+								color: 0/255, 0/255, 0/255
+								font_size: "22sp"
+								font_name: "OpenSansR"
+
 
         	MDBottomNavigationItem:
-            	name: 'screen 3'
-            	text: 'LinkedIN'
-            	icon: 'linkedin'
+            	name: 'Home'
+            	text: 'Home'
+            	font_size: "8sp"
+            	text_color_active: 0, 0, 0, 1
+            	selected_color_background: 0, 0, 1, .4
+            	icon: 'wallet'
 
-            	MDLabel:
-                	text: 'LinkedIN'
-                	halign: 'center'
-
-            MDBottomNavigationItem:
-            	name: 'screen 4'
-            	text: 'LinkedIN'
-            	icon: 'linkedin'
-
-            	MDLabel:
-                	text: 'LinkedIN'
-                	halign: 'center'
+            	MDBoxLayout:
+            		orientation: "vertical"
+            		size_hint: 1, 0.89
+            		pos_hint:  {'center_x': .5, 'center_y': .445}
+            		md_bg_color: 202/255, 246/255, 255/255, 1
 
             MDBottomNavigationItem:
-            	name: 'screen 5'
-            	text: 'LinkedIN'
-            	icon: 'linkedin'
+            	name: 'Statistics'
+            	text: 'Statistics'
+            	text_color_active: 0, 0, 0, 1
+            	selected_color_background: 0, 0, 1, .4
+            	font_size: "8sp"
+            	icon: 'chart-line'
 
-            	MDLabel:
-                	text: 'LinkedIN'
-                	halign: 'center'
+            	MDBoxLayout:
+            		orientation: "vertical"
+            		size_hint: 1, 0.89
+            		pos_hint:  {'center_x': .5, 'center_y': .445}
+            		md_bg_color: 202/255, 246/255, 255/255, 1
+
+            		ScrollView:
+            			do_scroll_y: True
+            			do_scroll_x: False
+            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
+            			size_hint: 1, 1
+
+            			GridLayout:
+            				adaptive_size: True
+            				cols: 1
+            				size_hint_y: None
+            				height: self.minimum_height
+
+            				MDBoxLayout:
+            					orientation: "vertical"
+            					id: BalanceChange
+            					size_hint: 1, None
+            					height: dp(250)
+            					md_bg_color: 0/255, 0/255, 0/255, 1
+            					
+            					MDFloatLayout
+	            					Label:
+										id: dsad
+										text: "KA-BDO"
+										halign: 'center'
+										pos_hint: {"center_x": .5, "center_y": .7}
+										color: 255/255, 255/255, 255/255
+										font_size: "22sp"
+										font_name: "OpenSansR"
+									Label:
+										id: dsadf
+										text: "KA-BDO"
+										halign: 'center'
+										color: 255/255, 255/255, 255/255
+										pos_hint: {"center_x": .6, "center_y": .4}
+										font_size: "22sp"
+										font_name: "OpenSansR"
+										
+							MDBoxLayout:
+            					id: BalanceChange
+            					size_hint: .90, None
+            					orientation: "vertical"
+            					height: dp(200)
+            					pos_hint: {"center_x": .5, "center_y": .7}
+            					md_bg_color: 25/255, 53/255, 42/255, 1
+	            					
+            					MDFloatLayout:
+	            					Label:
+										id: czxcz
+										text: "KA-BDO"
+										halign: 'center'
+										color: 0/255, 0/255, 0/255
+										font_size: "22sp"
+										font_name: "OpenSansR"
+							MDBoxLayout:
+            					orientation: "vertical"
+            					id: BalanceChange
+            					size_hint: 1, None
+            					height: dp(250)
+            					md_bg_color: 0/255, 0/255, 0/255, 1
+            					
+            					MDFloatLayout
+	            					Label:
+										id: dsafas
+										text: "KA-BDO"
+										halign: 'center'
+										pos_hint: {"center_x": .5, "center_y": .7}
+										color: 255/255, 255/255, 255/255
+										font_size: "22sp"
+										font_name: "OpenSansR"
+									Label:
+										id: czxczx
+										text: "KA-BDO"
+										halign: 'center'
+										color: 255/255, 255/255, 255/255
+										pos_hint: {"center_x": .6, "center_y": .4}
+										font_size: "22sp"
+										font_name: "OpenSansR"
+
+            MDBottomNavigationItem:
+            	name: 'Community'
+            	text: 'Community'
+            	font_size: "8sp"
+            	text_color_active: 0, 0, 0, 1
+            	selected_color_background: 0, 0, 1, .4
+            	icon: 'account-question'
+
+            	MDBoxLayout:
+            		orientation: "vertical"
+            		size_hint: 1, 0.89
+            		pos_hint:  {'center_x': .5, 'center_y': .445}
+            		md_bg_color: 202/255, 246/255, 255/255, 1
 
         MDBoxLayout:
 			id: TopContainer
@@ -511,11 +716,15 @@
 				margin: .8
 				title: "HOME"
 				font_size: '18dp'
-				left_action_items: [["menu", lambda x: root.menubutton()]]
+				left_action_items: [['menu', lambda x: About.set_state("open")]]
+
 		Image:
 			source: "assets/App_logo.ico"
 			size_hint: 0.13, 0.13
 			pos_hint: {'center_x': 0.9, 'center_y': 0.95}
+
+		MDNavigationDrawer:
+			id: About
 
 
 

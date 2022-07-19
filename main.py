@@ -15,7 +15,7 @@ from kivy.properties import ListProperty
 from kivymd.uix.menu import MDDropdownMenu
 from kivy.metrics import dp
 from kivy.clock import Clock
-from kivy.uix.screenmanager import NoTransition
+from kivy.uix.scrollview import ScrollView  
 import re
 #layout Libraries
 
@@ -74,6 +74,7 @@ class LoginScreen(Screen):
 		self.ids.Lpassword.helper_text = ""
 
 		currentUsername = userprofile.find_one({})
+		print(userprofile)
 		l = 0
 
 		#username and email doesnt exist
@@ -110,7 +111,6 @@ class LoginScreen(Screen):
 			User_password = Lpass
 
 			self.manager.current = "WelcomeBack_Screen"
-			self.manager.get_screen("WelcomeBack_Screen").ids.name.text = str(currentUsername[Luname]["First_Name"])
 
 
 class RegisterScreen(Screen):
@@ -188,7 +188,7 @@ class RegisterScreen(Screen):
 			self.manager.current = "Register_Screen"
 			
 		else:
-			user = { Uname : {"Uname": Uname, "Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}}
+			user = { Uname : {"Uname": Uname, "Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}, Email : {"Uname": Uname, "Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}}
 			userprofile.insert_one(user)
 
 			self.ids.Fname.text = ""
@@ -221,8 +221,8 @@ class CurrencyScreen(Screen):
 		self.menu = MDDropdownMenu(
 			caller = self.ids.field,
 			items = self.menu_list,
-			position = "bottom",
-			border_margin = dp(0),
+			position="bottom",
+            width_mult=4,
 		)
 		self.menu.open()
 
