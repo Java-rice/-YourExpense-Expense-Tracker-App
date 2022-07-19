@@ -15,7 +15,8 @@ from kivy.properties import ListProperty
 from kivymd.uix.menu import MDDropdownMenu
 from kivy.metrics import dp
 from kivy.clock import Clock
-from kivy.uix.scrollview import ScrollView  
+from kivy.uix.scrollview import ScrollView 
+import uuid 
 import re
 #layout Libraries
 
@@ -54,28 +55,32 @@ class LoadingScreen(Screen):
 		Clock.schedule_once(self.login, 4)
 
 	def login(self, *args):
+		print(userprofile.find_one({"Uname": "JavaRice"}))
 		self.manager.current = "Login_Screen"
+
 
 class LoginScreen(Screen):
 	
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+		self.ids.Lusername.text = ""
+		self.ids.Lpassword.text = ""
 
 	#To make password visible
 	def show_password(self, checkbox, value):
 		if value:
-			self.ids.password.password = False
+			self.ids.Lpassword.password = False
 		else:
-			self.ids.password.password = True
+			self.ids.Lpassword.password = True
 
 	def loginverification(self, Luname, Lpass):
 
 		self.ids.Lusername.helper_text = ""
 		self.ids.Lpassword.helper_text = ""
 
-		currentUsername = userprofile.find_one({})
-		print(userprofile)
 		l = 0
+		n = 0
+		i = 0
 
 		#username and email doesnt exist
 		if len(Luname) == 0:
@@ -83,22 +88,34 @@ class LoginScreen(Screen):
 			l += 1
 		else:
 			if (re.fullmatch(regex, Luname)):
-				if currentUsername[Luname]["Email"] != Luname:
+				data = userprofile.find({"Email": Luname})
+				if userprofile.find_one({"Email": Luname}) is None:
 					self.ids.Lusername.helper_text = "Email doesn't exist"
 					l += 1
 				else:
 					l += 0
-			elif currentUsername is None:
-				self.ids.Lusername.helper_text = "Username doesn't exist"
-				l += 1	
+					n += 1
+
+			else:
+				if userprofile.find_one({"Uname": Luname}) is None:
+					self.ids.Lusername.helper_text = "Username doesn't exist"
+					l += 1	
+				else:
+					data = userprofile.find({"Uname": Luname})
+					n += 1
+					l += 0
+
 
 		if len(Lpass) == 0:
 			self.ids.Lpassword.helper_text = "Required"	
 			l += 1
-		else:
-			if currentUsername[Luname]["Password"] != Lpass:
-				self.ids.Lpassword.helper_text = "Wrong Password"
-				l += 1
+		elif n > 0:
+			for x in data:
+				if x["Password"] == Lpass:
+					l += 0
+				else:
+					self.ids.Lpassword.helper_text = "Incorrect Password"
+					l += 1
 
 		if l > 0:
 			self.manager.current = "Login_Screen"
@@ -108,8 +125,8 @@ class LoginScreen(Screen):
 			self.ids.Lpassword.text = ""
 
 			User_name = Luname
-			User_password = Lpass
 
+			#self.manager.get_screen("WelcomeBack_Screen").ids.WBgreetings.text = userinfo["First_name"]
 			self.manager.current = "WelcomeBack_Screen"
 
 
@@ -117,6 +134,13 @@ class RegisterScreen(Screen):
 
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+
+		self.ids.Fname.text = ""
+		self.ids.Lname.text = ""
+		self.ids.Uname.text = ""
+		self.ids.Reg_Email.text = ""
+		self.ids.Rpassword.text = ""
+		self.ids.RCpassword.text = ""
 
 	#To make password visible
 	def show_Rpassword(self, checkbox, value):
@@ -134,15 +158,12 @@ class RegisterScreen(Screen):
 
 	def regverification(self, Fname, Lname, Uname, Email, Rpass, RCpass):
 
-
 		self.ids.Fname.helper_text = ""
 		self.ids.Lname.helper_text = ""
 		self.ids.Uname.helper_text = ""
 		self.ids.Rpassword.helper_text = ""
 		self.ids.RCpassword.helper_text = ""
 		self.ids.Reg_Email.helper_text = ""
-
-		collection = userprofile.find_one({Uname:{}})
 
 		x = 0
 
@@ -157,12 +178,11 @@ class RegisterScreen(Screen):
 		if len(Uname) == 0: 
 			self.ids.Uname.helper_text = "Required"
 			x += 1
-		#else:
-			#for x in listofuser:
-				#if (x == Uname):
-				#	self.ids.Uname.helper_text = "Username Already Exists"
-				#	x += 1
-				#	break
+		elif userprofile.find_one({"Uname": Uname}):
+			self.ids.Uname.helper_text = "Account already Exists"
+			x += 1
+		else:
+			x += 0
 
 		if len(Rpass) == 0:
 			self.ids.Rpassword.helper_text = "Required"
@@ -179,7 +199,11 @@ class RegisterScreen(Screen):
 
 		#Email Checker
 		if (re.fullmatch(regex, Email)):
-			x += 0
+			if userprofile.find_one({"Email": Email}):
+				self.ids.Reg_Email.helper_text = "Account already Exists"
+				x += 1
+			else:
+				x += 0
 		else:
 			self.ids.Reg_Email.helper_text = "Invalid Email"
 			x += 1
@@ -188,7 +212,15 @@ class RegisterScreen(Screen):
 			self.manager.current = "Register_Screen"
 			
 		else:
-			user = { Uname : {"Uname": Uname, "Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}, Email : {"Uname": Uname, "Email": Email, "First_Name": Fname, "Last_Name": Lname, "Password": Rpass}}
+			user = { 
+			"_id": uuid.uuid4().hex,
+			"Uname": Uname, 
+			"Email": Email, 
+			"First_Name": Fname, 
+			"Last_Name": Lname, 
+			"Password": Rpass
+			}
+
 			userprofile.insert_one(user)
 
 			self.ids.Fname.text = ""
@@ -277,7 +309,9 @@ if __name__ == '__main__':
 	userprofile = db["Profiles"]
 	userbalance = db["Balance"]
 
-	global User_name, User_password
+	global User_name
+	global User_password
+	global userinfo
 
 	#Fonts Styles
 	LabelBase.register(name = "LatoB", fn_regular= "assets/txt/Lato-Bold.ttf")
