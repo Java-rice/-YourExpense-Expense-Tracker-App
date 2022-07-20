@@ -60,6 +60,10 @@ class LoginScreen(Screen):
 	
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+
+		global CurrentUser
+		CurrentUser = []
+
 		self.ids.Lusername.text = ""
 		self.ids.Lpassword.text = ""
 		client_id = open("client_id.txt")
@@ -145,9 +149,10 @@ class LoginScreen(Screen):
 
 			User_name = Luname
 
+			global CurrentUser
+
 			for x in userprofile.find({"Uname": Luname}):
 				CurrentUser = x
-
 
 			self.manager.get_screen("Welcome_Screen").ids.namecurrent.text = CurrentUser["First_Name"]
 			self.manager.current = "Welcome_Screen"
@@ -235,6 +240,8 @@ class RegisterScreen(Screen):
 			self.manager.current = "Register_Screen"
 			
 		else:
+			global user
+
 			user = { 
 			"_id": uuid.uuid4().hex,
 			"Uname": Uname, 
@@ -243,8 +250,6 @@ class RegisterScreen(Screen):
 			"Last_Name": Lname, 
 			"Password": Rpass
 			}
-
-			userprofile.insert_one(user)
 
 			self.ids.Fname.text = ""
 			self.ids.Lname.text = ""
@@ -286,6 +291,7 @@ class CurrencyScreen(Screen):
 			width_mult = 4,
 		)
 
+
 	def PHP(self):
 		self.menu.dismiss()
 		self.ids.field.text = "PHP"
@@ -302,8 +308,7 @@ class CurrencyScreen(Screen):
 		
 
 	def confirmcurrency(self, currency):
-		#CurrenUser["Currency"] = currency
-		#print(CurrentUser)
+		user["Currency"] = currency
 
 		self.manager.transition.direction = "left"
 		self.manager.current = "InitialAmount_Screen"
@@ -312,6 +317,22 @@ class InitialAmount(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
+	def amountchecking(self, amount):
+
+		if amount.isnumeric(): 
+			user["Money"] = amount
+			print(user)
+			userprofile.insert_one(user)
+			self.manager.current = "ThankYou_Screen"
+		else:
+			if len(amount) == 0:
+				self.ids.Iamount.hint_text = "Required"
+				self.manager.current = "InitialAmount_Screen"
+			else:
+				self.ids.Iamount.hint_text = "Must be a number"
+				self.manager.current = "InitialAmount_Screen"
+
+
 class WelcomeScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
@@ -319,6 +340,7 @@ class WelcomeScreen(Screen):
 class ThankYouScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+
 
 class HomeScreen(Screen):
 	def __init__(self, **kwargs):
@@ -346,7 +368,6 @@ class YourExpense(MDApp):
 		sc_manager.add_widget(Home(name="Home"))
 		return sc_manager
 
-
 #MAIN FUNCTION
 if __name__ == '__main__':
 
@@ -360,8 +381,8 @@ if __name__ == '__main__':
 	userbalance = db["Balance"]
 
 	global User_name
-	global CurrentUser
 	global userinfo
+	global user
 
 	#Fonts Styles
 	LabelBase.register(name = "LatoB", fn_regular= "assets/txt/Lato-Bold.ttf")

@@ -360,6 +360,7 @@
 			font_name: "LatoB"
 
 		MDTextField:
+			id: Iamount
 			hint_text: "Enter amount"
 			font_name: "OpenSansR"
 			font_size: "15dp"
@@ -370,7 +371,7 @@
 			pos_hint: {"center_x": .5, "center_y": .45}
 			helper_text:  ""
 		MDRaisedButton:
-    		text: "GET STARTED"
+    		text: "PROCEED"
     		font_size: '15dp'
     		text_color: 0, 0, 26
     		padding: [39.3, 3]
@@ -378,8 +379,7 @@
     		pos_hint: {'center_x': .5, 'center_y': .10}
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
-    			root.manager.transition.direction = "left"
-    			root.manager.current = "ThankYou_Screen"
+    			root.amountchecking(Iamount.text)
 
 
 <WelcomeScreen>:
