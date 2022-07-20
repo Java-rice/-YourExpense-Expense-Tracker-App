@@ -126,7 +126,11 @@ class LoginScreen(Screen):
 
 			User_name = Luname
 
-			#self.manager.get_screen("WelcomeBack_Screen").ids.WBgreetings.text = userinfo["First_name"]
+			for x in userprofile.find({"Uname": Luname}):
+				CurrentUser = x
+
+
+			self.manager.get_screen("WelcomeBack_Screen").ids.WBgreetings.text = CurrentUser["First_Name"]
 			self.manager.current = "WelcomeBack_Screen"
 
 
@@ -310,7 +314,7 @@ if __name__ == '__main__':
 	userbalance = db["Balance"]
 
 	global User_name
-	global User_password
+	global CurrentUser
 	global userinfo
 
 	#Fonts Styles
