@@ -65,6 +65,18 @@ class LoginScreen(Screen):
 		super().__init__(**kwargs)
 		self.ids.Lusername.text = ""
 		self.ids.Lpassword.text = ""
+		client_id = open("client_id.txt")
+		client_secret = open("client_secret.txt")
+		initialize_google(self.after_login, self.error_listener, client_id.read(), client_secret.read())
+
+	def after_login(self, name, email):
+		pass
+
+	def error_listener(self):
+		pass
+
+	def google_log(self):
+		login_google()
 
 	#To make password visible
 	def show_password(self, checkbox, value):

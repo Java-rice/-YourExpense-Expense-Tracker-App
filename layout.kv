@@ -122,6 +122,8 @@
 			mode: "rectangle"
 			pos_hint: {'center_x': .5, 'center_y': .32}
 			md_bg_color: 235/255, 255/255, 255/255, 1
+			on_release:
+				root.google_log()
 
 			MDFloatLayout:
 				Image:
