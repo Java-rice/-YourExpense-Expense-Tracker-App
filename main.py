@@ -53,7 +53,6 @@ class LoadingScreen(Screen):
 		Clock.schedule_once(self.login, 4)
 
 	def login(self, *args):
-		print(userprofile.find_one({"Uname": "JavaRice"}))
 		self.manager.current = "Login_Screen"
 
 
@@ -150,8 +149,8 @@ class LoginScreen(Screen):
 				CurrentUser = x
 
 
-			self.manager.get_screen("WelcomeBack_Screen").ids.WBgreetings.text = CurrentUser["First_Name"]
-			self.manager.current = "WelcomeBack_Screen"
+			self.manager.get_screen("Welcome_Screen").ids.WBgreetings.text = CurrentUser["First_Name"]
+			self.manager.current = "Welcome_Screen"
 
 
 class RegisterScreen(Screen):
@@ -260,27 +259,54 @@ class RegisterScreen(Screen):
 class CurrencyScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
-
-	def currency(self, **kwargs):
-		self.menu_list = [
-			{
+		self.menu_list = [{
 				"viewclass": "OneLineListItem",
 				"text": "PHP",
-				"on_release": lambda x = "PHP" : self.test1()
-			},
-			{
+				"height": dp(56),
+				"on_release": 
+					lambda x = "PHP" : self.PHP()
+			},{
 				"viewclass": "OneLineListItem",
 				"text": "USD",
-				"on_release": lambda x = "USD" : self.test2()
+				"height": dp(56),
+				"on_release": 
+					lambda x = "USD" : self.USD()
+			},{
+				"viewclass": "OneLineListItem",
+				"text": "EURO",
+				"height": dp(56),
+				"on_release": 
+					lambda x = "USD" : self.EURO()
 			}
 		]
 		self.menu = MDDropdownMenu(
 			caller = self.ids.field,
 			items = self.menu_list,
-			position="bottom",
-            width_mult=4,
+			position =  "center",
+			width_mult = 4,
 		)
-		self.menu.open()
+
+	def PHP(self):
+		self.menu.dismiss()
+		self.ids.field.text = "PHP"
+		
+
+	def USD(self):
+		self.menu.dismiss()
+		self.ids.field.text = "USD"
+		
+
+	def EURO(self):
+		self.menu.dismiss()
+		self.ids.field.text = "EURO"
+		
+
+	def confirmcurrency(self, currency):
+		#CurrenUser["Currency"] = currency
+		#print(CurrentUser)
+
+		self.manager.transition.direction = "left"
+		self.manager.current = "InitialAmount_Screen"
 
 class InitialAmount(Screen):
 	def __init__(self, **kwargs):
@@ -290,7 +316,7 @@ class WelcomeScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
-class WelcomeBackScreen(Screen):
+class ThankYouScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
@@ -315,7 +341,7 @@ class YourExpense(MDApp):
 		sc_manager.add_widget(CurrencyScreen(name="Currency_Screen"))
 		sc_manager.add_widget(InitialAmount(name="InitialAmount_Screen"))
 		sc_manager.add_widget(WelcomeScreen(name="Welcome_Screen"))
-		sc_manager.add_widget(WelcomeBackScreen(name="WelcomeBack_Screen"))
+		sc_manager.add_widget(ThankYouScreen(name="ThankYou_Screen"))
 		sc_manager.add_widget(HomeScreen(name="Home_Screen"))
 		sc_manager.add_widget(Home(name="Home"))
 		return sc_manager

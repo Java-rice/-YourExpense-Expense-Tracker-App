@@ -318,12 +318,14 @@
 
 		MDTextField:
 			id: field
+			icon: "money"
 			text: "Select Currency Type"
 			pos_hint: {'center_x': .5, 'center_y': .5}
 			size_hint_x: None
 			width: "200dp"
 			hint_text: ""
-			on_focus: root.currency()
+			on_focus: 
+				if self.focus: root.menu.open()
 
 		MDRaisedButton:
     		text: "Confirm"
@@ -334,8 +336,7 @@
     		pos_hint: {'center_x': .5, 'center_y': .10}
     		md_bg_color: 255/255, 222/255, 89/255, 1
 			on_release:
-				root.manager.transition.direction = "left"
-				root.manager.current = "InitialAmount_Screen"
+				root.confirmcurrency(field.text)
 
 <InitialAmount>:
 	name: "InitialAmount_Screen"
@@ -347,18 +348,19 @@
 			pos_hint: {'center_x': 0.5, 'center_y': 0.5}	
 		Image:
 			source: "assets/App_logo.png"
-			size_hint: 0.3, 0.3
+			size_hint: 0.4, 0.4
 			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
 		Label:
-			text: "INPUT INITIAL \nAMOUNT"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+			text: "INPUT INITIAL \n AMOUNT"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.62}
 			halign: 'center'
 			color: 0/255, 0/255, 0/255
-			font_size: "30sp"
-			font_name: "LatoB"	
+			font_size: "22sp"
+			font_name: "LatoB"
+
 		MDTextField:
 			hint_text: "Enter amount"
-			mode: "rectangle"
 			font_name: "OpenSansR"
 			font_size: "15dp"
 			height: 100
@@ -373,11 +375,11 @@
     		text_color: 0, 0, 26
     		padding: [39.3, 3]
     		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .3}
+    		pos_hint: {'center_x': .5, 'center_y': .10}
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
     			root.manager.transition.direction = "left"
-    			root.manager.current = "Welcome_Screen"
+    			root.manager.current = "ThankYou_Screen"
 
 
 <WelcomeScreen>:
@@ -388,10 +390,12 @@
 			source: "assets/blue_bg.png"
 			size_hint: 1, 1
 			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
 		Image:
 			source: "assets/App_logo.png"
 			size_hint: 0.5, 0.5
 			pos_hint: {'center_x': 0.5, 'center_y':0.7}
+
 		Label: 
 			text: "Welcome"
 			pos_hint: {'center_x': 0.5, 'center_y': 0.53}
@@ -399,6 +403,7 @@
 			color: 0/255, 0/255, 0/255
 			font_size: "27sp"
 			font_name: "LatoB"
+
 		Label: 
 			text: "Ka-BDO"
 			pos_hint: {'center_x': 0.5, 'center_y': 0.47}
@@ -406,6 +411,7 @@
 			color: 0/255, 0/255, 0/255
 			font_size: "40sp"
 			font_name: "LatoB"
+
 		MDRaisedButton:
     		text: "GET STARTED"
     		font_size: '15dp'
@@ -418,44 +424,40 @@
     			root.manager.transition.direction = "left"
     			root.manager.current = "Home_Screen"
 
-<WelcomeBackScreen>:
-	name: "WelcomeBack_Screen"
-	id: WelcomeBack
+<ThankYouScreen>:
+	name: "ThankYou_Screen"
+	id: ThankYou
 	MDFloatLayout:
 		Image: 
 			source: "assets/blue_bg.png"
 			size_hint: 1, 1
 			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
 		Image:
 			source: "assets/App_logo.png"
 			size_hint: 0.5, 0.5
 			pos_hint: {'center_x': 0.5, 'center_y':0.7}
+
 		Label: 
-			text: "Welcome Back"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.53}
+			text: "Thanks\nfor\nRegistering"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.45}
 			halign: 'center'
 			color: 0/255, 0/255, 0/255
-			font_size: "27sp"
+			font_size: "30sp"
 			font_name: "LatoB"
-		Label: 
-			id: WBgreetings
-			text: "Ka-BDO"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.47}
-			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "40sp"
-			font_name: "LatoB"
+
 		MDRaisedButton:
-    		text: "GET STARTED"
+    		text: "Proceed to Login"
     		font_size: '15dp'
     		text_color: 0, 0, 26
-    		padding: [39.3, 3]
+    		padding: [35.3, 3]
     		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .3}
+    		pos_hint: {'center_x': .5, 'center_y': .17}
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
-    			root.manager.transition.direction = "left"
-    			root.manager.current = "Home_Screen"
+    			root.manager.transition.direction = "right"
+    			root.manager.current = "Login_Screen"
+
 <HomeScreen>:
 	name: "Home_Screen"
 	id: HomeScreen
