@@ -27,9 +27,7 @@ from pymongo import MongoClient
 
 ##validation api
 from kivyauth.google_auth import initialize_google, login_google, logout_google
-#235651464495-v9qn51gb53394mig64avc51ijaf1q439.apps.googleusercontent.com
-#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
-##google and facebook acc api
+
 
 Builder.load_file('layout.kv')
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -69,11 +67,14 @@ class LoginScreen(Screen):
 		client_secret = open("client_secret.txt")
 		initialize_google(self.after_login, self.error_listener, client_id.read(), client_secret.read())
 
-	def after_login(self, name, email):
-		pass
+	def after_login(self, name, email, photo_uri):
+		print(name)
+		print(email)
+		self.manager.transition.direction = "left"
+		self.manager.current = "WelcomeBack_Screen"
 
 	def error_listener(self):
-		pass
+		print("Login Failed!")
 
 	def google_log(self):
 		login_google()
