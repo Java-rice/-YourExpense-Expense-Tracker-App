@@ -149,7 +149,7 @@ class LoginScreen(Screen):
 				CurrentUser = x
 
 
-			self.manager.get_screen("Welcome_Screen").ids.WBgreetings.text = CurrentUser["First_Name"]
+			self.manager.get_screen("Welcome_Screen").ids.namecurrent.text = CurrentUser["First_Name"]
 			self.manager.current = "Welcome_Screen"
 
 
