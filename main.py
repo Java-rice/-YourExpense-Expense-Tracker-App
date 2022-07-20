@@ -71,13 +71,20 @@ class LoginScreen(Screen):
 		print(name)
 		print(email)
 		self.manager.transition.direction = "left"
-		self.manager.current = "WelcomeBack_Screen"
+		logout_google()
 
 	def error_listener(self):
 		print("Login Failed!")
 
 	def google_log(self):
 		login_google()
+
+	def logout(self):
+		logout_google()
+
+	def after_logout(self):
+		self.root.current = "WelcomeBack_Screen"
+
 
 	#To make password visible
 	def show_password(self, checkbox, value):
