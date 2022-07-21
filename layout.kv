@@ -476,6 +476,8 @@
             	font_size: 8
             	text_color_active: 0, 0, 0, 1
             	selected_color_background: 0, 0, 1, .4
+            	on_tab_release:
+            		root.ids.tb.title = "Agendas"
 
             	MDBoxLayout:
             		orientation: "vertical"
@@ -531,6 +533,8 @@
             	icon: 'folder-multiple'
             	text_color_active: 0, 0, 0, 1
             	selected_color_background: 0, 0, 1, .4
+            	on_tab_release:
+            		root.ids.tb.title = "PROFILE"
 
             	MDBoxLayout:
             		orientation: "vertical"
@@ -582,19 +586,8 @@
             	text_color_active: 0, 0, 0, 1
             	selected_color_background: 0, 0, 1, .4
             	icon: 'wallet'
-
-            	MDBoxLayout:
-            		orientation: "vertical"
-            		size_hint: 1, 0.89
-            		pos_hint:  {'center_x': .5, 'center_y': .445}
-            		md_bg_color: 202/255, 246/255, 255/255, 1
-
-            MDBottomNavigationItem:
-            	name: 'Statistics'
-            	text: 'Data'
-            	text_color_active: 0, 0, 0, 1
-            	selected_color_background: 0, 0, 1, .4
-            	icon: 'chart-line'
+            	on_tab_release:
+            		root.ids.tb.title = "HOME"
 
             	MDBoxLayout:
             		orientation: "vertical"
@@ -613,72 +606,187 @@
             				cols: 1
             				size_hint_y: None
             				height: self.minimum_height
+            				spacing: 9, 9
+            				padding: 9, 9
 
             				MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+
             					orientation: "vertical"
             					id: BalanceChange
             					size_hint: 1, None
-            					height: dp(250)
-            					md_bg_color: 0/255, 0/255, 0/255, 1
+            					height: dp(180)
+            					padding: [1 , 1]
             					
             					MDFloatLayout
 	            					Label:
-										id: dsad
-										text: "KA-BDO"
+										id: balance
+										text: "BALANCE TO BUDGET:"
 										halign: 'center'
-										pos_hint: {"center_x": .5, "center_y": .7}
-										color: 255/255, 255/255, 255/255
+										pos_hint: {"center_x": .55, "center_y": .82}
+										color: 0/255, 0/255, 0/255, 1
 										font_size: "22sp"
-										font_name: "OpenSansR"
+										font_name: "PoppinsB"
+
+									Image:
+										source: "assets/cash.ico"
+										size_hint: .3, .3
+										pos_hint: {"center_x": .1, "center_y": .82}
+
+
 									Label:
-										id: dsadf
-										text: "KA-BDO"
+										id: balance
 										halign: 'center'
-										color: 255/255, 255/255, 255/255
-										pos_hint: {"center_x": .6, "center_y": .4}
-										font_size: "22sp"
+										pos_hint: {"center_x": .5, "center_y": .40}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "16sp"
 										font_name: "OpenSansR"
-										
+
+									Image: 
+										source: "assets/roundedrect.png"
+										id: roundedrect
+										size_hint: 1,1 
+										pos_hint: {"center_x": .5, "center_y": .4}
+
+									MDIconButton:
+									    icon: "grease-pencil"
+									    user_font_size: "20sp"
+									    pos_hint: {"center_x": .5, "center_y": .20}
+
 							MDBoxLayout:
-            					id: BalanceChange
-            					size_hint: .90, None
+								canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
             					orientation: "vertical"
-            					height: dp(200)
-            					pos_hint: {"center_x": .5, "center_y": .7}
-            					md_bg_color: 25/255, 53/255, 42/255, 1
-	            					
-            					MDFloatLayout:
-	            					Label:
-										id: czxcz
-										text: "KA-BDO"
-										halign: 'center'
-										color: 0/255, 0/255, 0/255
-										font_size: "22sp"
-										font_name: "OpenSansR"
-							MDBoxLayout:
-            					orientation: "vertical"
-            					id: BalanceChange
+            					id: allocationtable
             					size_hint: 1, None
-            					height: dp(250)
-            					md_bg_color: 0/255, 0/255, 0/255, 1
+            					height: dp(350)
+            					md_bg_color: 202/255, 246/255, 255/255, 1
+
+            					MDFloatLayout: 
+
+            						Label: 
+										id: allocation
+										text: "ALLOCATION:"
+										halign: 'center'
+										pos_hint: {"center_x": .51, "center_y": .87}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "22sp"
+										font_name: "PoppinsB"
+
+									Image: 
+										source: "assets/pie.ico"
+										size_hint: .247, .25
+										pos_hint: {"center_x": .15, "center_y": .87}
+
+									MDRectangleFlatIconButton:
+							    		icon: "plus-circle"
+							    		text: "  Add Category"
+							    		font_name: "Montserrat"
+							    		font_size: "12sp"
+							    		theme_text_color: "Custom"
+							    		pos_hint: {'center_x': .5, 'center_y': .70}
+							    		text_color: 0/255, 0/255, 0/255, 1
+							    		line_color: 0/255, 0/255, 0/255, 1
+							    		theme_icon_color: "Custom"
+							    		icon_color: 0/255, 0/255, 0/255, 1
+							    		padding: [100,0]
+
+									Image: 
+							    		source: "assets/table1.png"
+							    		size_hint: 1,1
+							    		pos_hint: {'center_x': .5, 'center_y': .55}
+
+							MDBoxLayout:
+								canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+            					orientation: "vertical"
+            					id: allocationtable
+            					size_hint: 1, None
+            					height: dp(350)
+            					md_bg_color: 202/255, 246/255, 255/255, 1
+
+            					MDFloatLayout: 
+            						Label: 
+										id: Expenses
+										text: "EXPENSES:"
+										halign: 'center'
+										pos_hint: {"center_x": .51, "center_y": .87}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "22sp"
+										font_name: "PoppinsB"
+
+									Image: 
+										source: "assets/receipt.ico"
+										size_hint: .20, .20
+										pos_hint: {"center_x": .30, "center_y": .87}
+
+									MDRectangleFlatIconButton:
+							    		icon: "plus-circle"
+							    		font_name: "Montserrat"
+							    		text: "ADD TRANSACTION"
+							    		font_size: "12sp"
+							    		theme_text_color: "Custom"
+							    		pos_hint: {'center_x': .5, 'center_y': .70}
+							    		text_color: 35/255, 55/255, 82/255, 1
+							    		line_color: 0/255, 0/255, 0/255, 1
+							    		theme_icon_color: "Custom"
+							    		icon_color: 0/255, 0/255, 0/255, 1
+							    		padding: [80,0]
+
+							    	Image: 
+							    		source: "assets/table2.png"
+							    		size_hint: 1, 1 
+							    		pos_hint: {'center_x': .5, 'center_y': .55}
+
+
+            						
+            						
+
+            MDBottomNavigationItem:
+            	name: 'Statistics'
+            	text: 'Data'
+            	text_color_active: 0, 0, 0, 1
+            	selected_color_background: 0, 0, 1, .4
+            	icon: 'chart-line'
+            	on_tab_release:
+            		root.ids.tb.title = "DATA"
+
+            	MDBoxLayout:
+            		orientation: "vertical"
+            		size_hint: 1, 0.89
+            		pos_hint:  {'center_x': .5, 'center_y': .445}
+            		md_bg_color: 202/255, 246/255, 255/255, 1
+
+            		ScrollView:
+            			do_scroll_y: True
+            			do_scroll_x: False
+            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
+            			size_hint: 1, 1
+
+            			GridLayout:
+            				adaptive_size: True
+            				cols: 1
+            				size_hint_y: None
+            				height: self.minimum_height
+            				spacing: 9, 9
+            				padding: 9, 9
+
             					
-            					MDFloatLayout
-	            					Label:
-										id: dsafas
-										text: "KA-BDO"
-										halign: 'center'
-										pos_hint: {"center_x": .5, "center_y": .7}
-										color: 255/255, 255/255, 255/255
-										font_size: "22sp"
-										font_name: "OpenSansR"
-									Label:
-										id: czxczx
-										text: "KA-BDO"
-										halign: 'center'
-										color: 255/255, 255/255, 255/255
-										pos_hint: {"center_x": .6, "center_y": .4}
-										font_size: "22sp"
-										font_name: "OpenSansR"
+            					
+									
 
             MDBottomNavigationItem:
             	name: 'Community'
@@ -687,6 +795,8 @@
             	text_color_active: 0, 0, 0, 1
             	selected_color_background: 0, 0, 1, .4
             	icon: 'account-question'
+            	on_tab_release:
+            		root.ids.tb.title = "CONNECT"
 
             	MDBoxLayout:
             		orientation: "vertical"
@@ -701,6 +811,7 @@
 			pos_hint: {'center_x': 0.5, 'center_y': 0.95}
 			adaptive_height: True
 			MDToolbar:
+				id: tb
 				title: "HOME"
 				font_size: '18dp'
 				elevation: 10
