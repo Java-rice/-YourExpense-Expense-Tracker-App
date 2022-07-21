@@ -326,10 +326,10 @@ class InitialAmount(Screen):
 			self.manager.current = "ThankYou_Screen"
 		else:
 			if len(amount) == 0:
-				self.ids.Iamount.hint_text = "Required"
+				self.ids.Iamount.helper_text = "Required"
 				self.manager.current = "InitialAmount_Screen"
 			else:
-				self.ids.Iamount.hint_text = "Must be a number"
+				self.ids.Iamount.helper_text = "Must be a number"
 				self.manager.current = "InitialAmount_Screen"
 
 
