@@ -356,9 +356,9 @@ class InitialAmount(Screen):
 			#list for add money and subtracted money
 			userstat.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Add_Money" : [user["Money"]], "Subtracted_Money" : []})
 			#list for total expenses in categories
-			usercat.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"]})
-			#Current table for Add Categories
-			usermain.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Categories":{}})
+			usercat.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Categories": []})
+			#Current Content table for Add Categories
+			usermain.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Categories":[]})
 			#usercommunityinformation
 			usercommunity.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "AboutMe" : None, "Age" : None, "Sex": None, "Occupation": None, "Birthday": None, "Posts" : []})
 
@@ -408,9 +408,12 @@ class HomeScreen(Screen):
 
 		y = usermain.find_one({"Uname": self.ids.Myname.text })
 
-		for i in y["Categories"]:
-			self.allocation_table.add_row([ y["Categories"][i] , "", ""])
-
+		if len(y["Categories"]) != 0:
+			for x in y["Categories"]:
+				for i in x:	
+					self.allocation_table.add_row([ i["Name"] , i["Budget"], i["Expenses"], i["Remaining"]])
+		else:
+			self.allocation_table.add_row([ "_", "_", "_", "_"])		
 		
 		#Update the portfolio email and username
 		pfolio = userprofile.find_one({"Uname": self.ids.Myname.text })
@@ -422,7 +425,6 @@ class HomeScreen(Screen):
 		self.manager.current = "Welcome_Screen"
 	
 	def modifybalance(self, *args):
-
 		x = userprofile.find_one({"Uname": self.ids.Myname.text })
 
 		global userdata
@@ -535,47 +537,50 @@ class HomeScreen(Screen):
 		if len(self.BudgetField.text) == 0:
 			self.BudgetField.helper_text = "Required"
 			z += 1
-		if self.BudgetField.text.isnumeric() == False:
-			self.BudgetField.helper_text = "Must Be a Number"
-			z += 1
-
-		for stk in dictcat.keys():
-			if stk == self.CategoryField.text:
-				z += 1	
+		else:
+			if self.BudgetField.text.isnumeric():
+				z += 0
+			else:
+				self.BudgetField.helper_text = "Must Be a Number"
+				z += 1
+#########
+		for sta in dictcat:
+			for stk in sta:
+				if stk["Name"] == self.CategoryField.text:
+					self.CategoryField.helper_text = "Existing Category"
+					z += 1	
 
 		if z < 1:
-			if usercat.find_one({"Uname": self.ids.Myname.text, self.CategoryField.text : []}) is None:
-				usercat.insert_one({self.CategoryField.text : []})
+			usercat.update_one({"Uname": self.ids.Myname.text}, {"$push" : {"Categories": [{"Name" : self.CategoryField.text , "Expenses" : 0 }]}})
 
-			y["Categories"][self.CategoryField.text] = self.BudgetField.text
-			usermain.update_one({"Uname": self.ids.Myname.text }, { "$set" : y})
+			usermain.update_one({"Uname": self.ids.Myname.text}, {"$push" : {"Categories":  [{"Name" : self.CategoryField.text , "Budget" : self.BudgetField.text, "Expenses" : 0, "Remaining" : self.BudgetField.text }]}})
+
+			self.allocation_table.add_row((self.CategoryField.text, self.BudgetField.text , 0, self.BudgetField.text))
 			self.AddCategories.dismiss()
-
-
-		self.allocation_table.add_row((self.CategoryField.text, self.BudgetField.text , 0, self.BudgetField.text))
 
 	def Cancel(self, obj):
 		self.AddCategories.dismiss()
 
 	def updatePortfolio(self):
-		z = userstat.find_one({"Email": self.ids.portfolio_email.text})
-		i = 0 
-		j = 0
-		k = 0
-		for i in z["Add_Money"]:
-			j += int(i)
-		for h in z["Subtracted_Money"]:
-			k += int(h)
-		
-		x = np.array(["Expenses", "Income"])
-		y = np.array([k,j])
+		#z = userstat.find_one({"Email": self.ids.portfolio_email.text})
+		#i = 0 
+		#j = 0
+		#k = 0
+		#for i in z["Add_Money"]:
+		#	j += int(i)
+		#for h in z["Subtracted_Money"]:
+		#	k += int(h)
 
-		plt.barh(x,y)
-		plt.ylabel("Expenses vs. Income")
-		plt.xlabel("Total")
+		#x = np.array(["Expenses", "Income"])
+		#y = np.array([k,j])
 
-		cont = self.ids.Boxinvsout
-		cont.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+		#plt.barh(x,y)
+		#plt.ylabel("Expenses vs. Income")
+		#plt.xlabel("Total")
+
+		#cont = self.ids.Boxinvsout
+		#cont.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+		pass
 
 
 class AddTransaction(Screen):
