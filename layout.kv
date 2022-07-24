@@ -365,6 +365,7 @@
 			font_name: "OpenSansR"
 			font_size: "15dp"
 			height: 100
+			helper_text_mode: "persistent"
 			size_hint: None , None
 			line_color_normal: (0, 0, 0, 1)
 			width: 200
@@ -381,7 +382,6 @@
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
     			root.amountchecking(Iamount.text)
-
 
 <WelcomeScreen>:
 	name: "Welcome_Screen"
@@ -523,9 +523,7 @@
 								font_size: "22sp"
 								font_name: "OpenSansR"
 
-
-
-
+########################################PORTFOLIO#########################################
         	MDBottomNavigationItem:
             	name: 'Portfolio'
             	text: 'Profile'
@@ -534,6 +532,7 @@
             	text_color_active: 0, 0, 0, 1
             	selected_color_background: 0, 0, 1, .4
             	on_tab_release:
+            		root.updatePortfolio()
             		root.ids.tb.title = "PROFILE"
 
             	MDBoxLayout:
@@ -549,36 +548,78 @@
             			size_hint: 1, 1
 
             			GridLayout:
-            				row: 5
             				adaptive_size: True
             				cols: 1
             				size_hint_y: None
             				height: self.minimum_height
             				row_default_height: 100
+            				spacing: 9,9
+            				padding: 9,9 
+            				
+            				MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
 
-							Label:
-								id: dasdas
-								text: "KA-BDO"
-								halign: 'center'
-								color: 0/255, 0/255, 0/255
-								font_size: "22sp"
-								font_name: "OpenSansR"
-							Label:
-								id: dasdaf
-								text: "KA-BDO"
-								halign: 'center'
-								color: 0/255, 0/255, 0/255
-								font_size: "22sp"
-								font_name: "OpenSansR"
-							Label:
-								id: dsad
-								text: "KA-BDO"
-								halign: 'center'
-								color: 0/255, 0/255, 0/255
-								font_size: "22sp"
-								font_name: "OpenSansR"
+            					orientation: "vertical"
+            					id: portfolioprofile
+            					size_hint: 1, None
+            					height: dp(280)
+            					padding: [1 , 1]
 
+            					MDFloatLayout:
+										
+									Label:
+            							text: "PROFILE"
+										halign: 'center'
+										pos_hint: {"center_x": .56, "center_y": .85}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "22sp"
+										font_name: "PoppinsB" 
+									Image: 
+										source: "assets/portfolio.id.png"
+										size_hint: .4,.4 
+										pos_hint: {"center_x": .355, "center_y": .85}
+									Label:
+            							text: "Name:"
+										halign: 'center'
+										pos_hint: {"center_x": .15, "center_y": .65}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "20sp"
+										font_name: "Montserrat"
+									Label:
+            							id: portfolio_name
+            							text: "Your Name"
+            							halign: "center"
+										pos_hint: {"center_x": .6, "center_y": .65}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "15sp"
+										font_name: "OpenSansR"
+									Label: 
+            							text: "E-mail:"
+										halign: 'center'
+										pos_hint: {"center_x": .15, "center_y": .52}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "20sp"
+										font_name: "Montserrat" 
+									Label:
+            							id: portfolio_email
+            							text: "Your Email"
+            							halign: "center"
+										pos_hint: {"center_x": .6, "center_y": .52}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "15sp"
+										font_name: "OpenSansR"
+									BoxLayout:
+										id: Boxinvsout	
+										size_hint: .6,.6
+										post_hint: {"center_x": .8, "center_y": .38}
+								
 
+########################################HOMEHOME#########################################
         	MDBottomNavigationItem:
             	name: 'Home'
             	text: 'Home'
@@ -657,6 +698,8 @@
 									    icon: "grease-pencil"
 									    user_font_size: "20sp"
 									    pos_hint: {"center_x": .5, "center_y": .20}
+									    on_release:
+									    	root.modifybalance()
 
 							MDBoxLayout:
 								canvas.before:
@@ -668,16 +711,16 @@
             					orientation: "vertical"
             					id: allocationtable
             					size_hint: 1, None
-            					height: dp(350)
+            					height: dp(450)
             					md_bg_color: 202/255, 246/255, 255/255, 1
 
-            					MDFloatLayout: 
-
+            					MDFloatLayout:
+            						id: allocationfloat
             						Label: 
 										id: allocation
 										text: "ALLOCATION:"
 										halign: 'center'
-										pos_hint: {"center_x": .51, "center_y": .87}
+										pos_hint: {"center_x": .51, "center_y": .92}
 										color: 0/255, 0/255, 0/255, 1
 										font_size: "22sp"
 										font_name: "PoppinsB"
@@ -685,7 +728,7 @@
 									Image: 
 										source: "assets/pie.ico"
 										size_hint: .247, .25
-										pos_hint: {"center_x": .15, "center_y": .87}
+										pos_hint: {"center_x": .15, "center_y": .92}
 
 									MDRectangleFlatIconButton:
 							    		icon: "plus-circle"
@@ -693,17 +736,14 @@
 							    		font_name: "Montserrat"
 							    		font_size: "12sp"
 							    		theme_text_color: "Custom"
-							    		pos_hint: {'center_x': .5, 'center_y': .70}
+							    		pos_hint: {'center_x': .5, 'center_y': .75}
 							    		text_color: 0/255, 0/255, 0/255, 1
 							    		line_color: 0/255, 0/255, 0/255, 1
 							    		theme_icon_color: "Custom"
 							    		icon_color: 0/255, 0/255, 0/255, 1
 							    		padding: [100,0]
-
-									Image: 
-							    		source: "assets/table1.png"
-							    		size_hint: 1,1
-							    		pos_hint: {'center_x': .5, 'center_y': .55}
+							    		on_release:
+							    			root.addcategories()
 
 							MDBoxLayout:
 								canvas.before:
@@ -713,9 +753,9 @@
             							width: 1
             							rectangle: self.x, self.y, self.width, self.height
             					orientation: "vertical"
-            					id: allocationtable
+            					id: expensestable
             					size_hint: 1, None
-            					height: dp(350)
+            					height: dp(450)
             					md_bg_color: 202/255, 246/255, 255/255, 1
 
             					MDFloatLayout: 
@@ -723,7 +763,7 @@
 										id: Expenses
 										text: "EXPENSES:"
 										halign: 'center'
-										pos_hint: {"center_x": .51, "center_y": .87}
+										pos_hint: {"center_x": .51, "center_y": .92}
 										color: 0/255, 0/255, 0/255, 1
 										font_size: "22sp"
 										font_name: "PoppinsB"
@@ -731,7 +771,7 @@
 									Image: 
 										source: "assets/receipt.ico"
 										size_hint: .20, .20
-										pos_hint: {"center_x": .30, "center_y": .87}
+										pos_hint: {"center_x": .30, "center_y": .92}
 
 									MDRectangleFlatIconButton:
 							    		icon: "plus-circle"
@@ -739,21 +779,16 @@
 							    		text: "ADD TRANSACTION"
 							    		font_size: "12sp"
 							    		theme_text_color: "Custom"
-							    		pos_hint: {'center_x': .5, 'center_y': .70}
+							    		pos_hint: {'center_x': .5, 'center_y': .75}
 							    		text_color: 35/255, 55/255, 82/255, 1
 							    		line_color: 0/255, 0/255, 0/255, 1
 							    		theme_icon_color: "Custom"
 							    		icon_color: 0/255, 0/255, 0/255, 1
 							    		padding: [80,0]
-
-							    	Image: 
-							    		source: "assets/table2.png"
-							    		size_hint: 1, 1 
-							    		pos_hint: {'center_x': .5, 'center_y': .55}
-
-
-            						
-            						
+							    		on_release:
+							    			manager.addtransaction()
+				
+##########################STATISTICS################################            						
 
             MDBottomNavigationItem:
             	name: 'Statistics'
@@ -784,9 +819,22 @@
             				spacing: 9, 9
             				padding: 9, 9
 
+            				MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+            					orientation: "vertical"
+            					id: BalanceChange
+            					size_hint: 1, None
+            					height: dp(400)
+            					md_bg_color: 202/255, 246/255, 255/255, 1
+
             					
-            					
-									
+
+##########################COMMUNITY#################################
 
             MDBottomNavigationItem:
             	name: 'Community'
@@ -824,8 +872,76 @@
 
 		MDNavigationDrawer:
 			id: About
+			size_hint: None, 1.3
+			pos_hint_y: {'center_y': 0.60}
+			elevation: 10
 
 
+			MDBoxLayout:
+				size_hint: .98, .8
+				pos_hint_y: {'center_y': 0.60}
+				orientation: "vertical"
+				spacing: '2dp'
+				MDIconButton:
+					icon: "close"
+					pos_hint: {"center_x": .06 ,"center_y": .7}
+					user_font_size: "30sp"
+					on_release:
+						About.set_state("close")
+				Image:
+					source: "assets/aboutpic.png"
+					size_hint: 1.1, 1.1
+					pos_hint: {'center_x': 0.491, 'center_y': 0.7}
+				MDBoxLayout:
+					orientation: "vertical"	
+					spacing: '0dp'
+					size_hint: 1, .2
+					Image:
+						source: "assets/crruser.png"
+						size_hint: .8, .8
+						pos_hint_x: {'center_x': 0.5}
+					Label:
+						id: Myname
+						text: "Name"
+						pos_hint_x: {'center_x': 0.5}
+						halign: 'center'
+						color: 0/255, 0/255, 0/255
+						font_size: "23sp"
+						padding: [0, 0]
+						font_name: "OpenSansR"
+
+				Label:
+					id: quote
+					text: "\"You must gain control over your\n money or the lack of \n will forever control\" \n ~Dave Ramsey"
+					pos_hint_x: {'center_x': 0.5}
+					halign: 'center'
+					size_hint: 1, .4
+					color: 0/255, 0/255, 0/255
+					font_size: "15sp"
+					padding: [0, 0]
+					font_name: "Montserrat"
+
+				MDRaisedButton:
+    				font_size: '15dp'
+    				text_color: 0/255, 0/255, 0/255
+    				padding: [100, 3]
+    				font_name: "LatoB"
+    				pos_hint: {'center_x': .5, 'center_y': .20}
+    				md_bg_color: 137/255, 207/255, 240/255, 1
+					text: "Logout"
+					on_release:
+						root.manager.transition.direction = "right"
+						root.manager.current = "Login_Screen"
+
+
+
+<AddTransaction>:
+	name: "AddTransaction_Screen"
+	MDFloatLayout:
+		Image: 
+			source: "assets/blue_bg.png"
+			size_hint: 1, 1
+			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
 
 
