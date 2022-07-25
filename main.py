@@ -54,7 +54,6 @@ class LogoScreen(Screen):
 
 	def next_page(self, *args):
 		self.manager.current = "Loading_Screen"
-
 class LoadingScreen(Screen):
 	#Loading Screen
 	def __init__(self, **kwargs):
@@ -65,8 +64,6 @@ class LoadingScreen(Screen):
 
 	def login(self, *args):
 		self.manager.current = "Login_Screen"
-
-#Login Screen
 class LoginScreen(Screen):
 	
 	def __init__(self, **kwargs):
@@ -175,9 +172,8 @@ class LoginScreen(Screen):
 
 			self.manager.get_screen("Welcome_Screen").ids.namecurrent.text = CurrentUser["First_Name"]
 			self.manager.get_screen("Home_Screen").ids.Myname.text = CurrentUser["Uname"]
-
+			self.manager.get_screen("Home_Screen").ids.p_uname.text = CurrentUser["Uname"]
 			self.manager.get_screen("Home_Screen").update(CurrentUser)
-
 class RegisterScreen(Screen):
 
 	def __init__(self, **kwargs):
@@ -204,6 +200,7 @@ class RegisterScreen(Screen):
 		else:
 			self.ids.RCpassword.password = True
 
+	#verify if information formats are valid
 	def regverification(self, Fname, Lname, Uname, Email, Rpass, RCpass):
 
 		self.ids.Fname.helper_text = ""
@@ -286,11 +283,10 @@ class RegisterScreen(Screen):
 			self.ids.RCpassword.text = ""
 
 			self.manager.current = "Currency_Screen"
-
-
 class CurrencyScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+		#dropdown for currency
 		self.menu_list = [{
 				"viewclass": "OneLineListItem",
 				"text": "PHP",
@@ -318,26 +314,28 @@ class CurrencyScreen(Screen):
 			width_mult = 4,
 		)
 
-
+	#If chooses PHP as currency
 	def PHP(self):
 		self.menu.dismiss()
 		self.ids.field.text = "PHP"
 		
-
+	#If chooses USD as currency
 	def USD(self):
 		self.menu.dismiss()
 		self.ids.field.text = "USD"
 		
-
+	#If chooses EURO as currency
 	def EURO(self):
 		self.menu.dismiss()
 		self.ids.field.text = "EURO"
 
+	#Confirm Currency
 	def confirmcurrency(self, currency):
 		user["Currency"] = currency
 
 		self.manager.transition.direction = "left"
 		self.manager.current = "InitialAmount_Screen"
+
 
 class InitialAmount(Screen):
 	def __init__(self, **kwargs):
@@ -406,6 +404,7 @@ class HomeScreen(Screen):
                 ("[size=12]Remaining[/size]", dp(20))
 			],row_data=[])
 
+		self.allocation_table.bind(on_row_press = self.allcheck_press)
 		y = usermain.find_one({"Uname": self.ids.Myname.text })
 
 		if len(y["Categories"]) != 0:
@@ -415,6 +414,19 @@ class HomeScreen(Screen):
 		else:
 			self.allocation_table.add_row([ "_", "_", "_", "_"])		
 		
+
+		#self.transaction_table = MDDataTable(
+			#padding="15dp",
+			#size_hint = (0.95, .65),
+			#pos_hint =  {'center_x': .5, 'center_y': .35},
+
+			#column_data = [
+			#	("[size=12]Categories[/size]", dp(20)),
+             #   ("[size=12]Amount[/size]", dp(20)),
+            #    ("[size=12]Date[/size]", dp(20)),
+            #    ("[size=12]Status[/size]", dp(20))
+			#],row_data=[])
+
 		#Update the portfolio email and username
 		pfolio = userprofile.find_one({"Uname": self.ids.Myname.text })
 		self.ids.portfolio_name.text = pfolio["First_Name"] + " " + pfolio["Last_Name"]
@@ -424,6 +436,51 @@ class HomeScreen(Screen):
 		self.ids.About.set_state("close")
 		self.manager.current = "Welcome_Screen"
 	
+	#Allocation row check
+	def allcheck_press(self, instance_table, current_row):
+		print(instance_table, current_row)
+		
+		self.allrow = MDTextField(
+			hint_text= "Enter Amount",
+			font_name= "OpenSansR",
+			font_size= "12dp",
+			size_hint_x= None,
+			line_color_normal= (0, 0, 0, 1),
+			width = 200,
+			helper_text_mode= "persistent",
+			pos_hint= {"center_x": .5, "center_y": .225},
+			helper_text=  "",
+			)
+		self.alldialog = MDDialog(
+			title = "Add to Balance",
+			buttons = [
+				MDFlatButton(text="ADD", padding = [10, 0],theme_text_color="Custom", on_release = self.AllAdd),
+            	MDFlatButton(text="DISCARD", theme_text_color="Custom", on_release = self.AllDiscard)]
+            )
+		self.alldialog.add_widget(self.allrow)
+		self.alldialog.open()	
+	#Add budget for allocation
+	def AllAdd(self, obj):
+		q = 0
+		stock = usermain.find_one({"Uname": self.ids.Myname.text })
+		for i in stock["Categories"][q]:
+			if i["Name"] == current_row[0]:
+				n = q
+				break
+			else:
+				q += 1
+
+		new = int(stock["Categories"][n]["Budget"]) + int(self.allrow.text)
+		new = int(stock["Categories"][n]["Remaining"]) + int(self.allrow.text)
+
+		usermain.update_one({"Uname": userdata["Uname"]}, {"$set" :{"Categories":[{"Budget": new}, {"Budget": userdata["Money"]}]}})
+		self.update()
+		self.all.dismiss()
+	#closes Add budget
+	def AllDiscard(self, obj):
+		self.alldialog.dismiss()
+
+
 	def modifybalance(self, *args):
 		x = userprofile.find_one({"Uname": self.ids.Myname.text })
 
@@ -450,6 +507,8 @@ class HomeScreen(Screen):
             )
 		self.mbalance.add_widget(self.bal)
 		self.mbalance.open()
+
+
 
 	def addcategories(self, *args):
 		self.Box = FloatLayout(
@@ -543,7 +602,7 @@ class HomeScreen(Screen):
 			else:
 				self.BudgetField.helper_text = "Must Be a Number"
 				z += 1
-#########
+
 		for sta in dictcat:
 			for stk in sta:
 				if stk["Name"] == self.CategoryField.text:

@@ -786,7 +786,8 @@
 							    		icon_color: 0/255, 0/255, 0/255, 1
 							    		padding: [80,0]
 							    		on_release:
-							    			manager.addtransaction()
+							    			root.manager.transition.direction: "left"
+							    			root.manager.current = "AddTransaction_Screen"
 				
 ##########################STATISTICS################################            						
 
@@ -851,6 +852,88 @@
             		size_hint: 1, 0.89
             		pos_hint:  {'center_x': .5, 'center_y': .445}
             		md_bg_color: 202/255, 246/255, 255/255, 1
+
+            		ScrollView:
+            			do_scroll_y: True
+            			do_scroll_x: False
+            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
+            			size_hint: 1, 1            	
+						
+						GridLayout:
+            				adaptive_size: True
+            				cols: 1
+            				size_hint_y: None
+            				height: self.minimum_height
+            				spacing: 9, 9
+            				padding: 9, 9
+							
+							MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0/255, 150/255, 255/255, 1
+            						Rectangle:
+            							pos: self.pos
+            							size: self.size
+
+            					orientation: "vertical"
+            					size_hint: 1, None
+            					height: dp(50)
+
+            					Label:
+									id: feedLabel
+									text: "FEED"
+									halign: 'center'
+									pos_hint: {"center_x": .5, "center_y": .5}
+									color: 255/255, 255/255, 255/255, 1
+									font_size: "24sp"
+									font_name: "PoppinsB"
+
+							MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0/255, 0/255, 0/255, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+            					orientation: "vertical"
+            					size_hint: 1, None
+            					height: dp(50)
+
+            					MDFloatLayout:
+            						Image:
+            							source: "assets/puser.ico"
+            							size_hint: .8, .8
+            							pos_hint: {"center_x": .08, "center_y": .5}
+	            					Label: 
+	            						id: p_uname
+	            						text: " "
+										halign: 'center'
+										pos_hint: {"center_x": .5, "center_y": .5}
+										color: 0/255/255, 0/255, 0/255, 1
+										font_size: "18sp"
+										font_name: "Montserrat"
+
+							MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0/255, 0/255, 0/255, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+            					orientation: "vertical"
+            					size_hint: 1, None
+            					height: dp(200)
+
+            					MDFloatLayout:
+	            					Label: 
+	            						id: p_uname
+	            						text: " "
+										halign: 'center'
+										pos_hint: {"center_x": .5, "center_y": .5}
+										color: 0/255/255, 0/255, 0/255, 1
+										font_size: "18sp"
+										font_name: "Montserrat"
+
 
         MDBoxLayout:
 			id: TopContainer
@@ -933,8 +1016,6 @@
 						root.manager.transition.direction = "right"
 						root.manager.current = "Login_Screen"
 
-
-
 <AddTransaction>:
 	name: "AddTransaction_Screen"
 	MDFloatLayout:
@@ -942,6 +1023,47 @@
 			source: "assets/blue_bg.png"
 			size_hint: 1, 1
 			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		MDIconButton:
+			icon: "arrow-left"
+			pos_hint: {"center_x": .1 ,"center_y": .95}
+			user_font_size: "30sp"
+			on_release:
+				root.manager.transition.direction = "right"
+				root.manager.current = "Home_Screen"
+		Image:
+			source: "assets/App_logo.png"
+			size_hint: 0.3, 0.3
+			pos_hint: {'center_x': 0.27, 'center_y': 0.8}
+		
+		Label:
+			text: "Username:"
+			pos_hint: {'center_x': 0.63, 'center_y': 0.82}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "20sp"
+			padding: [0, 0]
+			font_name: "LatoB"
+
+		Label:
+			id: currentusername
+			text: "Username"
+			pos_hint: {'center_x': 0.67, 'center_y': 0.78}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "17sp"
+			padding: [0, 0]
+			font_name: "OpenSansR"
+
+		Label:
+			text: "Add Transactions"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.68}
+			halign: 'center'
+			color: 0/255, 0/255, 0/255
+			font_size: "17sp"
+			padding: [0, 0]
+			font_name: "LatoB"
+
+
 
 
 
