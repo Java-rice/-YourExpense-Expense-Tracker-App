@@ -720,7 +720,7 @@
 										id: allocation
 										text: "ALLOCATION:"
 										halign: 'center'
-										pos_hint: {"center_x": .51, "center_y": .92}
+										pos_hint: {"center_x": .51, "center_y": .90}
 										color: 0/255, 0/255, 0/255, 1
 										font_size: "22sp"
 										font_name: "PoppinsB"
@@ -728,7 +728,7 @@
 									Image: 
 										source: "assets/pie.ico"
 										size_hint: .247, .25
-										pos_hint: {"center_x": .15, "center_y": .92}
+										pos_hint: {"center_x": .15, "center_y": .90}
 
 									MDRectangleFlatIconButton:
 							    		icon: "plus-circle"
@@ -758,12 +758,13 @@
             					height: dp(450)
             					md_bg_color: 202/255, 246/255, 255/255, 1
 
-            					MDFloatLayout: 
+            					MDFloatLayout:
+            						id: transactionfloat 
             						Label: 
 										id: Expenses
 										text: "EXPENSES:"
 										halign: 'center'
-										pos_hint: {"center_x": .51, "center_y": .92}
+										pos_hint: {"center_x": .51, "center_y": .90}
 										color: 0/255, 0/255, 0/255, 1
 										font_size: "22sp"
 										font_name: "PoppinsB"
@@ -771,7 +772,7 @@
 									Image: 
 										source: "assets/receipt.ico"
 										size_hint: .20, .20
-										pos_hint: {"center_x": .30, "center_y": .92}
+										pos_hint: {"center_x": .30, "center_y": .90}
 
 									MDRectangleFlatIconButton:
 							    		icon: "plus-circle"
@@ -961,13 +962,13 @@
 
 
 			MDBoxLayout:
-				size_hint: .98, .8
+				size_hint: .98, .75
 				pos_hint_y: {'center_y': 0.60}
 				orientation: "vertical"
 				spacing: '2dp'
 				MDIconButton:
 					icon: "close"
-					pos_hint: {"center_x": .06 ,"center_y": .7}
+					pos_hint: {"center_x": .06 ,"center_y": .68}
 					user_font_size: "30sp"
 					on_release:
 						About.set_state("close")

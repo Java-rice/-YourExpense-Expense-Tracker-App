@@ -415,24 +415,28 @@ class HomeScreen(Screen):
 			self.allocation_table.add_row([ "_", "_", "_", "_"])		
 		
 
-		#self.transaction_table = MDDataTable(
-			#padding="15dp",
-			#size_hint = (0.95, .65),
-			#pos_hint =  {'center_x': .5, 'center_y': .35},
+		self.transaction_table = MDDataTable(
+			padding="15dp",
+			size_hint = (0.95, .65),
+			pos_hint =  {'center_x': .5, 'center_y': .35},
 
-			#column_data = [
-			#	("[size=12]Categories[/size]", dp(20)),
-             #   ("[size=12]Amount[/size]", dp(20)),
-            #    ("[size=12]Date[/size]", dp(20)),
-            #    ("[size=12]Status[/size]", dp(20))
-			#],row_data=[])
+			column_data = [
+				("[size=12]Categories[/size]", dp(20)),
+              	("[size=12]Amount[/size]", dp(20)),
+                ("[size=12]Date[/size]", dp(20)),
+                ("[size=12]Status[/size]", dp(20))
+			],row_data=[])
+
+		
 
 		#Update the portfolio email and username
 		pfolio = userprofile.find_one({"Uname": self.ids.Myname.text })
 		self.ids.portfolio_name.text = pfolio["First_Name"] + " " + pfolio["Last_Name"]
 		self.ids.portfolio_email.text = pfolio["Email"]	
 
-		self.manager.get_screen("Home_Screen").ids.allocationfloat.add_widget(self.allocation_table)
+
+		self.ids.transactionfloat.add_widget(self.transaction_table)
+		self.ids.allocationfloat.add_widget(self.allocation_table)
 		self.ids.About.set_state("close")
 		self.manager.current = "Welcome_Screen"
 	
