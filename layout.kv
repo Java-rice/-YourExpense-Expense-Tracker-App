@@ -897,7 +897,12 @@
 							    		icon_color: 0/255, 0/255, 0/255, 1
 							    		padding: [80,0]
 							    		on_release:
-							    			root.manager.transition.direction: "left"
+							    			root.manager.transition.direction = "left"
+							    			root.manager.get_screen("AddTransaction_Screen").ids.SelectCategories.text = ""
+											root.manager.get_screen("AddTransaction_Screen").ids.SelectStatus.text = ""
+											root.manager.get_screen("AddTransaction_Screen").ids.SelectType.text = ""
+											root.manager.get_screen("AddTransaction_Screen").ids.InputAmount.text = ""
+											root.manager.get_screen("AddTransaction_Screen").ids.date.text = "Date of Transaction"
 							    			root.manager.current = "AddTransaction_Screen"
 				
 ##########################STATISTICS################################            						
@@ -1176,8 +1181,8 @@
 			font_name: "LatoB"
 
 		MDTextField:
-			id: Add Categories
-			hint_text: "Select Categories"
+			id: SelectCategories
+			hint_text: "Type Categories"
 			font_name: "OpenSansR"
 			font_size: "15dp"
 			height: 100
@@ -1187,8 +1192,11 @@
 			width: 200
 			pos_hint: {"center_x": .5, "center_y": .61}
 			helper_text:  ""
+			on_focus:
+				if self.focus: root.Smenu.open()
 
 		MDTextField:
+			id: SelectStatus
 			hint_text: "Select Status"
 			font_name: "OpenSansR"
 			font_size: "15dp"
@@ -1197,10 +1205,13 @@
 			size_hint: None , None
 			line_color_normal: (0, 0, 0, 1)
 			width: 200
-			pos_hint: {"center_x": .5, "center_y": .55}
+			pos_hint: {"center_x": .5, "center_y": .52}
 			helper_text:  ""
+			on_focus:
+				if self.focus: root.Smenu.open()
 
 		MDTextField:
+			id: SelectType
 			hint_text: "Select Type"
 			font_name: "OpenSansR"
 			font_size: "15dp"
@@ -1209,10 +1220,13 @@
 			size_hint: None , None
 			line_color_normal: (0, 0, 0, 1)
 			width: 200
-			pos_hint: {"center_x": .5, "center_y": .45}
+			pos_hint: {"center_x": .5, "center_y": .43}
 			helper_text:  ""
+			on_focus: 
+				if self.focus: root.Tmenu.open()
 
 		MDTextField:
+			id: InputAmount
 			hint_text: "Input Amount"
 			font_name: "OpenSansR"
 			font_size: "15dp"
@@ -1221,22 +1235,45 @@
 			size_hint: None , None
 			line_color_normal: (0, 0, 0, 1)
 			width: 200
-			pos_hint: {"center_x": .5, "center_y": .45}
+			pos_hint: {"center_x": .5, "center_y": .34}
 			helper_text:  ""
 
 		MDLabel:
 			id: date
 			text: "Date of Transaction"
 			halign: 'center'
-			pos_hint: {'center_x': 0.5, 'center_y': 0.50}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.25}
 
-		MDRectangleFlatButton:
+		MDRaisedButton:
 			text: "Choose Date"
-			theme_text_color: "Custom"
-    		text_color: 255, 255, 255, 1
-    		line_color: 68/255, 178/255, 221/255, 1
-			padding: [75,10]
-			pos_hint: {'center_x': 0.5, 'center_y': 0.30}
+			font_size: '15dp'
+    		text_color: 0, 0, 26
+    		padding: [39.3, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .5, 'center_y': .20}
+    		md_bg_color: 255/255, 222/255, 89/255, 1
+    		on_release:
+    			root.show_date()
+
+    	MDRaisedButton:
+			text: "Confirm"
+			font_size: '15dp'
+    		text_color: 0, 0, 26
+    		padding: [39.3, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .25, 'center_y': .10}
+    		md_bg_color: 255/255, 222/255, 89/255, 1
+
+    	MDRaisedButton:
+			text: "Cancel"
+			font_size: '15dp'
+    		text_color: 0, 0, 26
+    		padding: [39.3, 3]
+    		font_name: "LatoB"
+    		pos_hint: {'center_x': .75, 'center_y': .10}
+    		md_bg_color: 254/255, 77/255, 77/255, 1
+    		on_release:
+    			root.manager.current = "Home_Screen"
 
 
 

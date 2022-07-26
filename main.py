@@ -19,10 +19,11 @@ from kivy.uix.scrollview import ScrollView
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.datatables import MDDataTable
+from kivymd.uix.pickers import MDDatePicker
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.card import MDCardSwipe, MDCardSwipeLayerBox, MDCardSwipeFrontBox
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.list.list import ThreeLineAvatarIconListItem, OneLineListItem
+from kivymd.uix.list import ThreeLineAvatarIconListItem, OneLineListItem
 from datetime import datetime
 from kivy.properties import StringProperty
 from babel import numbers
@@ -48,11 +49,6 @@ Builder.load_file('layout.kv')
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 
-
-
-
-
-
 #Screens
 class LogoScreen(Screen):
 	#Start Screen
@@ -64,6 +60,8 @@ class LogoScreen(Screen):
 
 	def next_page(self, *args):
 		self.manager.current = "Loading_Screen"
+
+
 class LoadingScreen(Screen):
 	#Loading Screen
 	def __init__(self, **kwargs):
@@ -74,6 +72,8 @@ class LoadingScreen(Screen):
 
 	def login(self, *args):
 		self.manager.current = "Login_Screen"
+
+
 class LoginScreen(Screen):
 	
 	def __init__(self, **kwargs):
@@ -186,6 +186,7 @@ class LoginScreen(Screen):
 			self.manager.get_screen("Home_Screen").ids.Note_Name.text = CurrentUser["Uname"]
 			self.manager.get_screen("Home_Screen").update(CurrentUser)
 
+
 class RegisterScreen(Screen):
 
 	def __init__(self, **kwargs):
@@ -295,6 +296,8 @@ class RegisterScreen(Screen):
 			self.ids.RCpassword.text = ""
 
 			self.manager.current = "Currency_Screen"
+
+
 class CurrencyScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
@@ -387,6 +390,7 @@ class InitialAmount(Screen):
 class WelcomeScreen(Screen):
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
+
 
 class ThankYouScreen(Screen):
 	def __init__(self, **kwargs):
@@ -684,7 +688,91 @@ class SwipeToDeleteItem(MDCardSwipe):
 	text = StringProperty()
 
 class AddTransaction(Screen):
-	pass
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+		self.ids.SelectCategories.text = " "
+		self.ids.SelectStatus.text = " "
+		self.ids.SelectType.text = " "
+		self.ids.InputAmount.text = " "
+
+		self.Tmenu_list = [{
+				"viewclass": "OneLineListItem",
+				"text": "One Time",
+				"height": dp(56),
+				"on_release": 
+					lambda x = "One Time" : self.onetime()
+			},{
+				"viewclass": "OneLineListItem",
+				"text": "Periodic",
+				"height": dp(56),
+				"on_release": 
+					lambda x = "Periodic" : self.period()
+			}
+		]
+		self.Tmenu = MDDropdownMenu(
+			caller = self.ids.SelectType,
+			items = self.Tmenu_list,
+			position =  "center",
+			width_mult = 4,
+		)
+
+		self.Smenu_list = [{
+			"viewclass": "OneLineListItem",
+			"text": "Paid",
+			"height": dp(56),
+			"on_release": 
+				lambda x = "Paid" : self.paid()
+		},{
+			"viewclass": "OneLineListItem",
+			"text": "Pending",
+			"height": dp(56),
+			"on_release": 
+				lambda x = "Pending" : self.pending()
+			}
+		]
+		self.Smenu = MDDropdownMenu(
+			caller = self.ids.SelectStatus,
+			items = self.Smenu_list,
+			position =  "center",
+			width_mult = 4,
+		)
+
+	#If chooses PHP as currency
+	def onetime(self):
+		self.Tmenu.dismiss()
+		self.ids.SelectType.text = "One Time"
+		
+	#If chooses USD as currency
+	def period(self):
+		self.Tmenu.dismiss()
+		self.ids.SelectType.text = "Periodic"
+
+	#If chooses One Time
+	def paid(self):
+		self.Smenu.dismiss()
+		self.ids.SelectStatus.text = "Paid"
+		
+	#If chooses Periodic
+	def pending(self):
+		self.Smenu.dismiss()
+		self.ids.SelectStatus.text = "Pending"
+
+	#DATEPICKER
+	def show_date(self):
+		self.date_dialog = MDDatePicker()
+		self.date_dialog.bind(on_save = self.on_ok, on_cancel = self.on_cancel)
+		self.date_dialog.open()
+
+	#OK BUTTON - DATE
+	def on_ok(self, instance, value, data_range):
+		self.wdate = f'{value.day}/{value.month}/{value.year}'
+		self.ids.date.text = str(self.wdate)
+
+	#CANCEL BUTTON - DATE	
+	def on_cancel(self, instance, value):
+		self.date_dialog.dismiss()
+
+
 
 #MAIN APPLICATION
 class YourExpense(MDApp):
