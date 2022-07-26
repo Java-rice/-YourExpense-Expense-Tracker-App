@@ -469,15 +469,17 @@
 			selected_color: "#97ecf8"
 			text_color_active: 0, 0, 0, 1
 
+#########################################NOTENOTE######################
+
 			MDBottomNavigationItem:
-				name: 'Calendar'
-				text: 'Agendas'
-            	icon: 'calendar'
+				name: 'NOTES'
+				text: 'NOTES'
+            	icon: 'note'
             	font_size: 8
             	text_color_active: 0, 0, 0, 1
             	selected_color_background: 0, 0, 1, .4
             	on_tab_release:
-            		root.ids.tb.title = "Agendas"
+            		root.ids.tb.title = "Note"
 
             	MDBoxLayout:
             		orientation: "vertical"
@@ -492,37 +494,145 @@
             			size_hint: 1, 1
 
             			GridLayout:
-            				row: 5
             				adaptive_size: True
             				cols: 1
             				size_hint_y: None
             				height: self.minimum_height
-            				row_default_height: 100
+            				spacing: 9,9
+            				padding: 9,9 
 
             				MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+            					orientation: "vertical"
+            					id: zzzz
+            					size_hint: 1, None
+            					height: dp(50)
+            					padding: [1, 1]
 
-							Label:
-								id: dasdas
-								text: "KA-BDO"
-								halign: 'center'
-								color: 0/255, 0/255, 0/255
-								font_size: "22sp"
-								font_name: "OpenSansR"
-							Label:
-								id: dasdaf
-								text: "KA-BDO"
-								halign: 'center'
-								color: 0/255, 0/255, 0/255
-								font_size: "22sp"
-								font_name: "OpenSansR"
-							Label:
-								id: dsad
-								text: "KA-BDO"
-								halign: 'center'
-								color: 0/255, 0/255, 0/255
-								font_size: "22sp"
-								font_name: "OpenSansR"
+            					MDFloatLayout:
+            						Label: 
+										id: calendartxt
+										text: "PERSONAL NOTE"
+										halign: 'center'
+										pos_hint: {"center_x": .55, "center_y": .50}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "24sp"
+										font_name: "PoppinsB"
 
+									Image:
+										source: "assets/notepad.png"
+										size_hint: 1,1
+							MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+            					orientation: "vertical"
+            					id: month_year_picker
+            					size_hint: 1, None
+            					height: dp(330)
+            					md_bg_color: 202/255, 246/255, 255/255, 1
+
+
+            					MDFloatLayout:
+
+            						Label:
+            							text: "Create a New Note"
+            							pos_hint: {'center_x': .5, 'center_y':.89}
+            							color: 0/255, 0/255, 0/255, 1
+            							font_size: "20sp"
+            							font_name: "PoppinsB"
+
+
+            						Label:
+            							text: "Current User:"
+            							pos_hint: {'center_x': .17, 'center_y':.78}
+            							color: 0/255, 0/255, 0/255, 1
+            							font_size: "15sp"
+
+            						Label:
+            							text: " "
+            							id: Note_Name
+            							pos_hint: {'center_x': .5, 'center_y':.70}
+            							color: 0/255, 0/255, 0/255, 1
+            							font_size: "20sp"
+            							font_name: "Montserrat"
+
+            						Label:
+            							text: "Enter your note:"
+            							pos_hint: {'center_x': .197, 'center_y':.61}
+            							color: 0/255, 0/255, 0/255, 1
+            							font_size: "15sp"
+
+            						MDTextFieldRect:
+            							id: mynotes
+            							hint_text: "Type here"
+            							size_hint: None, None
+            							size: 319,125
+            							pos_hint: {'center_x': .5, 'center_y':.38}
+
+	            					MDRaisedButton:
+	            						id: addbutton
+	            						size_hint_x: .915
+	            						font_size: "12sp"
+	            						pos_hint: {'center_x': .5 , 'center_y': .1}
+	            						text: "Add Note"
+	            						md_bg_color: 218/255, 165/255, 32/255, 1
+	            						on_release:
+    										root.addnotes(mynotes.text)
+
+	    					MDBoxLayout:
+		            			canvas.before:
+	            					Color:
+	            						rgba: 0, 0, 0, 1
+	            					Line:
+	            						width: 1
+	            						rectangle: self.x, self.y, self.width, self.height
+	            				orientation: "vertical"
+	            				id: note
+	            				size_hint: 1, None
+	            				height: dp(45)
+	            				md_bg_color: 202/255, 246/255, 255/255, 1
+
+
+	            				MDFloatLayout:
+
+	            					Label:
+	            						text: "My Notes"
+	            						pos_hint: {'center_x': .5, 'center_y':.5}
+	            						color: 0/255, 0/255, 0/255, 1
+	            						font_size: "20sp"
+	            						font_name: "PoppinsB"
+
+	            			MDBoxLayout:
+	            				canvas.before:
+	            					Color:
+	            						rgba: 0, 0, 0, 1
+	            					Line:
+	            						width: 1
+	            						rectangle: self.x, self.y, self.width, self.height
+	            				orientation: "vertical"
+	            				id: note
+	            				size_hint: 1, None
+	            				height: dp(350)
+	            				md_bg_color: 202/255, 246/255, 255/255, 1
+	            				spacing: "10dp"
+	            				padding: [2,2]
+
+			            		ScrollView:
+			            			MDList:
+			            				id: md_list
+			            				padding: 0
+            				
+
+            					
 ########################################PORTFOLIO#########################################
         	MDBottomNavigationItem:
             	name: 'Portfolio'
@@ -946,7 +1056,7 @@
 				id: tb
 				title: "HOME"
 				font_size: '18dp'
-				elevation: 10
+				elevation: 20
 				left_action_items: [['menu', lambda x: About.set_state("open")]]
 
 		Image:
@@ -958,7 +1068,8 @@
 			id: About
 			size_hint: None, 1.3
 			pos_hint_y: {'center_y': 0.60}
-			elevation: 10
+			enable_swiping: False
+			elevation: 5
 
 
 			MDBoxLayout:
@@ -1064,7 +1175,85 @@
 			padding: [0, 0]
 			font_name: "LatoB"
 
+		MDTextField:
+			id: Add Categories
+			hint_text: "Select Categories"
+			font_name: "OpenSansR"
+			font_size: "15dp"
+			height: 100
+			helper_text_mode: "persistent"
+			size_hint: None , None
+			line_color_normal: (0, 0, 0, 1)
+			width: 200
+			pos_hint: {"center_x": .5, "center_y": .61}
+			helper_text:  ""
+
+		MDTextField:
+			hint_text: "Select Status"
+			font_name: "OpenSansR"
+			font_size: "15dp"
+			height: 100
+			helper_text_mode: "persistent"
+			size_hint: None , None
+			line_color_normal: (0, 0, 0, 1)
+			width: 200
+			pos_hint: {"center_x": .5, "center_y": .55}
+			helper_text:  ""
+
+		MDTextField:
+			hint_text: "Select Type"
+			font_name: "OpenSansR"
+			font_size: "15dp"
+			height: 100
+			helper_text_mode: "persistent"
+			size_hint: None , None
+			line_color_normal: (0, 0, 0, 1)
+			width: 200
+			pos_hint: {"center_x": .5, "center_y": .45}
+			helper_text:  ""
+
+		MDTextField:
+			hint_text: "Input Amount"
+			font_name: "OpenSansR"
+			font_size: "15dp"
+			height: 100
+			helper_text_mode: "persistent"
+			size_hint: None , None
+			line_color_normal: (0, 0, 0, 1)
+			width: 200
+			pos_hint: {"center_x": .5, "center_y": .45}
+			helper_text:  ""
+
+		MDLabel:
+			id: date
+			text: "Date of Transaction"
+			halign: 'center'
+			pos_hint: {'center_x': 0.5, 'center_y': 0.50}
+
+		MDRectangleFlatButton:
+			text: "Choose Date"
+			theme_text_color: "Custom"
+    		text_color: 255, 255, 255, 1
+    		line_color: 68/255, 178/255, 221/255, 1
+			padding: [75,10]
+			pos_hint: {'center_x': 0.5, 'center_y': 0.30}
 
 
 
+<SwipeToDeleteItem>:
+    size_hint_y: None
+    height: content.height
 
+    MDCardSwipeLayerBox:
+    	MDIconButton:
+    		icon: "trash-can"
+    		pos_hint: {"center_y":.5}
+    		on_release: app.remove_item(root)
+        # Content under the card.
+
+    MDCardSwipeFrontBox:
+        # Content of card.
+        OneLineListItem:
+            id: content
+            text: root.text
+            _no_ripple_effect: True

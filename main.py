@@ -20,7 +20,11 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.datatables import MDDataTable
 from kivy.uix.boxlayout import BoxLayout
+from kivymd.uix.card import MDCardSwipe, MDCardSwipeLayerBox, MDCardSwipeFrontBox
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.list.list import ThreeLineAvatarIconListItem, OneLineListItem
 from datetime import datetime
+from kivy.properties import StringProperty
 from babel import numbers
 import uuid 
 import re
@@ -42,6 +46,12 @@ from kivyauth.google_auth import initialize_google, login_google, logout_google
 
 Builder.load_file('layout.kv')
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+
+
+
+
+
+
 
 #Screens
 class LogoScreen(Screen):
@@ -173,7 +183,9 @@ class LoginScreen(Screen):
 			self.manager.get_screen("Welcome_Screen").ids.namecurrent.text = CurrentUser["First_Name"]
 			self.manager.get_screen("Home_Screen").ids.Myname.text = CurrentUser["Uname"]
 			self.manager.get_screen("Home_Screen").ids.p_uname.text = CurrentUser["Uname"]
+			self.manager.get_screen("Home_Screen").ids.Note_Name.text = CurrentUser["Uname"]
 			self.manager.get_screen("Home_Screen").update(CurrentUser)
+
 class RegisterScreen(Screen):
 
 	def __init__(self, **kwargs):
@@ -359,7 +371,8 @@ class InitialAmount(Screen):
 			usermain.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Categories":[]})
 			#usercommunityinformation
 			usercommunity.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "AboutMe" : None, "Age" : None, "Sex": None, "Occupation": None, "Birthday": None, "Posts" : []})
-
+			#addusernotes
+			personalnotes.insert_one({"_id": user["_id"], "Uname": user["Uname"], "Email": user["Email"], "Note": []})
 			self.manager.current = "ThankYou_Screen"
 
 		else:
@@ -434,7 +447,7 @@ class HomeScreen(Screen):
 		self.ids.portfolio_name.text = pfolio["First_Name"] + " " + pfolio["Last_Name"]
 		self.ids.portfolio_email.text = pfolio["Email"]	
 
-
+		self.update_notes()
 		self.ids.transactionfloat.add_widget(self.transaction_table)
 		self.ids.allocationfloat.add_widget(self.allocation_table)
 		self.ids.About.set_state("close")
@@ -463,6 +476,7 @@ class HomeScreen(Screen):
             )
 		self.alldialog.add_widget(self.allrow)
 		self.alldialog.open()	
+	
 	#Add budget for allocation
 	def AllAdd(self, obj):
 		q = 0
@@ -480,6 +494,7 @@ class HomeScreen(Screen):
 		usermain.update_one({"Uname": userdata["Uname"]}, {"$set" :{"Categories":[{"Budget": new}, {"Budget": userdata["Money"]}]}})
 		self.update()
 		self.all.dismiss()
+	
 	#closes Add budget
 	def AllDiscard(self, obj):
 		self.alldialog.dismiss()
@@ -553,6 +568,7 @@ class HomeScreen(Screen):
 		self.AddCategories.add_widget(self.Box)
 		self.AddCategories.open()
 
+
 	def Add(self, obj):
 		#Store the money you added
 		userstat.update_one({"Uname": self.ids.Myname.text }, { "$push" : {"Add_Money": self.bal.text }})
@@ -566,6 +582,7 @@ class HomeScreen(Screen):
 		self.displaynewbalance()
 		self.mbalance.dismiss()
 
+
 	def Subtract(self, obj):
 		#store the new money to userdata balance money and change the label
 		self.stock = int(userdata["Money"]) - int(self.bal.text)
@@ -573,6 +590,7 @@ class HomeScreen(Screen):
 		userprofile.update_one({"Uname": userdata["Uname"]}, {"$push" :{"Data": {"Subtracted_Money": userdata["Money"]}}})
 		self.displaynewbalance()
 		self.mbalance.dismiss()
+
 
 	def Discard(self, obj):
 		self.mbalance.dismiss()
@@ -646,9 +664,27 @@ class HomeScreen(Screen):
 		pass
 
 
+	#swipe notes 
+	def addnotes(self, mynotes):
+		self.ids.mynotes.text = " "
+		personalnotes.update_one({"Uname": self.ids.Myname.text}, { "$push" : {"Note" : mynotes}})
+		
+		self.update_notes()
+
+	def update_notes(self):
+		currentNinfo = personalnotes.find_one({"Uname": self.ids.Myname.text})
+		ArrayNotes = currentNinfo["Note"]
+
+		for i in ArrayNotes:
+			str1 = " "
+			self.ids.md_list.add_widget(SwipeToDeleteItem(text = f"{str1.join(i)}"))
+
+
+class SwipeToDeleteItem(MDCardSwipe):
+	text = StringProperty()
+
 class AddTransaction(Screen):
 	pass
-
 
 #MAIN APPLICATION
 class YourExpense(MDApp):
@@ -667,6 +703,15 @@ class YourExpense(MDApp):
 		sc_manager.add_widget(AddTransaction(name="AddTransaction_Screen"))
 		return sc_manager
 
+	def remove_item(self, instance):
+		currentNinfo = personalnotes.find_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text})
+		ArrayNotes = currentNinfo["Note"]
+		print(ArrayNotes)
+		print(instance.text)
+		#ArrayNotes.remove(str(instance.text))
+		#personalnotes.update_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text}, { "$set": {"Notes": ArrayNotes}})
+		#sc_manager.get_screen("Home_Screen").update_notes()
+
 #MAIN FUNCTION
 if __name__ == '__main__':
 
@@ -684,6 +729,7 @@ if __name__ == '__main__':
 	communityinteractions = db["Posts"]
 	userstat = db["Statistics"]
 	usercat = db["CategoryExpenses"]
+	personalnotes = db["Note"]
 
 	global user
 	global username
