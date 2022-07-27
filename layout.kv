@@ -114,30 +114,13 @@
 			pos_hint: {"center_x": .99, "center_y": .39}
 
 
-		MDFlatButton:
-			text: "            Continue with Google"
-			font_size: "13sp"
-			font_name: "LatoB"
-			padding: [20, 3]
-			mode: "rectangle"
-			pos_hint: {'center_x': .5, 'center_y': .31}
-			md_bg_color: 235/255, 255/255, 255/255, 1
-			on_release:
-				root.google_log()
-
-			MDFloatLayout:
-				Image:
-					source: "assets/Google.ico"
-					size_hint: .85, .85
-					pos_hint: {'center_x': 0.02, 'center_y': 0.5}
-
 		MDRaisedButton:
     		text: "Log In"
     		font_size: '15dp'
     		text_color: 0/255, 0/255, 0/255
     		padding: [90, 3]
     		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .20}
+    		pos_hint: {'center_x': .5, 'center_y': .26}
     		md_bg_color: 235/255, 233/255, 187/255, 1
     		on_release:
     			root.loginverification(Lusername.text, Lpassword.text)
@@ -148,7 +131,7 @@
     		text_color: 0/255, 0/255, 0/255
     		padding: [39.3, 3]
     		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .14}
+    		pos_hint: {'center_x': .5, 'center_y': .17}
     		md_bg_color: 255/255, 222/255, 89/255, 1
     		on_release:
     			root.manager.transition.direction = "left"
@@ -624,7 +607,7 @@
 	            				height: dp(350)
 	            				md_bg_color: 202/255, 246/255, 255/255, 1
 	            				spacing: "10dp"
-	            				padding: [2,2]
+	            				padding: [15,15]
 
 			            		ScrollView:
 			            			MDList:
@@ -662,7 +645,6 @@
             				cols: 1
             				size_hint_y: None
             				height: self.minimum_height
-            				row_default_height: 100
             				spacing: 9,9
             				padding: 9,9 
             				
@@ -673,60 +655,207 @@
             						Line:
             							width: 1
             							rectangle: self.x, self.y, self.width, self.height
-
             					orientation: "vertical"
             					id: portfolioprofile
             					size_hint: 1, None
-            					height: dp(280)
+            					height: dp(200)
             					padding: [1 , 1]
 
             					MDFloatLayout:
-										
 									Label:
             							text: "PROFILE"
 										halign: 'center'
-										pos_hint: {"center_x": .56, "center_y": .85}
+										pos_hint: {"center_x": .56, "center_y": .82}
 										color: 0/255, 0/255, 0/255, 1
-										font_size: "22sp"
+										font_size: "23sp"
 										font_name: "PoppinsB" 
 									Image: 
 										source: "assets/portfolio.id.png"
 										size_hint: .4,.4 
-										pos_hint: {"center_x": .355, "center_y": .85}
+										pos_hint: {"center_x": .355, "center_y": .82}
+									##########
 									Label:
             							text: "Name:"
 										halign: 'center'
-										pos_hint: {"center_x": .15, "center_y": .65}
+										pos_hint: {"center_x": .11, "center_y": .60}
 										color: 0/255, 0/255, 0/255, 1
-										font_size: "20sp"
-										font_name: "Montserrat"
+										font_size: "17sp"
+										font_name: "PoppinsB"
 									Label:
             							id: portfolio_name
             							text: "Your Name"
             							halign: "center"
-										pos_hint: {"center_x": .6, "center_y": .65}
+										pos_hint: {"center_x": .6, "center_y": .60}
 										color: 0/255, 0/255, 0/255, 1
-										font_size: "15sp"
+										font_size: "17sp"
 										font_name: "OpenSansR"
+									###########
 									Label: 
             							text: "E-mail:"
 										halign: 'center'
-										pos_hint: {"center_x": .15, "center_y": .52}
+										pos_hint: {"center_x": .12, "center_y": .45}
 										color: 0/255, 0/255, 0/255, 1
-										font_size: "20sp"
-										font_name: "Montserrat" 
+										font_size: "17sp"
+										font_name: "PoppinsB"
 									Label:
             							id: portfolio_email
             							text: "Your Email"
             							halign: "center"
-										pos_hint: {"center_x": .6, "center_y": .52}
+										pos_hint: {"center_x": .6, "center_y": .45}
 										color: 0/255, 0/255, 0/255, 1
-										font_size: "15sp"
+										font_size: "17sp"
 										font_name: "OpenSansR"
+									#########
+
 									#BoxLayout:
 										#id: Boxinvsout	
 										#size_hint: .6,.6
 										#post_hint: {"center_x": .8, "center_y": .38}
+
+									#########
+									Label: 
+            							text: "Age:"
+										halign: 'center'
+										pos_hint: {"center_x": .083, "center_y": .30}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "17sp"
+										font_name: "PoppinsB"
+									Label:
+            							id: portfolio_age
+            							text: "Add Age"
+            							halign: "center"
+										pos_hint: {"center_x": .6, "center_y": .30}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "17sp"
+										font_name: "OpenSansR"
+									MDIconButton:
+										icon: "pencil-box"
+										pos_hint: {"center_x": .92 ,"center_y": .30}
+										on_release:
+											root.ageEdit()
+											
+									
+									##########
+									Label: 
+            							text: "Occupation:"
+										halign: 'center'
+										pos_hint: {"center_x": .19, "center_y": .15}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "17sp"
+										font_name: "PoppinsB"
+									Label:
+            							id: portfolio_occupation
+            							text: "Add Occupation"
+            							halign: "center"
+										pos_hint: {"center_x": .6, "center_y": .15}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "17sp"
+										font_name: "OpenSansR"
+									MDIconButton:
+										icon: "pencil-box"
+										pos_hint: {"center_x": .92 ,"center_y": .15}
+										on_release:
+											root.occEdit()
+
+							MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+
+            					orientation: "vertical"
+            					id: portfolioprofile
+            					size_hint: 1, None
+            					height: dp(50)
+            					padding: [1 , 1]
+
+            					MDFloatLayout:
+	            					Label:
+										id: HISTORY
+										text: "HISTORY"
+										halign: 'center'
+										pos_hint: {"center_x": .55, "center_y": .5}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "22sp"
+										font_name: "PoppinsB"		
+								
+								    Image: 
+								    	source: "assets/portfolio.history.png"
+								    	size_hint: 1.4, 1.4
+								    	pos_hint: {'center_x': .32, 'center_y': .5}
+
+
+							MDBoxLayout:
+	            				canvas.before:
+	            					Color:
+	            						rgba: 0, 0, 0, 1
+	            					Line:
+	            						width: 1
+	            						rectangle: self.x, self.y, self.width, self.height
+	            				orientation: "vertical"
+	            				id: historydisplay
+	            				size_hint: 1, None
+	            				height: dp(250)
+	            				md_bg_color: 202/255, 246/255, 255/255, 1
+	            				spacing: "0dp"
+	            				padding: [2,2]
+
+			            		ScrollView:
+			            			MDList:
+			            				id: list_history
+			            				padding: 0
+
+							MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0, 0, 0, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+
+            					orientation: "vertical"
+            					id: portfolioprofile
+            					size_hint: 1, None
+            					height: dp(50)
+            					padding: [1 , 1]
+
+            					MDFloatLayout:
+	            					Label:
+										id: TRANSACTION
+										text: "TRANSACTIONS"
+										halign: 'center'
+										pos_hint: {"center_x": .55, "center_y": .5}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "22sp"
+										font_name: "PoppinsB"		
+								
+								    Image: 
+								    	source: "assets/portfolio.transactions.png"
+								    	size_hint: 1.4, 1.4
+								    	pos_hint: {'center_x': .32, 'center_y': .5}
+
+
+							MDBoxLayout:
+	            				canvas.before:
+	            					Color:
+	            						rgba: 0, 0, 0, 1
+	            					Line:
+	            						width: 1
+	            						rectangle: self.x, self.y, self.width, self.height
+	            				orientation: "vertical"
+	            				id: historydisplay
+	            				size_hint: 1, None
+	            				height: dp(250)
+	            				md_bg_color: 202/255, 246/255, 255/255, 1
+	            				spacing: "10dp"
+	            				padding: [20,20]
+
+			            		ScrollView:
+			            			MDList:
+			            				id: list_transactions
+			            				padding: 0
 								
 
 ########################################HOMEHOME#########################################
@@ -823,6 +952,7 @@
             					size_hint: 1, None
             					height: dp(450)
             					md_bg_color: 202/255, 246/255, 255/255, 1
+
 
             					MDFloatLayout:
             						id: allocationfloat
@@ -951,7 +1081,7 @@
 
             					
 
-##########################COMMUNITY#################################
+##########################Connect#################################
 
             MDBottomNavigationItem:
             	name: 'Community'
@@ -986,49 +1116,32 @@
 							MDBoxLayout:
             					canvas.before:
             						Color:
-            							rgba: 0/255, 150/255, 255/255, 1
-            						Rectangle:
-            							pos: self.pos
-            							size: self.size
-
-            					orientation: "vertical"
-            					size_hint: 1, None
-            					height: dp(50)
-
-            					Label:
-									id: feedLabel
-									text: "FEED"
-									halign: 'center'
-									pos_hint: {"center_x": .5, "center_y": .5}
-									color: 255/255, 255/255, 255/255, 1
-									font_size: "24sp"
-									font_name: "PoppinsB"
-
-							MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0/255, 0/255, 0/255, 1
+            							rgba: 0, 0, 0, 1
             						Line:
             							width: 1
             							rectangle: self.x, self.y, self.width, self.height
+
             					orientation: "vertical"
+            					id: portfolioprofile
             					size_hint: 1, None
             					height: dp(50)
+            					padding: [1 , 1]
 
             					MDFloatLayout:
-            						Image:
-            							source: "assets/puser.ico"
-            							size_hint: .8, .8
-            							pos_hint: {"center_x": .08, "center_y": .5}
-	            					Label: 
-	            						id: p_uname
-	            						text: " "
+	            					Label:
+										id: feedLabel
+										text: "KA-BDO FEED"
 										halign: 'center'
-										pos_hint: {"center_x": .5, "center_y": .5}
-										color: 0/255/255, 0/255, 0/255, 1
-										font_size: "18sp"
-										font_name: "Montserrat"
+										pos_hint: {"center_x": .555, "center_y": .5}
+										color: 0/255, 0/255, 0/255, 1
+										font_size: "24sp"
+										font_name: "PoppinsB"
+									Image: 
+										source: "assets/feed.feed.png"
+										size_hint: 1.5, 1.5
+										pos_hint: {'center_x': .265, 'center_y': .5}
 
+					
 							MDBoxLayout:
             					canvas.before:
             						Color:
@@ -1041,14 +1154,58 @@
             					height: dp(200)
 
             					MDFloatLayout:
+
+            						Image: 
+										source: "assets/feed.userprofile.png"
+										size_hint: .3, .3
+										pos_hint: {"center_x": .075, "center_y": .9} 
+
 	            					Label: 
 	            						id: p_uname
 	            						text: " "
 										halign: 'center'
-										pos_hint: {"center_x": .5, "center_y": .5}
+										pos_hint: {"center_x": .5, "center_y": .9}
 										color: 0/255/255, 0/255, 0/255, 1
-										font_size: "18sp"
+										font_size: "20sp"
 										font_name: "Montserrat"
+
+									MDTextFieldRect:
+            							id: feedpost
+            							hint_text: "Type here"
+            							size_hint: None, None
+            							size: 200,125
+            							pos_hint: {'center_x': .5, 'center_y':.5}
+
+									MDRaisedButton:
+							    		text: "POST"
+							    		font_size: '15dp'
+							    		text_color: 0/255, 0/255, 0/255
+							    		padding: [39.3, 3]
+							    		font_name: "LatoB"
+							    		pos_hint: {'center_x': .35, 'center_y': .1}
+							    		md_bg_color: 218/255, 165/255, 32/255, 1
+							    		on_release:
+							    			root.addpost(p_uname. text ,feedpost.text)
+
+							    	MDRaisedButton:
+							    		text: "CANCEL"
+							    		font_size: '15dp'
+							    		text_color: 0/255, 0/255, 0/255
+							    		padding: [39.3, 3]
+							    		font_name: "LatoB"
+							    		pos_hint: {'center_x': .65, 'center_y': .1}
+							    		md_bg_color: 0/255, 49/255, 82/255, 1
+
+							MDBoxLayout:
+            					canvas.before:
+            						Color:
+            							rgba: 0/255, 0/255, 0/255, 1
+            						Line:
+            							width: 1
+            							rectangle: self.x, self.y, self.width, self.height
+            					orientation: "vertical"
+            					size_hint: 1, None
+            					height: dp(250)
 
 
         MDBoxLayout:
@@ -1073,7 +1230,6 @@
 			id: About
 			size_hint: None, 1.3
 			pos_hint_y: {'center_y': 0.60}
-			enable_swiping: False
 			elevation: 5
 
 
@@ -1131,7 +1287,12 @@
 					text: "Logout"
 					on_release:
 						root.manager.transition.direction = "right"
+						root.manager.get_screen("Login_Screen").ids.Lusername.text = ""
+						root.manager.get_screen("Login_Screen").ids.Lpassword.text = ""
 						root.manager.current = "Login_Screen"
+
+
+######################################ADD_TRANSACTION###############################################
 
 <AddTransaction>:
 	name: "AddTransaction_Screen"
@@ -1193,7 +1354,7 @@
 			pos_hint: {"center_x": .5, "center_y": .61}
 			helper_text:  ""
 			on_focus:
-				if self.focus: root.Smenu.open()
+				if self.focus: root.Cmen()
 
 		MDTextField:
 			id: SelectStatus
@@ -1263,6 +1424,8 @@
     		font_name: "LatoB"
     		pos_hint: {'center_x': .25, 'center_y': .10}
     		md_bg_color: 255/255, 222/255, 89/255, 1
+    		on_release:
+    			root.getTransInfo(SelectCategories.text, SelectStatus.text, SelectType.text, InputAmount.text, date.text)
 
     	MDRaisedButton:
 			text: "Cancel"
@@ -1282,6 +1445,7 @@
     height: content.height
 
     MDCardSwipeLayerBox:
+    	radius: 0
     	MDIconButton:
     		icon: "trash-can"
     		pos_hint: {"center_y":.5}
@@ -1289,8 +1453,10 @@
         # Content under the card.
 
     MDCardSwipeFrontBox:
+    	radius: 0
         # Content of card.
         OneLineListItem:
             id: content
             text: root.text
             _no_ripple_effect: True
+

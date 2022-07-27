@@ -23,7 +23,7 @@ from kivymd.uix.pickers import MDDatePicker
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.card import MDCardSwipe, MDCardSwipeLayerBox, MDCardSwipeFrontBox
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.list import ThreeLineAvatarIconListItem, OneLineListItem
+from kivymd.uix.list import TwoLineAvatarIconListItem, OneLineListItem, IconLeftWidget
 from datetime import datetime
 from kivy.properties import StringProperty
 from babel import numbers
@@ -40,10 +40,6 @@ import matplotlib.pyplot as plt
 import pymongo
 from pymongo import MongoClient
 ##database libraries
-
-##validation api
-from kivyauth.google_auth import initialize_google, login_google, logout_google
-
 
 Builder.load_file('layout.kv')
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -86,30 +82,6 @@ class LoginScreen(Screen):
 		#Initialize what we see on screen
 		self.ids.Lusername.text = ""
 		self.ids.Lpassword.text = ""
-		client_id = open("client_id.txt")
-		client_secret = open("client_secret.txt")
-		initialize_google(self.after_login, self.error_listener, client_id.read(), client_secret.read())
-
-		#Google Login
-	def after_login(self, name, email, photo_uri):
-		print(name)
-		print(email)
-		self.manager.transition.direction = "left"
-		logout_google()
-
-
-	def error_listener(self):
-		print("Login Failed!")
-
-	def google_log(self):
-		login_google()
-
-	def logout(self):
-		logout_google()
-
-	def after_logout(self):
-		self.root.current = "WelcomeBack_Screen"
-
 
 	#To make password visible
 	def show_password(self, checkbox, value):
@@ -180,12 +152,17 @@ class LoginScreen(Screen):
 				for x in userprofile.find({"Uname": Luname}):
 					CurrentUser = x
 
+			age = usercommunity.find_one({"Uname":CurrentUser["Uname"]})
+			occupation = usercommunity.find_one({"Uname":CurrentUser["Uname"]})
+
 			self.manager.get_screen("Welcome_Screen").ids.namecurrent.text = CurrentUser["First_Name"]
 			self.manager.get_screen("Home_Screen").ids.Myname.text = CurrentUser["Uname"]
 			self.manager.get_screen("Home_Screen").ids.p_uname.text = CurrentUser["Uname"]
 			self.manager.get_screen("Home_Screen").ids.Note_Name.text = CurrentUser["Uname"]
+			self.manager.get_screen("AddTransaction_Screen").ids.currentusername.text = CurrentUser["Uname"]
 			self.manager.get_screen("Home_Screen").update(CurrentUser)
-
+			self.manager.get_screen("Home_Screen").ids.portfolio_age.text = age["Age"]
+			self.manager.get_screen("Home_Screen").ids.portfolio_occupation.text = occupation["Occupation"]
 
 class RegisterScreen(Screen):
 
@@ -373,10 +350,14 @@ class InitialAmount(Screen):
 			#Current Content table for Add Categories
 			usermain.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Categories":[]})
 			#usercommunityinformation
-			usercommunity.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "AboutMe" : None, "Age" : None, "Sex": None, "Occupation": None, "Birthday": None, "Posts" : []})
+			usercommunity.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Age" : "Add Age", "Occupation": "Add Occupation", "Posts" : []})
 			#addusernotes
 			personalnotes.insert_one({"_id": user["_id"], "Uname": user["Uname"], "Email": user["Email"], "Note": []})
+			#transactionlist
+			transactionlist.insert_one({"_id": user["_id"], "Uname": user["Uname"],"Transactions": []})
 			self.manager.current = "ThankYou_Screen"
+
+
 
 		else:
 			if len(amount) == 0:
@@ -450,6 +431,7 @@ class HomeScreen(Screen):
 		pfolio = userprofile.find_one({"Uname": self.ids.Myname.text })
 		self.ids.portfolio_name.text = pfolio["First_Name"] + " " + pfolio["Last_Name"]
 		self.ids.portfolio_email.text = pfolio["Email"]	
+
 
 		self.update_notes()
 		self.ids.transactionfloat.add_widget(self.transaction_table)
@@ -647,53 +629,142 @@ class HomeScreen(Screen):
 		self.AddCategories.dismiss()
 
 	def updatePortfolio(self):
-		#z = userstat.find_one({"Email": self.ids.portfolio_email.text})
-		#i = 0 
-		#j = 0
-		#k = 0
-		#for i in z["Add_Money"]:
-		#	j += int(i)
-		#for h in z["Subtracted_Money"]:
-		#	k += int(h)
+		x = userhistory.find_one({"Uname": self.ids.Myname.text})
+		history = x["History"]
+		for i in history:
+			print(history)
+			print(i)
+			
+			self.card = TwoLineAvatarIconListItem(
+					text = f"[size=13]{i[1]}[/size]",
+					secondary_text = f"[size=13]{i[0]}[/size]",
+				)
+			self.icon = IconLeftWidget(
+					icon = "history"
+				)
+			self.maincard = MDCardSwipeFrontBox(
+				size_hint_y = None,
+				height = self.card.height,
+				radius = 0
+				)
+			self.bodycard = MDCardSwipe(
+				size_hint_y = None,
+				height = self.maincard.height,
+				pos_hint={"center_x": 0.5, "center_y": 0.5},
+				)
 
-		#x = np.array(["Expenses", "Income"])
-		#y = np.array([k,j])
+			self.card.add_widget(self.icon)
+			self.maincard.add_widget(self.card)
+			self.bodycard.add_widget(self.maincard)
+			self.ids.list_history.add_widget(self.bodycard)
 
-		#plt.barh(x,y)
-		#plt.ylabel("Expenses vs. Income")
-		#plt.xlabel("Total")
-
-		#cont = self.ids.Boxinvsout
-		#cont.add_widget(FigureCanvasKivyAgg(plt.gcf()))
-		pass
 
 
 	#swipe notes 
 	def addnotes(self, mynotes):
-		self.ids.mynotes.text = " "
+		today = datetime.now()
 		personalnotes.update_one({"Uname": self.ids.Myname.text}, { "$push" : {"Note" : mynotes}})
-		
+		userhistory.update_one({"Uname": self.ids.Myname.text},{"$push": {"History": ["You have created a note.", today.strftime("%B %d, %Y" )]}})
 		self.update_notes()
 
 	def update_notes(self):
+		self.ids.md_list.clear_widgets()
+		self.ids.mynotes.text = ""
 		currentNinfo = personalnotes.find_one({"Uname": self.ids.Myname.text})
 		ArrayNotes = currentNinfo["Note"]
 
 		for i in ArrayNotes:
-			str1 = " "
-			self.ids.md_list.add_widget(SwipeToDeleteItem(text = f"{str1.join(i)}"))
+			self.ids.md_list.add_widget(SwipeToDeleteItem(text = f"{i}"))
 
+	def ageEdit(self):
+		self.editage = MDTextField(
+			hint_text= "Input Age",
+			font_name= "OpenSansR",
+			font_size= "12dp",
+			size_hint_x= None,
+			line_color_normal= (0, 0, 0, 1),
+			width = 200,
+			helper_text_mode= "persistent",
+			pos_hint= {"center_x": .5, "center_y": .225},
+			helper_text=  "",
+			)
+		self.Eage = MDDialog(
+			title = "Edit Balance",
+			buttons = [
+				MDFlatButton(text="CONFIRM", padding = [10, 0],theme_text_color="Custom", on_release = self.AgeChange),
+            	MDFlatButton(text="DISCARD", theme_text_color="Custom", on_release = self.AgeDis)]
+            )
+		self.Eage.add_widget(self.editage)
+		self.Eage.open()
+
+	def AgeChange(self, obj):
+		q = 0
+		n = self.editage.text
+		if len(self.editage.text) == 0:
+			self.editage.helper_text = "Required"
+		elif n.isnumeric() == False:
+			self.editage.helper_text = "Must be a number"
+		else:
+			usercommunity.update_one({"Uname": self.ids.Myname.text}, {"$set": {"Age": self.editage.text}})
+			self.ids.portfolio_age.text = self.editage.text
+			today = datetime.now()
+			userhistory.update_one({"Uname": self.ids.Myname.text},{"$push": {"History": ["You have modified your age.", today.strftime("%B %d, %Y" )]}})
+			
+			self.Eage.dismiss()
+
+	def AgeDis(self, obj):
+		self.Eage.dismiss()
+
+	def occEdit(self):
+		self.editoccu = MDTextField(
+			hint_text= "Input Occupation",
+			font_name= "OpenSansR",
+			font_size= "12dp",
+			size_hint_x= None,
+			line_color_normal= (0, 0, 0, 1),
+			width = 200,
+			helper_text_mode= "persistent",
+			pos_hint= {"center_x": .5, "center_y": .225},
+			helper_text=  "",
+			)
+		self.Eocc = MDDialog(
+			title = "Edit Balance",
+			buttons = [
+				MDFlatButton(text="CONFIRM", padding = [10, 0],theme_text_color="Custom", on_release = self.OccChange),
+            	MDFlatButton(text="DISCARD", theme_text_color="Custom", on_release = self.OccDis)]
+            )
+		self.Eocc.add_widget(self.editoccu)
+		self.Eocc.open()
+
+	def OccChange(self, obj):
+		q = 0
+		n = self.editoccu.text
+		print(n)
+		if len(self.editoccu.text) == 0:
+			self.editoccu.helper_text = "Required"
+		else:
+			usercommunity.update_one({"Uname": self.ids.Myname.text}, {"$set": {"Occupation": self.editoccu.text}})
+			self.ids.portfolio_occupation.text = n
+			today = datetime.now()
+			userhistory.update_one({"Uname": self.ids.Myname.text},{"$push": {"History": ["You have modified your occupation.", today.strftime("%B %d, %Y" )]}})
+			self.Eocc.dismiss()
+
+	def OccDis(self, obj):
+		self.Eocc.dismiss()
 
 class SwipeToDeleteItem(MDCardSwipe):
 	text = StringProperty()
 
 class AddTransaction(Screen):
+
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 		self.ids.SelectCategories.text = " "
 		self.ids.SelectStatus.text = " "
 		self.ids.SelectType.text = " "
 		self.ids.InputAmount.text = " "
+		self.ids.date.text = "Date of Transaction"
+
 
 		self.Tmenu_list = [{
 				"viewclass": "OneLineListItem",
@@ -736,6 +807,57 @@ class AddTransaction(Screen):
 			position =  "center",
 			width_mult = 4,
 		)
+
+	def Cmen(self):
+		name = self.ids.currentusername.text
+		self.ctgry = usercat.find_one({"Uname": name})
+
+		self.Cmenu_list = []
+		x = list()
+
+		for i in self.ctgry["Categories"]:
+			for z in i:
+				y = {"viewclass": "OneLineListItem",
+					"text": z["Name"],
+					"height": dp(56)}
+
+				self.Cmenu_list.append(y)
+
+		self.Cmenu = MDDropdownMenu(
+			caller = self.ids.SelectCategories,
+			items = self.Cmenu_list,
+			position =  "center",
+			width_mult = 4,
+		)
+		self.Cmenu.open()
+
+	def getTransInfo(self, Cat, Stat, Type, InAmount, date):
+		x = 0
+		if len(Cat) == 0:
+			self.ids.SelectCategories.helper_text = "Required"
+			x += 1
+		if len(Stat) == 0:
+			self.ids.SelectStatus.helper_text = "Required"
+			x += 1
+		if len(Type) == 0:
+			self.ids.SelectType.helper_text = "Required"
+			x += 1
+		if len(InAmount) == 0:
+			self.ids.InputAmount.helper_text = "Required"
+			x += 1
+		elif InAmount.isnumeric() == False:
+			self.ids.InputAmount.helper_text = "Must Be A Number"
+			x += 1
+		if date == "Date of Transaction":
+			self.ids.date.text = "Date Required"
+			x += 1
+		if x < 1:
+			Tlist = {"Category": Cat, "Status": Stat, "Type": Type, "Amount": InAmount, "Date": date}
+			transactionlist.update_one({"Uname": self.manager.get_screen("Home_Screen").ids.Myname.text}, {"$push": {"Transactions": [Tlist]}})
+			self.manager.current = "Home_Screen"
+		else:
+			self.manager.current = "AddTransaction_Screen"
+
 
 	#If chooses PHP as currency
 	def onetime(self):
@@ -794,11 +916,11 @@ class YourExpense(MDApp):
 	def remove_item(self, instance):
 		currentNinfo = personalnotes.find_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text})
 		ArrayNotes = currentNinfo["Note"]
-		print(ArrayNotes)
-		print(instance.text)
-		#ArrayNotes.remove(str(instance.text))
-		#personalnotes.update_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text}, { "$set": {"Notes": ArrayNotes}})
-		#sc_manager.get_screen("Home_Screen").update_notes()
+		ArrayNotes.remove(str(instance.text))
+		personalnotes.update_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text}, { "$set": {"Note": ArrayNotes}})
+		today = datetime.now()
+		userhistory.update_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text}, {"$push": {"History": ["You removed a note.", today.strftime("%B %d, %Y" )]}})
+		sc_manager.get_screen("Home_Screen").update_notes()
 
 #MAIN FUNCTION
 if __name__ == '__main__':
@@ -818,6 +940,7 @@ if __name__ == '__main__':
 	userstat = db["Statistics"]
 	usercat = db["CategoryExpenses"]
 	personalnotes = db["Note"]
+	transactionlist = db["Transactionlist"]
 
 	global user
 	global username
