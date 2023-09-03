@@ -1,1462 +1,651 @@
-
-
 <LogoScreen>:
 	name: "Logo_Page"
-	id: Logopage
+	id: logopage
 	MDFloatLayout:
-		Image: 
-			source: "assets/app_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		md_bg_color: 206/255, 229/255, 237/255, 1
 		Image:
-			source: "assets/App_logo.png"
-			size_hint: 0.4, 0.4
-			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
-		Image:
-			source: "assets/App_name.png"
-			size_hint: .7, .7
-			pos_hint: {'center_x': 0.5, 'center_y': 0.55}
-		Label:
-			text: "We keep you from \n going broke"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.47}
+			source: "assets/logo.png"
+			size_hint: 0.7, 0.7
+			pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+
+		MDLabel:
+			text: "We keep you from \ngetting broke."
+			pos_hint: {'center_x': 0.5, 'center_y': 0.4}
 			halign: 'center'
-			color: 255/255, 255/255, 255/255
-			font_size: "20sp"
-			font_name: "LatoB"
-		Label:
-			text: "In Partnership with Banco De Oro "
+			color: 255, 255, 255
+			font_size: "16sp"
+			font_name: "Poppins"
+
+		MDLabel: 
+			text: "All rights reserved 2022"
 			pos_hint: {'center_x': 0.5, 'center_y': 0.1}
 			halign: 'center'
-			color: 255/255, 255/255, 255/255
+			color: 255, 255, 255
 			font_size: "12sp"
-			font_name: "LatoB"
-
-<LoadingScreen>:
-	name: "Loading_Screen"
-	id: Loading
+			font_name: "Poppins"
+<NameInput>:
+	name: "Name_Input"
+	id: nameinput
 	MDFloatLayout:
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		md_bg_color: 206/255, 229/255, 237/255, 1
 		Image:
-			source: "assets/App_logo.png"
-			size_hint: 0.35, 0.35
-			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
-		Label:
-			text: "Please wait..."
-			pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-			halign: 'center'
-			color: 255/255, 255/255, 255/255
-			font_size: "23sp"
-			font_name: "LatoB"
-
-<LoginScreen>:
-	name: "Login_Screen"
-	id: Login
-	MDFloatLayout
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+			source: "assets/top.png"
+			size_hint: 0.45, 0.45
+			pos_hint: {'center_x': .78, 'center_y': 0.88}
 		Image:
-			source: "assets/App_logo.png"
-			size_hint: 0.4, 0.4
-			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-		Label:
-			text: "LOGIN"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.65}
-			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "27sp"
-			font_name: "LatoB"
-
-		MDTextField:
-			id: Lusername
-			hint_text: "Username/Email"
-			font_name: "OpenSansR"
-			font_size: "13dp"
+			source: "assets/bottom.png"
+			size_hint: 0.45, 0.45
+			pos_hint: {'center_x': .226, 'center_y': 0.128}
+		Image:
+			source: "assets/logo.png"
+			size_hint: 0.7, 0.7
+			pos_hint: {'center_x': 0.5, 'center_y': 0.67}
+			
+		MDTextFieldRound:
+			id: name
+			hint_text: "Enter Your Name"
+			multiline: False
+			mode: "rectangle"
 			icon_right: "account"
-			helper_text_mode: "persistent"
-			height: 100
-			size_hint: None , None
-			line_color_normal: (0, 0, 0, 1)
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .55}
-			helper_text:  ""
-
-		MDTextField:
-			id: Lpassword
-			hint_text: "Password"
-			font_name: "OpenSansR"
-			font_size: "13dp"
-			icon_right: "account"
-			helper_text_mode: "persistent"
-			height: 100
-			size_hint: None , None
-			line_color_normal: (0, 0, 0, 1)
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .45}
-			helper_text:  ""
-			password: True
-
-		MDCheckbox:
-			size_hint: None, None
-			size: "20dp", "20dp"
-			pos_hint: {"center_x": .73, "center_y": .39}
-			on_active:
-				root.show_password(*args)
-
-		MDLabel:
-			id: pass_text
-			text: "Show Password"
-			font_size: "10sp"
-			pos_hint: {"center_x": .99, "center_y": .39}
-
-
-		MDRaisedButton:
-    		text: "Log In"
-    		font_size: '15dp'
-    		text_color: 0/255, 0/255, 0/255
-    		padding: [90, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .26}
-    		md_bg_color: 235/255, 233/255, 187/255, 1
-    		on_release:
-    			root.loginverification(Lusername.text, Lpassword.text)
-
-    	MDRaisedButton:
-    		text: "Create New Account"
-    		font_size: '15dp'
-    		text_color: 0/255, 0/255, 0/255
-    		padding: [39.3, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .17}
-    		md_bg_color: 255/255, 222/255, 89/255, 1
-    		on_release:
-    			root.manager.transition.direction = "left"
-    			root.manager.current = "Register_Screen"
-
-<RegisterScreen>:
-	name: "Register_Screen"
-	id: Register
-	MDFloatLayout
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-		Image:
-			source: "assets/App_logo.png"
-			size_hint: 0.25, 0.25
-			pos_hint: {'center_x': 0.5, 'center_y': 0.85}
-
-		MDIconButton:
-			icon: "arrow-left"
-			pos_hint: {"center_x": .1 ,"center_y": .95}
-			user_font_size: "30sp"
-			on_release:
-				root.manager.transition.direction = "right"
-				root.manager.current = "Login_Screen"
-
-		Label:
-			text: "REGISTER"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.76}
-			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "22sp"
-			font_name: "LatoB"
-
-		MDTextField:
-			id: Fname
-			hint_text: "First Name"
-			font_name: "OpenSansR"
-			font_size: "13dp"
-			size_hint_x: None 
-			line_color_normal: (0, 0, 0, 1)
-			helper_text_mode: "persistent"
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .70}
-			helper_text:  ""
-
-		MDTextField:
-			id: Lname
-			hint_text: "Last Name"
-			font_name: "OpenSansR"
-			font_size: "13dp"
-			size_hint_x: None 
-			line_color_normal: (0, 0, 0, 1)
-			helper_text_mode: "persistent"
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .61}
-			helper_text:  ""
-
-		MDTextField:
-			id: Uname
-			hint_text: "Username"
-			font_name: "OpenSansR"
-			font_size: "13dp"
-			size_hint_x: None 
-			line_color_normal: (0, 0, 0, 1)
-			helper_text_mode: "persistent"
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .52}
-			helper_text:  ""
-
-		MDTextField:
-			id: Reg_Email
-			hint_text: "Email"
-			font_name: "OpenSansR"
-			font_size: "13dp"
-			helper_text_mode: "persistent"
 			size_hint_x: None
-			line_color_normal: (0, 0, 0, 1)
 			width: 200
-			pos_hint: {"center_x": .5, "center_y": .43}
-			helper_text:  ""
-
-		MDTextField:
-			id: Rpassword
-			hint_text: "Password"
-			font_name: "OpenSansR"
-			font_size: "13dp"
-			size_hint_x: None 
-			helper_text_mode: "persistent"
-			line_color_normal: (0, 0, 0, 1)
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .34}
-			helper_text:  ""
-			password: True
-
-		MDCheckbox:
-			size_hint: None, None
-			size: "20dp", "20dp"
-			pos_hint: {"center_x": .73, "center_y": .28}
-			on_active:
-				root.show_Rpassword(*args)
-
-		MDLabel:
-			id: pass_text
-			text: "Show Password"
-			font_size: "10sp"
-			pos_hint: {"center_x": .99, "center_y": .275}
-
-		MDTextField:
-			id: RCpassword
-			hint_text: "Confirm Password"
-			font_name: "OpenSansR"
-			font_size: "13dp"
-			size_hint_x: None 
-			line_color_normal: (0, 0, 0, 1)
-			width: 200
-			helper_text_mode: "persistent"
-			pos_hint: {"center_x": .5, "center_y": .225}
-			helper_text:  ""
-			password: True
-
-		MDCheckbox:
-			size_hint: None, None
-			size: "20dp", "20dp"
-			pos_hint: {"center_x": .73, "center_y": .165}
-			on_active:
-				root.show_RCpassword(*args)
-
-		MDLabel:
-			id: pass_text
-			text: "Show Password"
-			font_size: "10sp"
-			pos_hint: {"center_x": .99, "center_y": .160}
+			font_size: "13sp"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+			line_color_normal : [58,144,198]
 
 		MDRaisedButton:
-    		text: "Register"
-    		font_size: '15dp'
-    		text_color: 0/255, 0/255, 0/255
-    		padding: [70, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .07}
-    		md_bg_color: 255/255, 222/255, 89/255, 1
-    		on_release:
-    			root.regverification(Fname.text, Lname.text, Uname.text, Reg_Email.text, Rpassword.text, RCpassword.text)
+	    	text: "CONFIRM"
+	    	font_size: "13sp"
+	    	font_name: "Poppins"
+	    	padding: [85, 0]
+	    	pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+	    	on_press: 
+	    		app.get_data(name.text)
+				root.manager.transition.direction = 'right'
 
-<CurrencyScreen>:
-	name: "Currency_Screen"
-	id: currency
-	MDFloatLayout
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-
+<WelcomePage>:
+	name: "Welcome_Page"
+	id: welcomepage
+	MDFloatLayout:
+		md_bg_color: 206/255, 229/255, 237/255, 1
 		Image:
-			source: "assets/App_logo.png"
-			size_hint: 0.4, 0.4
-			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-
-		Label:
-			text: "CHOOSE YOUR CURRENCY"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.62}
-			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "22sp"
-			font_name: "LatoB"
-
-		MDTextField:
-			id: field
-			icon: "money"
-			text: "Select Currency Type"
-			pos_hint: {'center_x': .5, 'center_y': .5}
-			size_hint_x: None
-			width: "200dp"
-			hint_text: ""
-			on_focus: 
-				if self.focus: root.menu.open()
-
-		MDRaisedButton:
-    		text: "Confirm"
-    		font_size: '15dp'
-    		text_color: 0/255, 0/255, 0/255
-    		padding: [70, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .10}
-    		md_bg_color: 255/255, 222/255, 89/255, 1
-			on_release:
-				root.confirmcurrency(field.text)
-
-<InitialAmount>:
-	name: "InitialAmount_Screen"
-	id: initial_amount
-	MDFloatLayout
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}	
+			source: "assets/top.png"
+			size_hint: 0.45, 0.45
+			pos_hint: {'center_x': .78, 'center_y': 0.88}
 		Image:
-			source: "assets/App_logo.png"
-			size_hint: 0.4, 0.4
-			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-
-		Label:
-			text: "INPUT INITIAL \n AMOUNT"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.62}
-			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "22sp"
-			font_name: "LatoB"
-
-		MDTextField:
-			id: Iamount
-			hint_text: "Enter amount"
-			font_name: "OpenSansR"
-			font_size: "15dp"
-			height: 100
-			helper_text_mode: "persistent"
-			size_hint: None , None
-			line_color_normal: (0, 0, 0, 1)
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .45}
-			helper_text:  ""
-
-		MDRaisedButton:
-    		text: "PROCEED"
-    		font_size: '15dp'
-    		text_color: 0, 0, 26
-    		padding: [39.3, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .10}
-    		md_bg_color: 255/255, 222/255, 89/255, 1
-    		on_release:
-    			root.amountchecking(Iamount.text)
-
-<WelcomeScreen>:
-	name: "Welcome_Screen"
-	id: Welcome
-	MDFloatLayout
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-
+			source: "assets/bottomO.png"
+			size_hint: 0.45, 0.45
+			pos_hint: {'center_x': .226, 'center_y': 0.126}
 		Image:
-			source: "assets/App_logo.png"
+			source: "assets/main.png"
 			size_hint: 0.5, 0.5
-			pos_hint: {'center_x': 0.5, 'center_y':0.7}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
 
-		Label: 
+		MDLabel:
 			text: "Welcome"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.53}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.46}
 			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "27sp"
-			font_name: "LatoB"
+			color: 255, 255, 255
+			font_size: "30sp"
+			font_name: "Poppins"
 
-		Label:
-			id: namecurrent
-			text: "Ka-BDO"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.47}
+		MDLabel:
+			id: Username_new
+			text: "Beautiful Face"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.4}
 			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "40sp"
-			font_name: "LatoB"
+			color: 255, 255, 255
+			font_size: "24sp"
+			font_name: "Poppins"
+
+		MDRaisedButton:
+    		text: "CONTINUE"
+    		font_size: "13sp"
+    		font_name: "Poppins"
+    		padding: [85, 0]
+    		pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+    		on_press: 
+    			root.manager.current = "Home_Page"
+    			root.manager.transition.direction = 'right'
+
+<WelcomeBackPage>:
+	name: "WelcomeBack_Page"
+	id: welcomebackpage
+	MDFloatLayout:
+		md_bg_color: 206/255, 229/255, 237/255, 1
+		Image:
+			source: "assets/top.png"
+			size_hint: 0.45, 0.45
+			pos_hint: {'center_x': .78, 'center_y': 0.88}
+		Image:
+			source: "assets/bottomO.png"
+			size_hint: 0.45, 0.45
+			pos_hint: {'center_x': .226, 'center_y': 0.126}
+		Image:
+			source: "assets/main.png"
+			size_hint: 0.5, 0.5
+			pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+		MDLabel:
+			text: "Welcome Back"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.46}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "30sp"
+			font_name: "Poppins"
+
+		MDLabel:
+			id: Username
+			text: "Beautiful Face"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "24sp"
+			font_name: "Poppins"
 
 		MDRaisedButton:
     		text: "GET STARTED"
-    		font_size: '15dp'
-    		text_color: 0, 0, 26
-    		padding: [39.3, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .3}
-    		md_bg_color: 255/255, 222/255, 89/255, 1
-    		on_release:
-    			root.manager.transition.direction = "left"
-    			root.manager.current = "Home_Screen"
+    		font_size: "13sp"
+    		font_name: "Poppins"
+    		padding: [85, 0]
+    		pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+    		on_press: 
+    			root.manager.current = "Home_Page"
+    			root.manager.transition.direction = 'right'
 
-<ThankYouScreen>:
-	name: "ThankYou_Screen"
-	id: ThankYou
+<HomePage>:
+	name: "Home_Page"
+	id: homepage
 	MDFloatLayout:
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		md_bg_color: 206/255, 229/255, 237/255, 1
+		Image:
+			source: "assets/topO.png"
+			size_hint: 0.45, 0.45
+			pos_hint: {'center_x': .78, 'center_y': 0.88}
+		Image:
+			source: "assets/bottom.png"
+			size_hint: 0.45, 0.45
+			pos_hint: {'center_x': .226, 'center_y': 0.126}
+		Image:
+			source: "assets/homeicon.png"
+			size_hint: 0.3, 0.3
+			pos_hint: {'center_x': .2, 'center_y': 0.94}
+	
+		Image:
+			source: 'assets/Tracker.png'
+			size_hint: 0.3, 0.3
+			pos_hint: {'center_x': .26, 'center_y': 0.75}
 
 		Image:
-			source: "assets/App_logo.png"
-			size_hint: 0.5, 0.5
-			pos_hint: {'center_x': 0.5, 'center_y':0.7}
+			source: 'assets/reports.png'
+			size_hint: 0.3, 0.3
+			pos_hint: {'center_x': .26, 'center_y': 0.52}
 
-		Label: 
-			text: "Thanks\nfor\nRegistering"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.45}
-			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "30sp"
-			font_name: "LatoB"
+		Image:
+			source: 'assets/Notif.png'
+			size_hint: 0.3, 0.3
+			pos_hint: {'center_x': .26, 'center_y': 0.29}
 
 		MDRaisedButton:
-    		text: "Proceed to Login"
+    		text: "Tracker"
     		font_size: '15dp'
-    		text_color: 0, 0, 26
-    		padding: [35.3, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .17}
-    		md_bg_color: 255/255, 222/255, 89/255, 1
+    		padding: [12, 3]
+    		font_name: "Poppins"
+    		pos_hint: {'center_x': .55, 'center_y': 0.80}
+    		md_bg_color: 35/255, 55/255, 82/255, 1
+    		on_press: 
+    			app.clearwidg()
+	    		app.TrackerBoxes()
+    			root.manager.transition.direction = 'right'
+
+    	MDLabel:
+			text: "Tracks your daily\nexpense and keep you\non track of your budget."
+			pos_hint: {'center_x': .65, 'center_y': 0.72}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "13sp"
+			font_name: "Poppins"
+
+    	MDRaisedButton:
+    		text: "Reports"
+    		font_size: '15dp'
+    		padding: [12, 3]
+    		font_name: "Poppins"
+    		pos_hint: {'center_x': .55, 'center_y': 0.57}
+    		md_bg_color: 33/255, 158/255, 188/255, 1
+    		on_press:
+    			app.reportsclear()
+    			app.ReportsBox()
+    			root.manager.transition.direction = 'right'
+
+    	MDLabel:
+			text: "\"Records and data of\nyour daily, weekly\nexpense or budget.\""
+			pos_hint: {'center_x': .65, 'center_y': 0.49}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "13sp"
+			font_name: "Poppins"
+
+    	MDRaisedButton:
+    		text: "Status"
+    		font_size: '15dp'
+    		padding: [12, 3]
+    		font_name: "Poppins"
+    		pos_hint: {'center_x': .54, 'center_y': 0.34}
+    		md_bg_color: 255/255, 183/255, 3/255, 1
+    		on_press: 
+    			app.Notifclear()
+	    		app.NotifBoxes()
+    			root.manager.transition.direction = 'right'
+
+    	MDLabel:
+			text: "\"Pending/Unpaid \ntransactions.\n\""
+			pos_hint: {'center_x': .65, 'center_y': 0.26}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "13sp"
+			font_name: "Poppins"
+
+		MDRectangleFlatIconButton:
+    		icon: "mouse"
+    		text: "[u]Logout?[/u]"
+    		font_size: "15sp"
+    		font_name: "Poppins"
+    		pos_hint: {'center_x': .80, 'center_y': 0.08}
+    		theme_text_color: "Custom"
+    		text_color: 0, 0, 0, 1
+    		line_color: 206/255, 229/255, 237/255, 1
+    		theme_icon_color: "Custom"
+    		icon_color: 1, 0, 0, 1
     		on_release:
-    			root.manager.transition.direction = "right"
-    			root.manager.current = "Login_Screen"
+    			root.manager.current = "Name_Input"
 
-<HomeScreen>:
-	name: "Home_Screen"
-	id: HomeScreen
+<TrackerPage>:
+	name: "Tracker_Page"
+	id: trackerpage
 	MDFloatLayout:
-		MDBottomNavigation:
-			panel_color: 153/255, 230/255, 255/255, 1
-			selected_color: "#97ecf8"
-			text_color_active: 0, 0, 0, 1
-
-#########################################NOTENOTE######################
-
-			MDBottomNavigationItem:
-				name: 'NOTES'
-				text: 'NOTES'
-            	icon: 'note'
-            	font_size: 8
-            	text_color_active: 0, 0, 0, 1
-            	selected_color_background: 0, 0, 1, .4
-            	on_tab_release:
-            		root.ids.tb.title = "Note"
-
-            	MDBoxLayout:
-            		orientation: "vertical"
-            		size_hint: 1, 0.89
-            		pos_hint:  {'center_x': .5, 'center_y': .445}
-            		md_bg_color: 202/255, 246/255, 255/255, 1
-
-            		ScrollView:
-            			do_scroll_y: True
-            			do_scroll_x: False
-            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
-            			size_hint: 1, 1
-
-            			GridLayout:
-            				adaptive_size: True
-            				cols: 1
-            				size_hint_y: None
-            				height: self.minimum_height
-            				spacing: 9,9
-            				padding: 9,9 
-
-            				MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-            					orientation: "vertical"
-            					id: zzzz
-            					size_hint: 1, None
-            					height: dp(50)
-            					padding: [1, 1]
-
-            					MDFloatLayout:
-            						Label: 
-										id: calendartxt
-										text: "PERSONAL NOTE"
-										halign: 'center'
-										pos_hint: {"center_x": .55, "center_y": .50}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "24sp"
-										font_name: "PoppinsB"
-
-									Image:
-										source: "assets/notepad.png"
-										size_hint: 1,1
-							MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-            					orientation: "vertical"
-            					id: month_year_picker
-            					size_hint: 1, None
-            					height: dp(330)
-            					md_bg_color: 202/255, 246/255, 255/255, 1
-
-
-            					MDFloatLayout:
-
-            						Label:
-            							text: "Create a New Note"
-            							pos_hint: {'center_x': .5, 'center_y':.89}
-            							color: 0/255, 0/255, 0/255, 1
-            							font_size: "20sp"
-            							font_name: "PoppinsB"
-
-
-            						Label:
-            							text: "Current User:"
-            							pos_hint: {'center_x': .17, 'center_y':.78}
-            							color: 0/255, 0/255, 0/255, 1
-            							font_size: "15sp"
-
-            						Label:
-            							text: " "
-            							id: Note_Name
-            							pos_hint: {'center_x': .5, 'center_y':.70}
-            							color: 0/255, 0/255, 0/255, 1
-            							font_size: "20sp"
-            							font_name: "Montserrat"
-
-            						Label:
-            							text: "Enter your note:"
-            							pos_hint: {'center_x': .197, 'center_y':.61}
-            							color: 0/255, 0/255, 0/255, 1
-            							font_size: "15sp"
-
-            						MDTextFieldRect:
-            							id: mynotes
-            							hint_text: "Type here"
-            							size_hint: None, None
-            							size: 319,125
-            							pos_hint: {'center_x': .5, 'center_y':.38}
-
-	            					MDRaisedButton:
-	            						id: addbutton
-	            						size_hint_x: .915
-	            						font_size: "12sp"
-	            						pos_hint: {'center_x': .5 , 'center_y': .1}
-	            						text: "Add Note"
-	            						md_bg_color: 218/255, 165/255, 32/255, 1
-	            						on_release:
-    										root.addnotes(mynotes.text)
-
-	    					MDBoxLayout:
-		            			canvas.before:
-	            					Color:
-	            						rgba: 0, 0, 0, 1
-	            					Line:
-	            						width: 1
-	            						rectangle: self.x, self.y, self.width, self.height
-	            				orientation: "vertical"
-	            				id: note
-	            				size_hint: 1, None
-	            				height: dp(45)
-	            				md_bg_color: 202/255, 246/255, 255/255, 1
-
-
-	            				MDFloatLayout:
-
-	            					Label:
-	            						text: "My Notes"
-	            						pos_hint: {'center_x': .5, 'center_y':.5}
-	            						color: 0/255, 0/255, 0/255, 1
-	            						font_size: "20sp"
-	            						font_name: "PoppinsB"
-
-	            			MDBoxLayout:
-	            				canvas.before:
-	            					Color:
-	            						rgba: 0, 0, 0, 1
-	            					Line:
-	            						width: 1
-	            						rectangle: self.x, self.y, self.width, self.height
-	            				orientation: "vertical"
-	            				id: note
-	            				size_hint: 1, None
-	            				height: dp(350)
-	            				md_bg_color: 202/255, 246/255, 255/255, 1
-	            				spacing: "10dp"
-	            				padding: [15,15]
-
-			            		ScrollView:
-			            			MDList:
-			            				id: md_list
-			            				padding: 0
-            				
-
-            					
-########################################PORTFOLIO#########################################
-        	MDBottomNavigationItem:
-            	name: 'Portfolio'
-            	text: 'Profile'
-            	font_size: "8sp"
-            	icon: 'folder-multiple'
-            	text_color_active: 0, 0, 0, 1
-            	selected_color_background: 0, 0, 1, .4
-            	on_tab_release:
-            		root.updatePortfolio()
-            		root.ids.tb.title = "PROFILE"
-
-            	MDBoxLayout:
-            		orientation: "vertical"
-            		size_hint: 1, 0.89
-            		pos_hint:  {'center_x': .5, 'center_y': .445}
-            		md_bg_color: 202/255, 246/255, 255/255, 1
-
-            		ScrollView:
-            			do_scroll_y: True
-            			do_scroll_x: False
-            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
-            			size_hint: 1, 1
-
-            			GridLayout:
-            				adaptive_size: True
-            				cols: 1
-            				size_hint_y: None
-            				height: self.minimum_height
-            				spacing: 9,9
-            				padding: 9,9 
-            				
-            				MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-            					orientation: "vertical"
-            					id: portfolioprofile
-            					size_hint: 1, None
-            					height: dp(200)
-            					padding: [1 , 1]
-
-            					MDFloatLayout:
-									Label:
-            							text: "PROFILE"
-										halign: 'center'
-										pos_hint: {"center_x": .56, "center_y": .82}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "23sp"
-										font_name: "PoppinsB" 
-									Image: 
-										source: "assets/portfolio.id.png"
-										size_hint: .4,.4 
-										pos_hint: {"center_x": .355, "center_y": .82}
-									##########
-									Label:
-            							text: "Name:"
-										halign: 'center'
-										pos_hint: {"center_x": .11, "center_y": .60}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "17sp"
-										font_name: "PoppinsB"
-									Label:
-            							id: portfolio_name
-            							text: "Your Name"
-            							halign: "center"
-										pos_hint: {"center_x": .6, "center_y": .60}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "17sp"
-										font_name: "OpenSansR"
-									###########
-									Label: 
-            							text: "E-mail:"
-										halign: 'center'
-										pos_hint: {"center_x": .12, "center_y": .45}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "17sp"
-										font_name: "PoppinsB"
-									Label:
-            							id: portfolio_email
-            							text: "Your Email"
-            							halign: "center"
-										pos_hint: {"center_x": .6, "center_y": .45}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "17sp"
-										font_name: "OpenSansR"
-									#########
-
-									#BoxLayout:
-										#id: Boxinvsout	
-										#size_hint: .6,.6
-										#post_hint: {"center_x": .8, "center_y": .38}
-
-									#########
-									Label: 
-            							text: "Age:"
-										halign: 'center'
-										pos_hint: {"center_x": .083, "center_y": .30}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "17sp"
-										font_name: "PoppinsB"
-									Label:
-            							id: portfolio_age
-            							text: "Add Age"
-            							halign: "center"
-										pos_hint: {"center_x": .6, "center_y": .30}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "17sp"
-										font_name: "OpenSansR"
-									MDIconButton:
-										icon: "pencil-box"
-										pos_hint: {"center_x": .92 ,"center_y": .30}
-										on_release:
-											root.ageEdit()
-											
-									
-									##########
-									Label: 
-            							text: "Occupation:"
-										halign: 'center'
-										pos_hint: {"center_x": .19, "center_y": .15}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "17sp"
-										font_name: "PoppinsB"
-									Label:
-            							id: portfolio_occupation
-            							text: "Add Occupation"
-            							halign: "center"
-										pos_hint: {"center_x": .6, "center_y": .15}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "17sp"
-										font_name: "OpenSansR"
-									MDIconButton:
-										icon: "pencil-box"
-										pos_hint: {"center_x": .92 ,"center_y": .15}
-										on_release:
-											root.occEdit()
-
-							MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-
-            					orientation: "vertical"
-            					id: portfolioprofile
-            					size_hint: 1, None
-            					height: dp(50)
-            					padding: [1 , 1]
-
-            					MDFloatLayout:
-	            					Label:
-										id: HISTORY
-										text: "HISTORY"
-										halign: 'center'
-										pos_hint: {"center_x": .55, "center_y": .5}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "22sp"
-										font_name: "PoppinsB"		
-								
-								    Image: 
-								    	source: "assets/portfolio.history.png"
-								    	size_hint: 1.4, 1.4
-								    	pos_hint: {'center_x': .32, 'center_y': .5}
-
-
-							MDBoxLayout:
-	            				canvas.before:
-	            					Color:
-	            						rgba: 0, 0, 0, 1
-	            					Line:
-	            						width: 1
-	            						rectangle: self.x, self.y, self.width, self.height
-	            				orientation: "vertical"
-	            				id: historydisplay
-	            				size_hint: 1, None
-	            				height: dp(250)
-	            				md_bg_color: 202/255, 246/255, 255/255, 1
-	            				spacing: "0dp"
-	            				padding: [2,2]
-
-			            		ScrollView:
-			            			MDList:
-			            				id: list_history
-			            				padding: 0
-
-							MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-
-            					orientation: "vertical"
-            					id: portfolioprofile
-            					size_hint: 1, None
-            					height: dp(50)
-            					padding: [1 , 1]
-
-            					MDFloatLayout:
-	            					Label:
-										id: TRANSACTION
-										text: "TRANSACTIONS"
-										halign: 'center'
-										pos_hint: {"center_x": .55, "center_y": .5}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "22sp"
-										font_name: "PoppinsB"		
-								
-								    Image: 
-								    	source: "assets/portfolio.transactions.png"
-								    	size_hint: 1.4, 1.4
-								    	pos_hint: {'center_x': .32, 'center_y': .5}
-
-
-							MDBoxLayout:
-	            				canvas.before:
-	            					Color:
-	            						rgba: 0, 0, 0, 1
-	            					Line:
-	            						width: 1
-	            						rectangle: self.x, self.y, self.width, self.height
-	            				orientation: "vertical"
-	            				id: historydisplay
-	            				size_hint: 1, None
-	            				height: dp(250)
-	            				md_bg_color: 202/255, 246/255, 255/255, 1
-	            				spacing: "10dp"
-	            				padding: [20,20]
-
-			            		ScrollView:
-			            			MDList:
-			            				id: list_transactions
-			            				padding: 0
-								
-
-########################################HOMEHOME#########################################
-        	MDBottomNavigationItem:
-            	name: 'Home'
-            	text: 'Home'
-            	font_size: "8sp"
-            	text_color_active: 0, 0, 0, 1
-            	selected_color_background: 0, 0, 1, .4
-            	icon: 'wallet'
-            	on_tab_release:
-            		root.ids.tb.title = "HOME"
-
-            	MDBoxLayout:
-            		orientation: "vertical"
-            		size_hint: 1, 0.89
-            		pos_hint:  {'center_x': .5, 'center_y': .445}
-            		md_bg_color: 202/255, 246/255, 255/255, 1
-
-            		ScrollView:
-            			do_scroll_y: True
-            			do_scroll_x: False
-            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
-            			size_hint: 1, 1
-
-            			GridLayout:
-            				adaptive_size: True
-            				cols: 1
-            				size_hint_y: None
-            				height: self.minimum_height
-            				spacing: 9, 9
-            				padding: 9, 9
-
-            				MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-
-            					orientation: "vertical"
-            					id: BalanceChange
-            					size_hint: 1, None
-            					height: dp(180)
-            					padding: [1 , 1]
-            					
-            					MDFloatLayout
-	            					Label:
-										id: balance
-										text: "BALANCE TO BUDGET:"
-										halign: 'center'
-										pos_hint: {"center_x": .55, "center_y": .82}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "22sp"
-										font_name: "PoppinsB"
-
-									Image:
-										source: "assets/cash.ico"
-										size_hint: .3, .3
-										pos_hint: {"center_x": .1, "center_y": .82}
-
-
-									Label:
-										id: balance
-										halign: 'center'
-										pos_hint: {"center_x": .5, "center_y": .40}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "16sp"
-										font_name: "OpenSansR"
-
-									Image: 
-										source: "assets/roundedrect.png"
-										id: roundedrect
-										size_hint: 1,1 
-										pos_hint: {"center_x": .5, "center_y": .4}
-
-									MDIconButton:
-									    icon: "grease-pencil"
-									    user_font_size: "20sp"
-									    pos_hint: {"center_x": .5, "center_y": .20}
-									    on_release:
-									    	root.modifybalance()
-
-							MDBoxLayout:
-								canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-            					orientation: "vertical"
-            					id: allocationtable
-            					size_hint: 1, None
-            					height: dp(450)
-            					md_bg_color: 202/255, 246/255, 255/255, 1
-
-
-            					MDFloatLayout:
-            						id: allocationfloat
-            						Label: 
-										id: allocation
-										text: "ALLOCATION:"
-										halign: 'center'
-										pos_hint: {"center_x": .51, "center_y": .90}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "22sp"
-										font_name: "PoppinsB"
-
-									Image: 
-										source: "assets/pie.ico"
-										size_hint: .247, .25
-										pos_hint: {"center_x": .15, "center_y": .90}
-
-									MDRectangleFlatIconButton:
-							    		icon: "plus-circle"
-							    		text: "  Add Category"
-							    		font_name: "Montserrat"
-							    		font_size: "12sp"
-							    		theme_text_color: "Custom"
-							    		pos_hint: {'center_x': .5, 'center_y': .75}
-							    		text_color: 0/255, 0/255, 0/255, 1
-							    		line_color: 0/255, 0/255, 0/255, 1
-							    		theme_icon_color: "Custom"
-							    		icon_color: 0/255, 0/255, 0/255, 1
-							    		padding: [100,0]
-							    		on_release:
-							    			root.addcategories()
-
-							MDBoxLayout:
-								canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-            					orientation: "vertical"
-            					id: expensestable
-            					size_hint: 1, None
-            					height: dp(450)
-            					md_bg_color: 202/255, 246/255, 255/255, 1
-
-            					MDFloatLayout:
-            						id: transactionfloat 
-            						Label: 
-										id: Expenses
-										text: "EXPENSES:"
-										halign: 'center'
-										pos_hint: {"center_x": .51, "center_y": .90}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "22sp"
-										font_name: "PoppinsB"
-
-									Image: 
-										source: "assets/receipt.ico"
-										size_hint: .20, .20
-										pos_hint: {"center_x": .30, "center_y": .90}
-
-									MDRectangleFlatIconButton:
-							    		icon: "plus-circle"
-							    		font_name: "Montserrat"
-							    		text: "ADD TRANSACTION"
-							    		font_size: "12sp"
-							    		theme_text_color: "Custom"
-							    		pos_hint: {'center_x': .5, 'center_y': .75}
-							    		text_color: 35/255, 55/255, 82/255, 1
-							    		line_color: 0/255, 0/255, 0/255, 1
-							    		theme_icon_color: "Custom"
-							    		icon_color: 0/255, 0/255, 0/255, 1
-							    		padding: [80,0]
-							    		on_release:
-							    			root.manager.transition.direction = "left"
-							    			root.manager.get_screen("AddTransaction_Screen").ids.SelectCategories.text = ""
-											root.manager.get_screen("AddTransaction_Screen").ids.SelectStatus.text = ""
-											root.manager.get_screen("AddTransaction_Screen").ids.SelectType.text = ""
-											root.manager.get_screen("AddTransaction_Screen").ids.InputAmount.text = ""
-											root.manager.get_screen("AddTransaction_Screen").ids.date.text = "Date of Transaction"
-							    			root.manager.current = "AddTransaction_Screen"
-				
-##########################STATISTICS################################            						
-
-            MDBottomNavigationItem:
-            	name: 'Statistics'
-            	text: 'Data'
-            	text_color_active: 0, 0, 0, 1
-            	selected_color_background: 0, 0, 1, .4
-            	icon: 'chart-line'
-            	on_tab_release:
-            		root.ids.tb.title = "DATA"
-
-            	MDBoxLayout:
-            		orientation: "vertical"
-            		size_hint: 1, 0.89
-            		pos_hint:  {'center_x': .5, 'center_y': .445}
-            		md_bg_color: 202/255, 246/255, 255/255, 1
-
-            		ScrollView:
-            			do_scroll_y: True
-            			do_scroll_x: False
-            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
-            			size_hint: 1, 1
-
-            			GridLayout:
-            				adaptive_size: True
-            				cols: 1
-            				size_hint_y: None
-            				height: self.minimum_height
-            				spacing: 9, 9
-            				padding: 9, 9
-
-            				MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-            					orientation: "vertical"
-            					id: BalanceChange
-            					size_hint: 1, None
-            					height: dp(400)
-            					md_bg_color: 202/255, 246/255, 255/255, 1
-
-            					
-
-##########################Connect#################################
-
-            MDBottomNavigationItem:
-            	name: 'Community'
-            	text: 'Connect'
-            	font_size: "8sp"
-            	text_color_active: 0, 0, 0, 1
-            	selected_color_background: 0, 0, 1, .4
-            	icon: 'account-question'
-            	on_tab_release:
-            		root.ids.tb.title = "CONNECT"
-
-            	MDBoxLayout:
-            		orientation: "vertical"
-            		size_hint: 1, 0.89
-            		pos_hint:  {'center_x': .5, 'center_y': .445}
-            		md_bg_color: 202/255, 246/255, 255/255, 1
-
-            		ScrollView:
-            			do_scroll_y: True
-            			do_scroll_x: False
-            			pos_hint: {'center_x': .5, 'center_y': 0.5}	
-            			size_hint: 1, 1            	
-						
-						GridLayout:
-            				adaptive_size: True
-            				cols: 1
-            				size_hint_y: None
-            				height: self.minimum_height
-            				spacing: 9, 9
-            				padding: 9, 9
-							
-							MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0, 0, 0, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-
-            					orientation: "vertical"
-            					id: portfolioprofile
-            					size_hint: 1, None
-            					height: dp(50)
-            					padding: [1 , 1]
-
-            					MDFloatLayout:
-	            					Label:
-										id: feedLabel
-										text: "KA-BDO FEED"
-										halign: 'center'
-										pos_hint: {"center_x": .555, "center_y": .5}
-										color: 0/255, 0/255, 0/255, 1
-										font_size: "24sp"
-										font_name: "PoppinsB"
-									Image: 
-										source: "assets/feed.feed.png"
-										size_hint: 1.5, 1.5
-										pos_hint: {'center_x': .265, 'center_y': .5}
-
-					
-							MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0/255, 0/255, 0/255, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-            					orientation: "vertical"
-            					size_hint: 1, None
-            					height: dp(200)
-
-            					MDFloatLayout:
-
-            						Image: 
-										source: "assets/feed.userprofile.png"
-										size_hint: .3, .3
-										pos_hint: {"center_x": .075, "center_y": .9} 
-
-	            					Label: 
-	            						id: p_uname
-	            						text: " "
-										halign: 'center'
-										pos_hint: {"center_x": .5, "center_y": .9}
-										color: 0/255/255, 0/255, 0/255, 1
-										font_size: "20sp"
-										font_name: "Montserrat"
-
-									MDTextFieldRect:
-            							id: feedpost
-            							hint_text: "Type here"
-            							size_hint: None, None
-            							size: 200,125
-            							pos_hint: {'center_x': .5, 'center_y':.5}
-
-									MDRaisedButton:
-							    		text: "POST"
-							    		font_size: '15dp'
-							    		text_color: 0/255, 0/255, 0/255
-							    		padding: [39.3, 3]
-							    		font_name: "LatoB"
-							    		pos_hint: {'center_x': .35, 'center_y': .1}
-							    		md_bg_color: 218/255, 165/255, 32/255, 1
-							    		on_release:
-							    			root.addpost(p_uname. text ,feedpost.text)
-
-							    	MDRaisedButton:
-							    		text: "CANCEL"
-							    		font_size: '15dp'
-							    		text_color: 0/255, 0/255, 0/255
-							    		padding: [39.3, 3]
-							    		font_name: "LatoB"
-							    		pos_hint: {'center_x': .65, 'center_y': .1}
-							    		md_bg_color: 0/255, 49/255, 82/255, 1
-
-							MDBoxLayout:
-            					canvas.before:
-            						Color:
-            							rgba: 0/255, 0/255, 0/255, 1
-            						Line:
-            							width: 1
-            							rectangle: self.x, self.y, self.width, self.height
-            					orientation: "vertical"
-            					size_hint: 1, None
-            					height: dp(250)
-
-
-        MDBoxLayout:
-			id: TopContainer
-			orientation: "vertical"
-			spacing: "12dp"
-			pos_hint: {'center_x': 0.5, 'center_y': 0.95}
-			adaptive_height: True
-			MDToolbar:
-				id: tb
-				title: "HOME"
-				font_size: '18dp'
-				elevation: 20
-				left_action_items: [['menu', lambda x: About.set_state("open")]]
-
-		Image:
-			source: "assets/App_logo.ico"
-			size_hint: 0.13, 0.13
-			pos_hint: {'center_x': 0.9, 'center_y': 0.95}
-
-		MDNavigationDrawer:
-			id: About
-			size_hint: None, 1.3
-			pos_hint_y: {'center_y': 0.60}
-			elevation: 5
-
-
-			MDBoxLayout:
-				size_hint: .98, .75
-				pos_hint_y: {'center_y': 0.60}
-				orientation: "vertical"
-				spacing: '2dp'
-				MDIconButton:
-					icon: "close"
-					pos_hint: {"center_x": .06 ,"center_y": .68}
-					user_font_size: "30sp"
-					on_release:
-						About.set_state("close")
-				Image:
-					source: "assets/aboutpic.png"
-					size_hint: 1.1, 1.1
-					pos_hint: {'center_x': 0.491, 'center_y': 0.7}
-				MDBoxLayout:
-					orientation: "vertical"	
-					spacing: '0dp'
-					size_hint: 1, .2
-					Image:
-						source: "assets/crruser.png"
-						size_hint: .8, .8
-						pos_hint_x: {'center_x': 0.5}
-					Label:
-						id: Myname
-						text: "Name"
-						pos_hint_x: {'center_x': 0.5}
-						halign: 'center'
-						color: 0/255, 0/255, 0/255
-						font_size: "23sp"
-						padding: [0, 0]
-						font_name: "OpenSansR"
-
-				Label:
-					id: quote
-					text: "\"You must gain control over your\n money or the lack of \n will forever control\" \n ~Dave Ramsey"
-					pos_hint_x: {'center_x': 0.5}
-					halign: 'center'
-					size_hint: 1, .4
-					color: 0/255, 0/255, 0/255
-					font_size: "15sp"
-					padding: [0, 0]
-					font_name: "Montserrat"
-
-				MDRaisedButton:
-    				font_size: '15dp'
-    				text_color: 0/255, 0/255, 0/255
-    				padding: [100, 3]
-    				font_name: "LatoB"
-    				pos_hint: {'center_x': .5, 'center_y': .20}
-    				md_bg_color: 137/255, 207/255, 240/255, 1
-					text: "Logout"
-					on_release:
-						root.manager.transition.direction = "right"
-						root.manager.get_screen("Login_Screen").ids.Lusername.text = ""
-						root.manager.get_screen("Login_Screen").ids.Lpassword.text = ""
-						root.manager.current = "Login_Screen"
-
-
-######################################ADD_TRANSACTION###############################################
-
-<AddTransaction>:
-	name: "AddTransaction_Screen"
+        id: Track
+		md_bg_color: 206/255, 229/255, 237/255, 1
+
+        MDIconButton:
+            icon: "keyboard-return"
+            size_hint: 0.25, 0.25
+            pos_hint: {'center_x': .89, 'center_y': 0.95}
+            on_release:
+                root.manager.current = "Home_Page"
+                root.manager.transition.direction = "left"
+        Image:
+            source: "assets/tracker_1.png"
+            size_hint: 0.15, 0.15
+            pos_hint: {'center_x': .15, 'center_y': 0.93}
+        Image:
+            source: "assets/tracker_name.png"
+            size_hint: 0.25, 0.25
+            pos_hint: {'center_x': .37, 'center_y': 0.93}
+
+        Image:
+            source: "assets/Plantrans.png"
+            size_hint: 0.6, 0.6
+            pos_hint: {'center_x': .33, 'center_y': 0.86}
+
+    	#Add plan button
+    	MDRectangleFlatIconButton:
+    		icon: "plus-circle"
+    		text: "  Add Transaction"
+    		font_size: "20sp"
+    		theme_text_color: "Custom"
+    		pos_hint: {'center_x': .37, 'center_y': 0.81}
+    		text_color: 35/255, 55/255, 82/255, 1
+    		line_color: 206/255, 229/255, 237/255, 1
+    		theme_icon_color: "Custom"
+    		icon_color: 35/255, 55/255, 82/255, 1
+    		on_release:
+    			root.manager.current = "AddPlan_Page"
+    			root.manager.transition.direction = 'right' 
+        Image:
+            source: "assets/Column top.png"
+            size_hint: 1, 1
+            pos_hint: {'center_x': .5, 'center_y': 0.76}
+
+        ScrollView:
+        	size_hint: 1, 0.25
+        	pos_hint: {'center_x': .5, 'center_y': 0.61}	
+        	do_scroll_x: False
+        	do_scroll_y: True
+        	GridLayout:
+        		id: plan_container
+				adaptive_size: True
+        		bg_color: 5/255, 29/255, 64/255, 1
+        		cols: 1
+        		size_hint_y: None
+            	height: self.minimum_height
+            	row_default_height: 32
+
+        Image:
+            source: "assets/Paidtrans.png"
+            size_hint: 0.6, 0.6
+            pos_hint: {'center_x': .33, 'center_y': 0.45}
+
+        #Add paid button
+        MDRectangleFlatIconButton:
+            icon: "plus-circle"
+            text: "  Add Transaction"
+            font_size: "20sp"
+            theme_text_color: "Custom"
+            pos_hint: {'center_x': .37, 'center_y': 0.40}
+            text_color: 35/255, 55/255, 82/255, 1
+            line_color: 206/255, 229/255, 237/255, 1
+            theme_icon_color: "Custom"
+            icon_color: 35/255, 55/255, 82/255, 1
+            on_release:
+                root.manager.current = "AddPaid_Page"
+                root.manager.transition.direction = 'right'
+
+        Image:
+            source: "assets/Column top.png"
+            size_hint: 1, 1
+            pos_hint: {'center_x': .5, 'center_y': 0.35}
+
+        ScrollView:
+        	size_hint: 1, 0.25
+        	pos_hint: {'center_x': .5, 'center_y': 0.20}	
+        	do_scroll_x: False
+        	do_scroll_y: True
+        	GridLayout:
+        		id: paid_container
+				adaptive_size: True
+        		bg_color: 5/255, 29/255, 64/255, 1
+        		cols: 1
+        		size_hint_y: None
+            	height: self.minimum_height
+            	row_default_height: 32
+
+<AddPlanPage>:
+	name: "AddPlan_Page"
+	id: addplanpage
 	MDFloatLayout:
-		Image: 
-			source: "assets/blue_bg.png"
-			size_hint: 1, 1
-			pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+		md_bg_color: 206/255, 229/255, 237/255, 1
+
 		MDIconButton:
-			icon: "arrow-left"
-			pos_hint: {"center_x": .1 ,"center_y": .95}
-			user_font_size: "30sp"
+			icon: "keyboard-return"
+			size_hint: 0.25, 0.25
+			pos_hint: {'center_x': .89, 'center_y': 0.95}
 			on_release:
-				root.manager.transition.direction = "right"
-				root.manager.current = "Home_Screen"
+				root.manager.current = "Tracker_Page"
+				root.manager.transition.direction = "left"
 		Image:
-			source: "assets/App_logo.png"
-			size_hint: 0.3, 0.3
-			pos_hint: {'center_x': 0.27, 'center_y': 0.8}
-		
-		Label:
-			text: "Username:"
-			pos_hint: {'center_x': 0.63, 'center_y': 0.82}
-			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "20sp"
-			padding: [0, 0]
-			font_name: "LatoB"
+			source: "assets/tracker_1.png"
+			size_hint: 0.15, 0.15
+			pos_hint: {'center_x': .15, 'center_y': 0.93}
+		Image:
+			source: "assets/tracker_name.png"
+			size_hint: 0.25, 0.25
+			pos_hint: {'center_x': .37, 'center_y': 0.93}
 
-		Label:
-			id: currentusername
-			text: "Username"
-			pos_hint: {'center_x': 0.67, 'center_y': 0.78}
+		MDLabel:
+			text: "Add Plan Transaction"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
 			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "17sp"
-			padding: [0, 0]
-			font_name: "OpenSansR"
+			color: 255, 255, 255
+			font_size: "25sp"
+			font_name: "Poppins"
 
-		Label:
-			text: "ADD TRANSACTIONS"
+		MDTextFieldRound:
+			id: Plan_Title
+			hint_text: "Enter Plan Title"
+			multiline: False
+			mode: "rectangle"
+			icon_left: "file"
+			size_hint_x: None
+			width: 200
+			required: True
+			max_text_length: 10
+			helper_text: "Input New Unique Title"
+			color_mode: 'primary'
+			font_size: "13sp"
+			sizehint: 0.8, 0.8
 			pos_hint: {'center_x': 0.5, 'center_y': 0.68}
-			halign: 'center'
-			color: 0/255, 0/255, 0/255
-			font_size: "17sp"
-			padding: [0, 0]
-			font_name: "LatoB"
+			line_color_normal : [58,144,198]
+			multiline: False
 
-		MDTextField:
-			id: SelectCategories
-			hint_text: "Type Categories"
-			font_name: "OpenSansR"
-			font_size: "15dp"
-			height: 100
-			helper_text_mode: "persistent"
-			size_hint: None , None
-			line_color_normal: (0, 0, 0, 1)
+		MDTextFieldRound:
+			id: Plan_amount
+			hint_text: "Enter Amount"
+			input_type: 'number'
+			multiline: False
+			mode: "rectangle"
+			icon_left: "calculator"
+			size_hint_x: None
 			width: 200
-			pos_hint: {"center_x": .5, "center_y": .61}
-			helper_text:  ""
-			on_focus:
-				if self.focus: root.Cmen()
-
-		MDTextField:
-			id: SelectStatus
-			hint_text: "Select Status"
-			font_name: "OpenSansR"
-			font_size: "15dp"
-			height: 100
-			helper_text_mode: "persistent"
-			size_hint: None , None
-			line_color_normal: (0, 0, 0, 1)
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .52}
-			helper_text:  ""
-			on_focus:
-				if self.focus: root.Smenu.open()
-
-		MDTextField:
-			id: SelectType
-			hint_text: "Select Type"
-			font_name: "OpenSansR"
-			font_size: "15dp"
-			height: 100
-			helper_text_mode: "persistent"
-			size_hint: None , None
-			line_color_normal: (0, 0, 0, 1)
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .43}
-			helper_text:  ""
-			on_focus: 
-				if self.focus: root.Tmenu.open()
-
-		MDTextField:
-			id: InputAmount
-			hint_text: "Input Amount"
-			font_name: "OpenSansR"
-			font_size: "15dp"
-			height: 100
-			helper_text_mode: "persistent"
-			size_hint: None , None
-			line_color_normal: (0, 0, 0, 1)
-			width: 200
-			pos_hint: {"center_x": .5, "center_y": .34}
-			helper_text:  ""
+			required: True
+			max_text_length: 10
+			helper_text: "Amount: (No Decimal)"
+			color_mode: 'primary'
+			font_size: "13sp"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.53}
+			line_color_normal : [58,144,198]
 
 		MDLabel:
 			id: date
 			text: "Date of Transaction"
 			halign: 'center'
-			pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.38}
+
+		MDRectangleFlatButton:
+			text: "Choose Date"
+			theme_text_color: "Custom"
+    		text_color: 255, 255, 255, 1
+    		line_color: 68/255, 178/255, 221/255, 1
+			padding: [75,10]
+			pos_hint: {'center_x': 0.5, 'center_y': 0.30}
+			on_release:
+				app.show_date()
 
 		MDRaisedButton:
+	    	text: "Finish"
+	    	font_size: "15sp"
+	    	font_color: 1, 1, 1, 1
+	    	font_name: "Poppins"
+	    	padding: [35, 0]
+	    	pos_hint: {'center_x': 0.29, 'center_y': 0.18}
+	    	on_press: 
+	    		app.planrec(Plan_Title.text, Plan_amount.text, date.text)
+	    		app.clearwidg()
+	    		app.TrackerBoxes()
+	    		root.manager.transition.direction = 'right'
+
+	    MDRaisedButton:
+	    	text: "Cancel"
+	    	font_size: "15sp"
+	    	font_name: "Poppins"
+	    	font_color: 255/255, 255/255, 225/255, 1
+	    	padding: [35, 0]
+	    	pos_hint: {'center_x': 0.7, 'center_y': 0.18}
+	    	on_release: 
+	    		app.clearwidg()
+	    		app.TrackerBoxes()
+	    		root.manager.transition.direction = 'left'
+<AddPaidPage>:
+	name: "AddPaid_Page"
+	id: addpaidpage
+	MDFloatLayout:
+		id: Add_paid
+		md_bg_color: 206/255, 229/255, 237/255, 1
+		MDIconButton:
+			icon: "keyboard-return"
+			size_hint: 0.25, 0.25
+			pos_hint: {'center_x': .89, 'center_y': 0.95}
+			on_release:
+				root.manager.current = "Tracker_Page"
+				root.manager.transition.direction = "left"
+		Image:
+			source: "assets/tracker_1.png"
+			size_hint: 0.15, 0.15
+			pos_hint: {'center_x': .15, 'center_y': 0.93}
+		Image:
+			source: "assets/tracker_name.png"
+			size_hint: 0.25, 0.25
+			pos_hint: {'center_x': .37, 'center_y': 0.93}
+
+		MDLabel:
+			text: "Add Paid Transaction"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+			halign: 'center'
+			color: 255, 255, 255
+			font_size: "25sp"
+			font_name: "Poppins"
+
+		MDTextFieldRound:
+			id: Paid_Title
+			hint_text: "Enter Title/Category"
+			multiline: False
+			mode: "rectangle"
+			icon_left: "file"
+			size_hint_x: None
+			width: 200
+			required: True
+			max_text_length: 10
+			helper_text: "Input New Unique Title"
+			color_mode: 'primary'
+			font_size: "13sp"
+			sizehint: 0.8, 0.8
+			pos_hint: {'center_x': 0.5, 'center_y': 0.68}
+			line_color_normal : [58,144,198]
+			multiline: False
+
+		MDTextFieldRound:
+			id: Paid_amount
+			hint_text: "Enter Amount"
+			multiline: False
+			mode: "rectangle"
+			icon_left: "calculator"
+			size_hint_x: None
+			width: 200
+			required: True
+			max_text_length: 10
+			helper_text: "Amount: (No Decimal)"
+			color_mode: 'primary'
+			font_size: "13sp"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.53}
+			line_color_normal : [58,144,198]
+
+		MDLabel:
+			id: date
+			text: "Date of Transaction"
+			halign: 'center'
+			pos_hint: {'center_x': 0.5, 'center_y': 0.38}
+
+		MDRectangleFlatButton:
 			text: "Choose Date"
-			font_size: '15dp'
-    		text_color: 0, 0, 26
-    		padding: [39.3, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .5, 'center_y': .20}
-    		md_bg_color: 255/255, 222/255, 89/255, 1
-    		on_release:
-    			root.show_date()
+			theme_text_color: "Custom"
+    		text_color: 255, 255, 255, 1
+    		line_color: 68/255, 178/255, 221/255, 1
+			padding: [75,10]
+			pos_hint: {'center_x': 0.5, 'center_y': 0.30}
+			on_release:
+				app.show_date()
 
-    	MDRaisedButton:
-			text: "Confirm"
-			font_size: '15dp'
-    		text_color: 0, 0, 26
-    		padding: [39.3, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .25, 'center_y': .10}
-    		md_bg_color: 255/255, 222/255, 89/255, 1
-    		on_release:
-    			root.getTransInfo(SelectCategories.text, SelectStatus.text, SelectType.text, InputAmount.text, date.text)
+		MDRaisedButton:
+	    	text: "Finish"
+	    	font_size: "15sp"
+	    	font_color: 1, 1, 1, 1
+	    	font_name: "Poppins"
+	    	padding: [35, 0]
+	    	pos_hint: {'center_x': 0.29, 'center_y': 0.18}
+	    	on_press: 
+	    		app.paidrec(Paid_Title.text, Paid_amount.text, date.text)
+	    		app.clearwidg()
+	    		app.TrackerBoxes()
+	    		root.manager.transition.direction = 'right'
 
-    	MDRaisedButton:
-			text: "Cancel"
-			font_size: '15dp'
-    		text_color: 0, 0, 26
-    		padding: [39.3, 3]
-    		font_name: "LatoB"
-    		pos_hint: {'center_x': .75, 'center_y': .10}
-    		md_bg_color: 254/255, 77/255, 77/255, 1
-    		on_release:
-    			root.manager.current = "Home_Screen"
+	    MDRaisedButton:
+	    	text: "Cancel"
+	    	font_size: "15sp"
+	    	font_name: "Poppins"
+	    	font_color: 255/255, 255/255, 225/255, 1
+	    	padding: [35, 0]
+	    	pos_hint: {'center_x': 0.7, 'center_y': 0.18}
+	    	on_release: 
+	    		app.clearwidg()
+	    		app.TrackerBoxes()
+	    		root.manager.transition.direction = 'left'
+<ReportPage>:
+	name: "Report_Page"
+	id: reportpage
+	MDFloatLayout:
+		md_bg_color: 68/255, 178/255, 221/255, 1
+		MDIconButton:
+            icon: "keyboard-return"
+            size_hint: 0.25, 0.25
+            pos_hint: {'center_x': .89, 'center_y': 0.95}
+            on_release:
+                root.manager.current = "Home_Page"
+                root.manager.transition.direction = "left"
+        Image:
+            source: "assets/report_1.png"
+            size_hint: 0.15, 0.15
+            pos_hint: {'center_x': .15, 'center_y': 0.93}
+        Image:
+            source: "assets/Reports_name.png"
+            size_hint: 0.6, 0.6
+            pos_hint: {'center_x': .40, 'center_y': 0.93}
+        ScrollView:
+        	size_hint: 1, 0.85
+        	pos_hint: {'x': 0, 'y': 0.022}	
+        	do_scroll_x: False
+        	do_scroll_y: True
+        	GridLayout:
+        		id: report_container
+				adaptive_size: True
+        		bg_color: 5/255, 29/255, 64/255, 1
+        		cols: 1
+        		size_hint_y: None
+            	height: self.minimum_height
+            	row_default_height: 70
 
 
+<NotifPage>:
+	name: "Notif_Page"
+	id: notifpage
+	MDFloatLayout:
+		md_bg_color: 5/255, 29/255, 64/255, 1
+		MDIconButton:
+            icon: "keyboard-return"
+            size_hint: 0.25, 0.25
+            pos_hint: {'center_x': .89, 'center_y': 0.95}
+            theme_icon_color: "Custom"
+    		specific_text_color: 255,255,255,1
+            on_release:
+                root.manager.current = "Home_Page"
+                root.manager.transition.direction = "left"
+        Image:
+            source: "assets/notif_1.png"
+            size_hint: 0.15, 0.15
+            pos_hint: {'center_x': .15, 'center_y': 0.93}
+        Image:
+            source: "assets/Notif_name.png"
+            size_hint: 0.35, 0.35
+            pos_hint: {'center_x': .40, 'center_y': 0.92}
+        MDLabel:
+			text: "Planned Transaction"
+			pos_hint: {'center_x': 0.5, 'center_y': 0.83}
+			halign: 'center'
+			color: 1, 1, 1, 1
+			font_size: "25sp"
+			font_name: "Poppins"   
+        ScrollView:
+        	size_hint: 1, 0.77
+        	pos_hint: {'x': 0, 'y': 0.018}	
+        	do_scroll_x: False
+        	do_scroll_y: True
+        	GridLayout:
+        		id: Notif_container
+				adaptive_size: True
+        		bg_color: 5/255, 29/255, 64/255, 1
+        		cols: 1
+        		size_hint_y: None
+            	height: self.minimum_height
+            	row_default_height: 60
 
-<SwipeToDeleteItem>:
-    size_hint_y: None
-    height: content.height
 
-    MDCardSwipeLayerBox:
-    	radius: 0
-    	MDIconButton:
-    		icon: "trash-can"
-    		pos_hint: {"center_y":.5}
-    		on_release: app.remove_item(root)
-        # Content under the card.
-
-    MDCardSwipeFrontBox:
-    	radius: 0
-        # Content of card.
-        OneLineListItem:
-            id: content
-            text: root.text
-            _no_ripple_effect: True
 

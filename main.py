@@ -1,50 +1,40 @@
-#######Required Libraries########
-#layout libraries
-import kivy
+#Required Libraries
+#Required Libraries
 from kivymd.app import MDApp
-from kivy.core.window import Window
+from kivy.core.window import Window	
+from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.image import Image
 from kivy.core.text import LabelBase 
-from kivy.uix.label import Label
-from kivy.uix.floatlayout import FloatLayout
-from kivymd.uix.textfield import MDTextField
-from kivymd.icon_definitions import md_icons
-from kivy.properties import ListProperty
-from kivymd.uix.menu import MDDropdownMenu
-from kivy.metrics import dp
-from kivy.clock import Clock
-from kivy.uix.scrollview import ScrollView
-from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.datatables import MDDataTable
-from kivymd.uix.pickers import MDDatePicker
-from kivy.uix.boxlayout import BoxLayout
-from kivymd.uix.card import MDCardSwipe, MDCardSwipeLayerBox, MDCardSwipeFrontBox
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.list import TwoLineAvatarIconListItem, OneLineListItem, IconLeftWidget
-from datetime import datetime
+from kivymd.uix.button import MDRectangleFlatButton, MDRaisedButton, MDRectangleFlatIconButton, MDIconButton
+from kivy.clock import Clock
 from kivy.properties import StringProperty
-from babel import numbers
-import uuid 
-import re
-#layout Libraries
-
-#graph
-from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
-import numpy as np
-import matplotlib.pyplot as plt
-
-##database libraries
-import pymongo
-from pymongo import MongoClient
-##database libraries
+from kivy.uix.scrollview import ScrollView  					
+from kivymd.uix.dialog import MDDialog
+from kivy.uix.button import Button
+from kivymd.icon_definitions import md_icons
+from kivymd.uix.list import OneLineIconListItem
+from kivymd.uix.label import MDIcon
+from kivymd.uix.pickers import MDDatePicker
+from kivymd.uix.datatables import MDDataTable
+from kivy.uix.widget import Widget
+from kivy.metrics import dp
+from kivy.uix.boxlayout import BoxLayout	
+from kivy.uix.image import Image
+from kivy.uix.label import Label
+from kivymd.icon_definitions import md_icons
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.gridlayout import GridLayout
+from kivymd.uix.selectioncontrol import MDSwitch
+import json
+#Required Libraries
+#Required Libraries
 
 Builder.load_file('layout.kv')
-regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
-
+#Screens
 #Screens
 class LogoScreen(Screen):
 	#Start Screen
@@ -53,848 +43,29 @@ class LogoScreen(Screen):
 
 	def on_enter(self, *args):
 		Clock.schedule_once(self.next_page, 4)
-
 	def next_page(self, *args):
-		self.manager.current = "Loading_Screen"
-
-
-class LoadingScreen(Screen):
-	#Loading Screen
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-
-	def on_enter(self, *args):
-		Clock.schedule_once(self.login, 4)
-
-	def login(self, *args):
-		self.manager.current = "Login_Screen"
-
-
-class LoginScreen(Screen):
-	
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-
-		#Current User Variable
-		global CurrentUser
-		CurrentUser = {}
-
-		#Initialize what we see on screen
-		self.ids.Lusername.text = ""
-		self.ids.Lpassword.text = ""
-
-	#To make password visible
-	def show_password(self, checkbox, value):
-		if value:
-			self.ids.Lpassword.password = False
-		else:
-			self.ids.Lpassword.password = True
-
-	#Verify login including input formats
-	def loginverification(self, Luname, Lpass):
-
-		self.ids.Lusername.helper_text = ""
-		self.ids.Lpassword.helper_text = ""
-
-		l = 0
-		n = 0
-		i = 0
-
-		#username and email doesnt exist
-		if len(Luname) == 0:
-			self.ids.Lusername.helper_text = "Required"
-			l += 1
-		else:
-			if (re.fullmatch(regex, Luname)):
-				data = userprofile.find({"Email": Luname})
-				if userprofile.find_one({"Email": Luname}) is None:
-					self.ids.Lusername.helper_text = "Email doesn't exist"
-					l += 1
-				else:
-					l += 0
-					n += 1
-
-			else:
-				if userprofile.find_one({"Uname": Luname}) is None:
-					self.ids.Lusername.helper_text = "Username doesn't exist"
-					l += 1	
-				else:
-					data = userprofile.find({"Uname": Luname})
-					n += 1
-					l += 0
-
-
-		if len(Lpass) == 0:
-			self.ids.Lpassword.helper_text = "Required"	
-			l += 1
-		elif n > 0:
-			for x in data:
-				if x["Password"] == Lpass:
-					l += 0
-				else:
-					self.ids.Lpassword.helper_text = "Incorrect Password"
-					l += 1
-
-		if l > 0:
-			self.manager.current = "Login_Screen"
-			
-		else:
-			self.ids.Lusername.text = ""
-			self.ids.Lpassword.text = ""
-
-
-			global CurrentUser
-
-			if (re.fullmatch(regex, Luname)):
-				for x in userprofile.find({"Email": Luname}):
-					CurrentUser = x
-			else:
-				for x in userprofile.find({"Uname": Luname}):
-					CurrentUser = x
-
-			age = usercommunity.find_one({"Uname":CurrentUser["Uname"]})
-			occupation = usercommunity.find_one({"Uname":CurrentUser["Uname"]})
-
-			self.manager.get_screen("Welcome_Screen").ids.namecurrent.text = CurrentUser["First_Name"]
-			self.manager.get_screen("Home_Screen").ids.Myname.text = CurrentUser["Uname"]
-			self.manager.get_screen("Home_Screen").ids.p_uname.text = CurrentUser["Uname"]
-			self.manager.get_screen("Home_Screen").ids.Note_Name.text = CurrentUser["Uname"]
-			self.manager.get_screen("AddTransaction_Screen").ids.currentusername.text = CurrentUser["Uname"]
-			self.manager.get_screen("Home_Screen").update(CurrentUser)
-			self.manager.get_screen("Home_Screen").ids.portfolio_age.text = age["Age"]
-			self.manager.get_screen("Home_Screen").ids.portfolio_occupation.text = occupation["Occupation"]
-
-class RegisterScreen(Screen):
-
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-
-		self.ids.Fname.text = ""
-		self.ids.Lname.text = ""
-		self.ids.Uname.text = ""
-		self.ids.Reg_Email.text = ""
-		self.ids.Rpassword.text = ""
-		self.ids.RCpassword.text = ""
-
-	#To make password visible
-	def show_Rpassword(self, checkbox, value):
-		if value:
-			self.ids.Rpassword.password = False
-		else:
-			self.ids.Rpassword.password = True
-
-	#To make password visible
-	def show_RCpassword(self, checkbox, value):
-		if value:
-			self.ids.RCpassword.password = False
-		else:
-			self.ids.RCpassword.password = True
-
-	#verify if information formats are valid
-	def regverification(self, Fname, Lname, Uname, Email, Rpass, RCpass):
-
-		self.ids.Fname.helper_text = ""
-		self.ids.Lname.helper_text = ""
-		self.ids.Uname.helper_text = ""
-		self.ids.Rpassword.helper_text = ""
-		self.ids.RCpassword.helper_text = ""
-		self.ids.Reg_Email.helper_text = ""
-
-		x = 0
-		p = 0
-
-		#No Input Error
-		if len(Fname) == 0:
-			self.ids.Fname.helper_text = "Required"
-			x += 1
-		if len(Lname) == 0:
-			self.ids.Lname.helper_text = "Required"
-			x += 1
-
-		if len(Uname) == 0: 
-			self.ids.Uname.helper_text = "Required"
-			x += 1
-		elif userprofile.find_one({"Uname": Uname}):
-			self.ids.Uname.helper_text = "Account already Exists"
-			x += 1
-		else:
-			x += 0
-
-		if len(Rpass) == 0:
-			self.ids.Rpassword.helper_text = "Required"
-			x += 1
-		elif len(Rpass)	< 6:
-			self.ids.Rpassword.helper_text = "Min Password Length : 6"
-			x += 1
-		else:
-			p += 1
-
-		if len(RCpass) == 0:
-			self.ids.RCpassword.helper_text = "Required"
-			x += 1
-
-		#Confirm Password Checker Error
-		if (p < 1) & (Rpass != RCpass):
-			self.ids.Rpassword.helper_text = "Password do not match"
-			self.ids.RCpassword.helper_text = "Password do not match"
-			x += 1
-
-		#Email Checker
-		if (re.fullmatch(regex, Email)):
-			if userprofile.find_one({"Email": Email}):
-				self.ids.Reg_Email.helper_text = "Account already Exists"
-				x += 1
-			else:
-				x += 0
-		else:
-			self.ids.Reg_Email.helper_text = "Invalid Email"
-			x += 1
-
-		if x > 0:
-			self.manager.current = "Register_Screen"
-			
-		else:
-			global user
-
-			user = { 
-			"_id": uuid.uuid4().hex,
-			"Uname": Uname, 
-			"Email": Email, 
-			"First_Name": Fname, 
-			"Last_Name": Lname, 
-			"Password": Rpass
-			}
-
-			self.ids.Fname.text = ""
-			self.ids.Lname.text = ""
-			self.ids.Uname.text = ""
-			self.ids.Reg_Email.text = ""
-			self.ids.Rpassword.text = ""
-			self.ids.RCpassword.text = ""
-
-			self.manager.current = "Currency_Screen"
-
-
-class CurrencyScreen(Screen):
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-		#dropdown for currency
-		self.menu_list = [{
-				"viewclass": "OneLineListItem",
-				"text": "PHP",
-				"height": dp(56),
-				"on_release": 
-					lambda x = "PHP" : self.PHP()
-			},{
-				"viewclass": "OneLineListItem",
-				"text": "USD",
-				"height": dp(56),
-				"on_release": 
-					lambda x = "USD" : self.USD()
-			},{
-				"viewclass": "OneLineListItem",
-				"text": "EURO",
-				"height": dp(56),
-				"on_release": 
-					lambda x = "USD" : self.EURO()
-			}
-		]
-		self.menu = MDDropdownMenu(
-			caller = self.ids.field,
-			items = self.menu_list,
-			position =  "center",
-			width_mult = 4,
-		)
-
-	#If chooses PHP as currency
-	def PHP(self):
-		self.menu.dismiss()
-		self.ids.field.text = "PHP"
-		
-	#If chooses USD as currency
-	def USD(self):
-		self.menu.dismiss()
-		self.ids.field.text = "USD"
-		
-	#If chooses EURO as currency
-	def EURO(self):
-		self.menu.dismiss()
-		self.ids.field.text = "EURO"
-
-	#Confirm Currency
-	def confirmcurrency(self, currency):
-		user["Currency"] = currency
-
-		self.manager.transition.direction = "left"
-		self.manager.current = "InitialAmount_Screen"
-
-
-class InitialAmount(Screen):
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-
-	def amountchecking(self, amount):
-
-		if amount.isnumeric(): 
-			user["Money"] = amount
-			today = datetime.now()
-			userprofile.insert_one(user)
-			#main user and balance flow
-			userbalance.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "BalanceFlow": [user["Money"]]} )
-			#string history with current date
-			userhistory.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "History": [["You Have Created Your Account", today.strftime("%B %d, %Y" )]]})
-			#list for add money and subtracted money
-			userstat.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Add_Money" : [user["Money"]], "Subtracted_Money" : []})
-			#list for total expenses in categories
-			usercat.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Categories": []})
-			#Current Content table for Add Categories
-			usermain.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Categories":[]})
-			#usercommunityinformation
-			usercommunity.insert_one({"_id": user["_id"],"Uname": user["Uname"], "Email": user["Email"], "Age" : "Add Age", "Occupation": "Add Occupation", "Posts" : []})
-			#addusernotes
-			personalnotes.insert_one({"_id": user["_id"], "Uname": user["Uname"], "Email": user["Email"], "Note": []})
-			#transactionlist
-			transactionlist.insert_one({"_id": user["_id"], "Uname": user["Uname"],"Transactions": []})
-			self.manager.current = "ThankYou_Screen"
-
-
-
-		else:
-			if len(amount) == 0:
-				self.ids.Iamount.helper_text = "Required"
-				self.manager.current = "InitialAmount_Screen"
-			else:
-				self.ids.Iamount.helper_text = "Must be a number"
-				self.manager.current = "InitialAmount_Screen"
-
-
-class WelcomeScreen(Screen):
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-
-
-class ThankYouScreen(Screen):
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-
-
-class HomeScreen(Screen):
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-
-	def update(self, data):
-		if data["Currency"] == "PHP":
-			self.manager.get_screen("Home_Screen").ids.balance.text = numbers.format_currency(data["Money"], 'PHP ', locale='en_US')
-		elif data["Currency"] == "USD":
-			self.manager.get_screen("Home_Screen").ids.balance.text = numbers.format_currency(data["Money"], 'USD ', locale='en')
-		else:
-			self.manager.get_screen("Home_Screen").ids.balance.text = numbers.format_currency(data["Money"], 'EUR ', locale='en')
-
-		self.allocation_table = MDDataTable(
-			padding="15dp",
-			size_hint = (0.95, .65),
-			pos_hint =  {'center_x': .5, 'center_y': .35},
-
-			column_data = [
-				("[size=12]Categories[/size]", dp(20)),
-                ("[size=12]Budget[/size]", dp(20)),
-                ("[size=12]Expenses[/size]", dp(20)),
-                ("[size=12]Remaining[/size]", dp(20))
-			],row_data=[])
-
-		self.allocation_table.bind(on_row_press = self.allcheck_press)
-		y = usermain.find_one({"Uname": self.ids.Myname.text })
-
-		if len(y["Categories"]) != 0:
-			for x in y["Categories"]:
-				for i in x:	
-					self.allocation_table.add_row([ i["Name"] , i["Budget"], i["Expenses"], i["Remaining"]])
-		else:
-			self.allocation_table.add_row([ "_", "_", "_", "_"])		
-		
-
-		self.transaction_table = MDDataTable(
-			padding="15dp",
-			size_hint = (0.95, .65),
-			pos_hint =  {'center_x': .5, 'center_y': .35},
-
-			column_data = [
-				("[size=12]Categories[/size]", dp(20)),
-              	("[size=12]Amount[/size]", dp(20)),
-                ("[size=12]Date[/size]", dp(20)),
-                ("[size=12]Status[/size]", dp(20))
-			],row_data=[])
-
-		
-
-		#Update the portfolio email and username
-		pfolio = userprofile.find_one({"Uname": self.ids.Myname.text })
-		self.ids.portfolio_name.text = pfolio["First_Name"] + " " + pfolio["Last_Name"]
-		self.ids.portfolio_email.text = pfolio["Email"]	
-
-
-		self.update_notes()
-		self.ids.transactionfloat.add_widget(self.transaction_table)
-		self.ids.allocationfloat.add_widget(self.allocation_table)
-		self.ids.About.set_state("close")
-		self.manager.current = "Welcome_Screen"
-	
-	#Allocation row check
-	def allcheck_press(self, instance_table, current_row):
-		print(instance_table, current_row)
-		
-		self.allrow = MDTextField(
-			hint_text= "Enter Amount",
-			font_name= "OpenSansR",
-			font_size= "12dp",
-			size_hint_x= None,
-			line_color_normal= (0, 0, 0, 1),
-			width = 200,
-			helper_text_mode= "persistent",
-			pos_hint= {"center_x": .5, "center_y": .225},
-			helper_text=  "",
-			)
-		self.alldialog = MDDialog(
-			title = "Add to Balance",
-			buttons = [
-				MDFlatButton(text="ADD", padding = [10, 0],theme_text_color="Custom", on_release = self.AllAdd),
-            	MDFlatButton(text="DISCARD", theme_text_color="Custom", on_release = self.AllDiscard)]
-            )
-		self.alldialog.add_widget(self.allrow)
-		self.alldialog.open()	
-	
-	#Add budget for allocation
-	def AllAdd(self, obj):
-		q = 0
-		stock = usermain.find_one({"Uname": self.ids.Myname.text })
-		for i in stock["Categories"][q]:
-			if i["Name"] == current_row[0]:
-				n = q
-				break
-			else:
-				q += 1
-
-		new = int(stock["Categories"][n]["Budget"]) + int(self.allrow.text)
-		new = int(stock["Categories"][n]["Remaining"]) + int(self.allrow.text)
-
-		usermain.update_one({"Uname": userdata["Uname"]}, {"$set" :{"Categories":[{"Budget": new}, {"Budget": userdata["Money"]}]}})
-		self.update()
-		self.all.dismiss()
-	
-	#closes Add budget
-	def AllDiscard(self, obj):
-		self.alldialog.dismiss()
-
-
-	def modifybalance(self, *args):
-		x = userprofile.find_one({"Uname": self.ids.Myname.text })
-
-		global userdata
-		userdata = x
-
-		self.bal = MDTextField(
-			hint_text= "Enter Amount",
-			font_name= "OpenSansR",
-			font_size= "12dp",
-			size_hint_x= None,
-			line_color_normal= (0, 0, 0, 1),
-			width = 200,
-			helper_text_mode= "persistent",
-			pos_hint= {"center_x": .5, "center_y": .225},
-			helper_text=  "",
-			)
-		self.mbalance = MDDialog(
-			title = "Edit Balance",
-			buttons = [
-				MDFlatButton(text="ADD", padding = [10, 0],theme_text_color="Custom", on_release = self.Add),
-            	MDFlatButton(text="SUBTRACT", theme_text_color="Custom", on_release = self.Subtract),
-            	MDFlatButton(text="DISCARD", theme_text_color="Custom", on_release = self.Discard)]
-            )
-		self.mbalance.add_widget(self.bal)
-		self.mbalance.open()
-
-
-
-	def addcategories(self, *args):
-		self.Box = FloatLayout(
-			pos_hint= {"center_x": .5, "center_y": .5})
-		self.CategoryField = MDTextField(
-			hint_text= "Enter Category",
-			font_name= "OpenSansR",
-			font_size= "10dp",
-			size_hint_x= None,
-			line_color_normal= (0, 0, 0, 1),
-			width = 150,
-			helper_text_mode= "persistent",
-			pos_hint= {"center_x": .3, "center_y": .58},
-			helper_text=  "Note: Category musn't exists",
-			)
-
-		self.BudgetField = MDTextField(
-			hint_text= "Add Budget",
-			font_name= "OpenSansR",
-			font_size= "10dp",
-			size_hint_x= None,
-			line_color_normal= (0, 0, 0, 1),
-			width = 120,
-			helper_text_mode= "persistent",
-			pos_hint= {"center_x": .3, "center_y": .2},
-			helper_text=  "",
-			)
-
-		self.Box.add_widget(self.CategoryField)
-		self.Box.add_widget(self.BudgetField)
-
-		self.AddCategories = MDDialog(
-			title = "Add Categories",
-			buttons = [
-				MDFlatButton(text="ADD", padding = [10, 0],theme_text_color="Custom", on_release = self.AddC),
-            	MDFlatButton(text="CANCEL", theme_text_color="Custom", on_release = self.Cancel)]
-            )
-		self.AddCategories.add_widget(self.Box)
-		self.AddCategories.open()
-
-
-	def Add(self, obj):
-		#Store the money you added
-		userstat.update_one({"Uname": self.ids.Myname.text }, { "$push" : {"Add_Money": self.bal.text }})
-		#Store changes in balance for balance flow
-		userbalance.update_one({"Uname": self.ids.Myname.text }, {"$push": {"BalanceFlow" : (int(userdata["Money"]) + int(self.bal.text))}})
-
-		#store the new money to userdata balance money and change the label
-		self.stock = int(userdata["Money"]) + int(self.bal.text)
-		userdata["Money"] = self.stock
-		userprofile.update_one({"Uname": userdata["Uname"]}, {"$set" :{"Money": userdata["Money"]}})
-		self.displaynewbalance()
-		self.mbalance.dismiss()
-
-
-	def Subtract(self, obj):
-		#store the new money to userdata balance money and change the label
-		self.stock = int(userdata["Money"]) - int(self.bal.text)
-		userdata["Money"] = self.stock
-		userprofile.update_one({"Uname": userdata["Uname"]}, {"$push" :{"Data": {"Subtracted_Money": userdata["Money"]}}})
-		self.displaynewbalance()
-		self.mbalance.dismiss()
-
-
-	def Discard(self, obj):
-		self.mbalance.dismiss()
-
-	def displaynewbalance(self):
-		if userdata["Currency"] == "PHP":
-			print(userdata["First_Name"])
-			self.ids.balance.text = numbers.format_currency(userdata["Money"], 'PHP ', locale='en_US')
-		elif userdata["Currency"] == "USD":
-			self.ids.balance.text = numbers.format_currency(userdata["Money"], 'EUR ', locale='en')
-		else:
-			self.ids.balance.text = numbers.format_currency(userdata["Money"], 'USD ', locale='en')
-
-	def AddC(self, obj):
-
-		y = usermain.find_one({"Uname": self.ids.Myname.text })
-		dictcat = y["Categories"]
-
-		z = 0
-		stk = 0
-
-		if len(self.CategoryField.text) == 0:
-			self.BudgetField.helper_text = "Required"
-			z += 1
-		if len(self.BudgetField.text) == 0:
-			self.BudgetField.helper_text = "Required"
-			z += 1
-		else:
-			if self.BudgetField.text.isnumeric():
-				z += 0
-			else:
-				self.BudgetField.helper_text = "Must Be a Number"
-				z += 1
-
-		for sta in dictcat:
-			for stk in sta:
-				if stk["Name"] == self.CategoryField.text:
-					self.CategoryField.helper_text = "Existing Category"
-					z += 1	
-
-		if z < 1:
-			usercat.update_one({"Uname": self.ids.Myname.text}, {"$push" : {"Categories": [{"Name" : self.CategoryField.text , "Expenses" : 0 }]}})
-
-			usermain.update_one({"Uname": self.ids.Myname.text}, {"$push" : {"Categories":  [{"Name" : self.CategoryField.text , "Budget" : self.BudgetField.text, "Expenses" : 0, "Remaining" : self.BudgetField.text }]}})
-
-			self.allocation_table.add_row((self.CategoryField.text, self.BudgetField.text , 0, self.BudgetField.text))
-			self.AddCategories.dismiss()
-
-	def Cancel(self, obj):
-		self.AddCategories.dismiss()
-
-	def updatePortfolio(self):
-		x = userhistory.find_one({"Uname": self.ids.Myname.text})
-		history = x["History"]
-		for i in history:
-			print(history)
-			print(i)
-			
-			self.card = TwoLineAvatarIconListItem(
-					text = f"[size=13]{i[1]}[/size]",
-					secondary_text = f"[size=13]{i[0]}[/size]",
-				)
-			self.icon = IconLeftWidget(
-					icon = "history"
-				)
-			self.maincard = MDCardSwipeFrontBox(
-				size_hint_y = None,
-				height = self.card.height,
-				radius = 0
-				)
-			self.bodycard = MDCardSwipe(
-				size_hint_y = None,
-				height = self.maincard.height,
-				pos_hint={"center_x": 0.5, "center_y": 0.5},
-				)
-
-			self.card.add_widget(self.icon)
-			self.maincard.add_widget(self.card)
-			self.bodycard.add_widget(self.maincard)
-			self.ids.list_history.add_widget(self.bodycard)
-
-
-
-	#swipe notes 
-	def addnotes(self, mynotes):
-		today = datetime.now()
-		personalnotes.update_one({"Uname": self.ids.Myname.text}, { "$push" : {"Note" : mynotes}})
-		userhistory.update_one({"Uname": self.ids.Myname.text},{"$push": {"History": ["You have created a note.", today.strftime("%B %d, %Y" )]}})
-		self.update_notes()
-
-	def update_notes(self):
-		self.ids.md_list.clear_widgets()
-		self.ids.mynotes.text = ""
-		currentNinfo = personalnotes.find_one({"Uname": self.ids.Myname.text})
-		ArrayNotes = currentNinfo["Note"]
-
-		for i in ArrayNotes:
-			self.ids.md_list.add_widget(SwipeToDeleteItem(text = f"{i}"))
-
-	def ageEdit(self):
-		self.editage = MDTextField(
-			hint_text= "Input Age",
-			font_name= "OpenSansR",
-			font_size= "12dp",
-			size_hint_x= None,
-			line_color_normal= (0, 0, 0, 1),
-			width = 200,
-			helper_text_mode= "persistent",
-			pos_hint= {"center_x": .5, "center_y": .225},
-			helper_text=  "",
-			)
-		self.Eage = MDDialog(
-			title = "Edit Balance",
-			buttons = [
-				MDFlatButton(text="CONFIRM", padding = [10, 0],theme_text_color="Custom", on_release = self.AgeChange),
-            	MDFlatButton(text="DISCARD", theme_text_color="Custom", on_release = self.AgeDis)]
-            )
-		self.Eage.add_widget(self.editage)
-		self.Eage.open()
-
-	def AgeChange(self, obj):
-		q = 0
-		n = self.editage.text
-		if len(self.editage.text) == 0:
-			self.editage.helper_text = "Required"
-		elif n.isnumeric() == False:
-			self.editage.helper_text = "Must be a number"
-		else:
-			usercommunity.update_one({"Uname": self.ids.Myname.text}, {"$set": {"Age": self.editage.text}})
-			self.ids.portfolio_age.text = self.editage.text
-			today = datetime.now()
-			userhistory.update_one({"Uname": self.ids.Myname.text},{"$push": {"History": ["You have modified your age.", today.strftime("%B %d, %Y" )]}})
-			
-			self.Eage.dismiss()
-
-	def AgeDis(self, obj):
-		self.Eage.dismiss()
-
-	def occEdit(self):
-		self.editoccu = MDTextField(
-			hint_text= "Input Occupation",
-			font_name= "OpenSansR",
-			font_size= "12dp",
-			size_hint_x= None,
-			line_color_normal= (0, 0, 0, 1),
-			width = 200,
-			helper_text_mode= "persistent",
-			pos_hint= {"center_x": .5, "center_y": .225},
-			helper_text=  "",
-			)
-		self.Eocc = MDDialog(
-			title = "Edit Balance",
-			buttons = [
-				MDFlatButton(text="CONFIRM", padding = [10, 0],theme_text_color="Custom", on_release = self.OccChange),
-            	MDFlatButton(text="DISCARD", theme_text_color="Custom", on_release = self.OccDis)]
-            )
-		self.Eocc.add_widget(self.editoccu)
-		self.Eocc.open()
-
-	def OccChange(self, obj):
-		q = 0
-		n = self.editoccu.text
-		print(n)
-		if len(self.editoccu.text) == 0:
-			self.editoccu.helper_text = "Required"
-		else:
-			usercommunity.update_one({"Uname": self.ids.Myname.text}, {"$set": {"Occupation": self.editoccu.text}})
-			self.ids.portfolio_occupation.text = n
-			today = datetime.now()
-			userhistory.update_one({"Uname": self.ids.Myname.text},{"$push": {"History": ["You have modified your occupation.", today.strftime("%B %d, %Y" )]}})
-			self.Eocc.dismiss()
-
-	def OccDis(self, obj):
-		self.Eocc.dismiss()
-
-class SwipeToDeleteItem(MDCardSwipe):
-	text = StringProperty()
-
-class AddTransaction(Screen):
-
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-		self.ids.SelectCategories.text = " "
-		self.ids.SelectStatus.text = " "
-		self.ids.SelectType.text = " "
-		self.ids.InputAmount.text = " "
-		self.ids.date.text = "Date of Transaction"
-
-
-		self.Tmenu_list = [{
-				"viewclass": "OneLineListItem",
-				"text": "One Time",
-				"height": dp(56),
-				"on_release": 
-					lambda x = "One Time" : self.onetime()
-			},{
-				"viewclass": "OneLineListItem",
-				"text": "Periodic",
-				"height": dp(56),
-				"on_release": 
-					lambda x = "Periodic" : self.period()
-			}
-		]
-		self.Tmenu = MDDropdownMenu(
-			caller = self.ids.SelectType,
-			items = self.Tmenu_list,
-			position =  "center",
-			width_mult = 4,
-		)
-
-		self.Smenu_list = [{
-			"viewclass": "OneLineListItem",
-			"text": "Paid",
-			"height": dp(56),
-			"on_release": 
-				lambda x = "Paid" : self.paid()
-		},{
-			"viewclass": "OneLineListItem",
-			"text": "Pending",
-			"height": dp(56),
-			"on_release": 
-				lambda x = "Pending" : self.pending()
-			}
-		]
-		self.Smenu = MDDropdownMenu(
-			caller = self.ids.SelectStatus,
-			items = self.Smenu_list,
-			position =  "center",
-			width_mult = 4,
-		)
-
-	def Cmen(self):
-		name = self.ids.currentusername.text
-		self.ctgry = usercat.find_one({"Uname": name})
-
-		self.Cmenu_list = []
-		x = list()
-
-		for i in self.ctgry["Categories"]:
-			for z in i:
-				y = {"viewclass": "OneLineListItem",
-					"text": z["Name"],
-					"height": dp(56)}
-
-				self.Cmenu_list.append(y)
-
-		self.Cmenu = MDDropdownMenu(
-			caller = self.ids.SelectCategories,
-			items = self.Cmenu_list,
-			position =  "center",
-			width_mult = 4,
-		)
-		self.Cmenu.open()
-
-	def getTransInfo(self, Cat, Stat, Type, InAmount, date):
-		x = 0
-		if len(Cat) == 0:
-			self.ids.SelectCategories.helper_text = "Required"
-			x += 1
-		if len(Stat) == 0:
-			self.ids.SelectStatus.helper_text = "Required"
-			x += 1
-		if len(Type) == 0:
-			self.ids.SelectType.helper_text = "Required"
-			x += 1
-		if len(InAmount) == 0:
-			self.ids.InputAmount.helper_text = "Required"
-			x += 1
-		elif InAmount.isnumeric() == False:
-			self.ids.InputAmount.helper_text = "Must Be A Number"
-			x += 1
-		if date == "Date of Transaction":
-			self.ids.date.text = "Date Required"
-			x += 1
-		if x < 1:
-			Tlist = {"Category": Cat, "Status": Stat, "Type": Type, "Amount": InAmount, "Date": date}
-			transactionlist.update_one({"Uname": self.manager.get_screen("Home_Screen").ids.Myname.text}, {"$push": {"Transactions": [Tlist]}})
-			self.manager.current = "Home_Screen"
-		else:
-			self.manager.current = "AddTransaction_Screen"
-
-
-	#If chooses PHP as currency
-	def onetime(self):
-		self.Tmenu.dismiss()
-		self.ids.SelectType.text = "One Time"
-		
-	#If chooses USD as currency
-	def period(self):
-		self.Tmenu.dismiss()
-		self.ids.SelectType.text = "Periodic"
-
-	#If chooses One Time
-	def paid(self):
-		self.Smenu.dismiss()
-		self.ids.SelectStatus.text = "Paid"
-		
-	#If chooses Periodic
-	def pending(self):
-		self.Smenu.dismiss()
-		self.ids.SelectStatus.text = "Pending"
-
-	#DATEPICKER
-	def show_date(self):
-		self.date_dialog = MDDatePicker()
-		self.date_dialog.bind(on_save = self.on_ok, on_cancel = self.on_cancel)
-		self.date_dialog.open()
-
-	#OK BUTTON - DATE
-	def on_ok(self, instance, value, data_range):
-		self.wdate = f'{value.day}/{value.month}/{value.year}'
-		self.ids.date.text = str(self.wdate)
-
-	#CANCEL BUTTON - DATE	
-	def on_cancel(self, instance, value):
-		self.date_dialog.dismiss()
-
-
+		self.manager.current = "Name_Input"
+
+class NameInput(Screen):
+	pass
+class WelcomePage(Screen):
+	pass
+class WelcomeBackPage(Screen):
+	pass
+class HomePage(Screen):
+	pass
+class TrackerPage(Screen):
+	pass	
+class AddPlanPage(Screen):
+	pass
+class AddPaidPage(Screen):
+	pass
+class NotifPage(Screen):
+	pass
+class ReportPage(Screen):
+	pass
+#Screens
+#Screens
 
 #MAIN APPLICATION
 class YourExpense(MDApp):
@@ -902,25 +73,318 @@ class YourExpense(MDApp):
 		global sc_manager
 		sc_manager = ScreenManager()
 		sc_manager.add_widget(LogoScreen(name="Logo_Page"))
-		sc_manager.add_widget(LoadingScreen(name="Loading_Screen"))
-		sc_manager.add_widget(LoginScreen(name="Login_Screen"))
-		sc_manager.add_widget(RegisterScreen(name="Register_Screen"))
-		sc_manager.add_widget(CurrencyScreen(name="Currency_Screen"))
-		sc_manager.add_widget(InitialAmount(name="InitialAmount_Screen"))
-		sc_manager.add_widget(WelcomeScreen(name="Welcome_Screen"))
-		sc_manager.add_widget(ThankYouScreen(name="ThankYou_Screen"))
-		sc_manager.add_widget(HomeScreen(name="Home_Screen"))
-		sc_manager.add_widget(AddTransaction(name="AddTransaction_Screen"))
+		sc_manager.add_widget(NameInput(name="Name_Input"))
+		sc_manager.add_widget(WelcomePage(name="Welcome_Page"))
+		sc_manager.add_widget(WelcomeBackPage(name="WelcomeBack_Page"))
+		sc_manager.add_widget(HomePage(name="Home_Page"))
+		sc_manager.add_widget(TrackerPage(name="Tracker_Page"))
+		sc_manager.add_widget(AddPlanPage(name="AddPlan_Page"))
+		sc_manager.add_widget(AddPaidPage(name="AddPaid_Page"))
+		sc_manager.add_widget(ReportPage(name="Report_Page"))
+		sc_manager.add_widget(NotifPage(name="Notif_Page"))
 		return sc_manager
 
-	def remove_item(self, instance):
-		currentNinfo = personalnotes.find_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text})
-		ArrayNotes = currentNinfo["Note"]
-		ArrayNotes.remove(str(instance.text))
-		personalnotes.update_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text}, { "$set": {"Note": ArrayNotes}})
-		today = datetime.now()
-		userhistory.update_one({"Uname": sc_manager.get_screen("Home_Screen").ids.Myname.text}, {"$push": {"History": ["You removed a note.", today.strftime("%B %d, %Y" )]}})
-		sc_manager.get_screen("Home_Screen").update_notes()
+	#PROFILE CHECKER
+	def get_data(self, name):
+		global profile
+		profile = name
+		if len(name) == 0:
+			invalid_but = MDRectangleFlatButton(text = 'Return', padding = [35, 0], on_release = self.cancel)
+			self.dialogue = MDDialog(title = "Invalid Name", size_hint = (.9, 1), buttons = [invalid_but])
+			self.dialogue.open()
+		else:
+			i = 0
+			j = 0
+			stckuser = {name: list()}
+			stck = {name: {"Plan_Transaction": {}, "Paid_Transaction": {}}}
+			for i in data.keys():
+				if profile == i:
+					j += 1
+			if j < 1:
+				data.update(stck)
+				with open(database, "w") as f:
+					json.dump(data,f,indent=2)
+				info.update(stckuser)
+				with open(user_reports, "w") as user:
+					json.dump(info,user,indent=2)
+				sc_manager.current = "Welcome_Page"
+				self.root.get_screen("Welcome_Page").ids.Username_new.text = profile
+				
+				
+			else:
+				Proc_but = MDRectangleFlatButton(text = 'Proceed', padding = [23.8, 0], on_release = self.proceed_welcome)
+				Ovrr_but = MDRectangleFlatButton(text = 'Override', padding = [23.8, 0], on_release = self.overide_welcome)
+				Cancel_but = MDRectangleFlatButton(text = 'Cancel', padding = [23.8, 0], on_release = self.cancel)
+				self.dialogue = MDDialog(title = "Account Already Exists", size_hint = (.9, 1), buttons = [Proc_but, Ovrr_but, Cancel_but])
+				self.dialogue.open()
+
+
+	def cancel(self, obj):
+		self.dialogue.dismiss()	
+
+	#PROCEED AS EXISTING ACCOUNT
+	def proceed_welcome(self, obj):
+		sc_manager.current = "WelcomeBack_Page"
+		self.root.get_screen("WelcomeBack_Page").ids.Username.text = profile
+		self.dialogue.dismiss()
+
+	#DELETE AND REPLACE EXISTING ACCOUNT
+	def overide_welcome(self, obj):
+		del data[profile], info[profile]
+		data.update({profile: {"Plan_Transaction": {}, "Paid_Transaction": {}}})
+		with open(database, "w") as f:
+			json.dump(data,f,indent=2)
+		info.update({profile: list()})
+		with open(user_reports, "w") as user:
+			json.dump(info,user,indent=2)
+		sc_manager.current = "Welcome_Page"
+		self.root.get_screen("Welcome_Page").ids.Username_new.text = profile
+		self.dialogue.dismiss()
+
+	#PLAN TRANSACTION DATA
+	def planrec(self, NTitle, NAmount, Ndate):
+		NTransac = {NTitle: {"Amount": NAmount, "Date": Ndate, "Status":"Pending"}}
+		TRecords = [f'You started a transaction entitled "{NTitle}"\namounting to {NAmount}' , Ndate]
+
+		data[profile]["Plan_Transaction"].update(NTransac)
+		with open(database, "w") as f:
+			json.dump(data,f, indent = 3)
+		info[profile].append(TRecords)
+		with open(user_reports, "w") as user:
+			json.dump(info,user, indent = 3)
+
+	#PAID TRANSACTION DATA
+	def paidrec(self, DTitle, DAmount, DDate):
+		DTransac = {DTitle: {"Amount": DAmount, "Date": DDate , "Status": "Paid"}}
+		DRecords = [f'You have done a transaction entitled "{DTitle}"\namounting to {DAmount}', DDate]
+		data[profile]["Paid_Transaction"].update(DTransac)
+		with open(database, "w") as f:
+			json.dump(data,f, indent = 3)
+		info[profile].append(DRecords)
+		with open(user_reports, "w") as user:
+			json.dump(info,user, indent = 3)
+
+	#DATEPICKER
+	def show_date(self):
+		date_dialog = MDDatePicker()
+		date_dialog.bind(on_save = self.on_ok, on_cancel = self.on_cancel)
+		date_dialog.open()
+
+	#OK BUTTON - DATE
+	def on_ok(self, instance, value, data_range):
+		wdate = f'{value.day}/{value.month}/{value.year}'
+		if sc_manager.current == "AddPlan_Page":
+			self.root.get_screen("AddPlan_Page").ids.date.text = str(wdate)
+		elif sc_manager.current == "AddPaid_Page":
+			self.root.get_screen("AddPaid_Page").ids.date.text = str(wdate)
+
+	#CANCEL BUTTON - DATE	
+	def on_cancel(self, instance, value):
+		pass
+
+	#LOGOUT BUTTON
+	def logout(self):
+		Yes_but = MDRectangleFlatButton(text = 'Yes', padding = [35, 0], on_release = self.YES_choice)
+		No_but = MDRectangleFlatButton(text = 'No', padding = [35, 0], on_release = self.NO_choice)
+		self.Y_N = MDDialog(title = "Are you sure, you want to exit?", size_hint = (.9, 1), buttons = [Yes_but, No_but])
+		self.Y_N.open()
+
+	#CONFIRM LOGOUT
+	def YES_choice(self, obj):
+		self.Y_N.dismiss()
+		sc_manager.current = "Name_Input"
+
+	#CANCEL LOGOUT
+	def NO_choice(self, obj):
+		self.Y_N.dismiss()
+
+	#REPORT PAGE CONTENT
+	def ReportsBox(self):
+		Reportslen = len(info[profile])
+		for i in range(Reportslen):
+			boxmain = RelativeLayout(size_hint=(1, 1))
+			box = Image(source="assets/Notifbox.png", size_hint = (1, 1))
+			Rtext = Label(text = info[profile][i][0], pos_hint = {'center_x': 0.55, 'center_y': 0.4},
+				font_size = "10sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255)
+				)
+			datetext = Label(text = info[profile][i][1], pos_hint = {'center_x': 0.33, 'center_y': 0.69},
+				font_size = "10sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255)
+				)
+			boxmain.add_widget(box)
+			boxmain.add_widget(datetext)
+			boxmain.add_widget(Rtext)
+			self.root.get_screen("Report_Page").ids.report_container.add_widget(boxmain)
+
+		sc_manager.current = "Report_Page"
+
+	#TRACKER BOX CONTENT
+	def TrackerBoxes(self):
+		NTrackerlen = len(data[profile]["Plan_Transaction"])
+		DTrackerlen = len(data[profile]["Paid_Transaction"])
+		Plankeys = list(data[profile]["Plan_Transaction"].keys())
+		Paidkeys = list(data[profile]["Paid_Transaction"].keys())
+
+		#PLAN TRACKER COLUMN
+		for i in range(NTrackerlen):
+			NMbox = RelativeLayout(size_hint=(1, .8))
+			Nbox = Image(source="assets/row.png", size_hint = (1, 1))
+			Ngrid_box = GridLayout(size_hint= (.98, 1), cols = 4)
+			NNLabel = Label(text = str(Plankeys[i]),
+				font_size = "11sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255),
+				size_hint_x=None, 
+				width=120)
+			NALabel = Label(text = str(data[profile]["Plan_Transaction"][Plankeys[i]]["Amount"]),
+				font_size = "11sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255),
+				size_hint_x = None,
+				width = 85)
+			NDLabel = Label(text = str(data[profile]["Plan_Transaction"][Plankeys[i]]["Date"]),
+				font_size = "11sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255),
+				size_hint_x = None, 
+				width = 90)
+			if str(data[profile]["Plan_Transaction"][Plankeys[i]]["Status"]) == "Pending":
+				NSLabel = Label(text = "Ongoing",
+					font_size = "10sp", 
+					font_name= "Poppins", 
+					halign= 'center', 
+					color= (255, 255, 255),
+					size_hint_x = None, 
+					width = 63)
+			else:
+				NSLabel = Label(text = "Paid",
+					font_size = "10sp", 
+					font_name = "Poppins", 
+					halign = 'center', 
+					color = (255, 255, 255),
+					size_hint_x = None, 
+					width = 63)
+
+			NMbox.add_widget(Nbox)
+			Ngrid_box.add_widget(NNLabel)
+			Ngrid_box.add_widget(NALabel)
+			Ngrid_box.add_widget(NDLabel)
+			Ngrid_box.add_widget(NSLabel)
+			NMbox.add_widget(Ngrid_box)
+
+			self.root.get_screen("Tracker_Page").ids.plan_container.add_widget(NMbox)
+
+		#PAID TRACKER COLUMN
+		for i in range(DTrackerlen):
+			DMbox = RelativeLayout(size_hint=(1, .8))
+			Dbox = Image(source="assets/row.png", size_hint = (1, 1))
+			Dgrid_box = GridLayout(size_hint= (.98, 1), cols = 4)
+			DNLabel = Label(text = str(Paidkeys[i]),
+				font_size = "11sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255),
+				size_hint_x=None, 
+				width= 120)
+			DALabel = Label(text = str(data[profile]["Paid_Transaction"][Paidkeys[i]]["Amount"]),
+				font_size = "11sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255),
+				size_hint_x=None, 
+				width= 85)
+			DDLabel = Label(text = str(data[profile]["Paid_Transaction"][Paidkeys[i]]["Date"]),
+				font_size = "11sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255),
+				size_hint_x=None, 
+				width= 90)
+			if str(data[profile]["Paid_Transaction"][Paidkeys[i]]["Status"]) == "Pending":
+				DSLabel = Label(text = "Ongoing",
+					font_size = "10sp", 
+					font_name= "Poppins", 
+					halign= 'center', 
+					color= (255, 255, 255),
+					size_hint_x = None, 
+					width = 63)
+			else:
+				DSLabel = Label(text = "Paid",
+					font_size = "10sp", 
+					font_name= "Poppins", 
+					halign= 'center', 
+					color= (255, 255, 255),
+					size_hint_x = None, 
+					width = 63)
+			DMbox.add_widget(Dbox)
+			Dgrid_box.add_widget(DNLabel)
+			Dgrid_box.add_widget(DALabel)
+			Dgrid_box.add_widget(DDLabel)
+			Dgrid_box.add_widget(DSLabel)
+			DMbox.add_widget(Dgrid_box)
+
+			self.root.get_screen("Tracker_Page").ids.paid_container.add_widget(DMbox)
+
+		sc_manager.current = "Tracker_Page"
+
+	#CLEAR WIDGETS IN TRACKER PAGE
+	def clearwidg(self):
+		self.root.get_screen("Tracker_Page").ids.plan_container.clear_widgets()
+		self.root.get_screen("Tracker_Page").ids.paid_container.clear_widgets()
+
+	#CLEAR WIDGETS IN REPORT PAGE
+	def reportsclear(self):
+		self.root.get_screen("Report_Page").ids.report_container.clear_widgets()
+
+	#CLEAR WIDGETS IN STATUS PAGE
+	def Notifclear(self):
+		self.root.get_screen("Notif_Page").ids.Notif_container.clear_widgets()
+
+	#STATUS PAGE CONTENT
+	def NotifBoxes(self):
+		
+		global stockd
+		Notiflen = len(data[profile]["Plan_Transaction"])
+		Notifnames = list(data[profile]["Plan_Transaction"].keys())
+		for i in range(Notiflen):
+			stockd = Notifnames[i]
+			Noboxmain = RelativeLayout(size_hint=(1, 1))
+			picbox = Image(source="assets/Notifboxes.png", size_hint = (.9, 1), pos_hint = {'center_x': 0.5, 'center_y': 0.5})
+			Nicon = MDIcon(icon = "calendar", pos_hint = {'center_x': 0.1, 'center_y': 0.5})
+			Notiftext = Label(text = str(Notifnames[i]), pos_hint = {'center_x': .5, 'center_y': 0.69},
+				font_size = "13sp", 
+				font_name= "Poppins", 
+				color= (255, 255, 255)
+				)
+			NotifA = Label(text = str(data[profile]["Plan_Transaction"][Notifnames[i]]["Amount"]), pos_hint = {'center_x': 0.5, 'center_y': 0.35},
+				font_size = "13sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255)
+				)
+			Notifdatetext = Label(text = str(data[profile]["Plan_Transaction"][Notifnames[i]]["Date"]), pos_hint = {'center_x': 0.85, 'center_y': 0.5},
+				font_size = "13sp", 
+				font_name= "Poppins", 
+				halign= 'center', 
+				color= (255, 255, 255)
+				)
+			Noboxmain.add_widget(picbox)
+			Noboxmain.add_widget(Notiftext)
+			Noboxmain.add_widget(NotifA)
+			Noboxmain.add_widget(Notifdatetext)
+			Noboxmain.add_widget(Nicon)
+			self.root.get_screen("Notif_Page").ids.Notif_container.add_widget(Noboxmain)
+
+		
+		sc_manager.current = "Notif_Page"
 
 #MAIN FUNCTION
 if __name__ == '__main__':
@@ -928,28 +392,21 @@ if __name__ == '__main__':
 	#WINDOW SIZE
 	Window.size = (360, 640)
 
-	#DataBase
-	clusterdata = MongoClient("mongodb+srv://Java-rice:Fs6EMINE5Dm9YaFj@finalproject.p08n5.mongodb.net/?retryWrites=true&w=majority")
-	db = clusterdata["Application"]
-	userprofile = db["Profiles"]
-	userbalance = db["Balance"]
-	userhistory = db["History"]
-	usermain = db["Transactions"]
-	usercommunity = db["Community"]
-	communityinteractions = db["Posts"]
-	userstat = db["Statistics"]
-	usercat = db["CategoryExpenses"]
-	personalnotes = db["Note"]
-	transactionlist = db["Transactionlist"]
+	#FONT REGISTER
+	LabelBase.register(name = "Poppins", fn_regular= "assets/Poppins.ttf")
 
-	global user
-	global username
+	global profile
+	#json file - data storage
+	database = "datastorage.json"
+	user_reports = "user_reports.json"
 
-	#Fonts Styles
-	LabelBase.register(name = "LatoB", fn_regular= "assets/txt/Lato-Bold.ttf")
-	LabelBase.register(name = "PoppinsB", fn_regular= "assets/txt/Poppins-Bold.ttf")
-	LabelBase.register(name = "Montserrat", fn_regular= "assets/txt/MontserratC.ttf")
-	LabelBase.register(name = "OpenSansR", fn_regular= "assets/txt/OpenSansR.ttf")
+	#TRACKER INFO
+	with open( database, "r") as f:
+		data = json.loads(f.read())
+
+	#USER RECORDS INFO
+	with open( user_reports, "r") as user:
+		info = json.loads(user.read())
 
 	#RUN THE MAIN APPLICATION
 	YourExpense().run()

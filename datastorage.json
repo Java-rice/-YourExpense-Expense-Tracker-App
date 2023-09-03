@@ -1,0 +1,89 @@
+{
+  "Joseph": {
+    "Plan_Transaction": {
+      "Tuition": {
+        "Amount": "20000",
+        "Date": "18/6/2022",
+        "Status": "Pending"
+      },
+      "WaterBill": {
+        "Amount": "1000",
+        "Date": "11/6/2022",
+        "Status": "Pending"
+      },
+      "Grocery": {
+        "Amount": "5000",
+        "Date": "2/6/2022",
+        "Status": "Pending"
+      },
+      "Supplies": {
+        "Amount": "800",
+        "Date": "7/6/2022",
+        "Status": "Pending"
+      },
+      "clothes": {
+        "Amount": "800",
+        "Date": "31/5/2022",
+        "Status": "Pending"
+      },
+      "water": {
+        "Amount": "900",
+        "Date": "31/5/2022",
+        "Status": "Pending"
+      },
+      "Project": {
+        "Amount": "300",
+        "Date": "31/5/2022",
+        "Status": "Pending"
+      }
+    },
+    "Paid_Transaction": {
+      "Sugar": {
+        "Amount": "200",
+        "Date": "27/5/2022",
+        "Status": "Paid"
+      },
+      "Milk": {
+        "Amount": "500",
+        "Date": "30/5/2022",
+        "Status": "Paid"
+      },
+      "Books": {
+        "Amount": "3000",
+        "Date": "30/5/2022",
+        "Status": "Paid"
+      },
+      "Rent": {
+        "Amount": "7000",
+        "Date": "30/5/2022",
+        "Status": "Paid"
+      },
+      "Tuition": {
+        "Amount": "30000",
+        "Date": "10/5/2022",
+        "Status": "Paid"
+      },
+      "Ball": {
+        "Amount": "150",
+        "Date": "10/5/2022",
+        "Status": "Paid"
+      }
+    }
+  },
+  "Angeline": {
+    "Plan_Transaction": {},
+    "Paid_Transaction": {}
+  },
+  "Jose": {
+    "Plan_Transaction": {},
+    "Paid_Transaction": {}
+  },
+  "joseph": {
+    "Plan_Transaction": {},
+    "Paid_Transaction": {}
+  },
+  "Joey": {
+    "Plan_Transaction": {},
+    "Paid_Transaction": {}
+  }
+}
