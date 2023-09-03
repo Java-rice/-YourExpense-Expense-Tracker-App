@@ -3,11 +3,10 @@
 ## What is @YOUREXPENSE? ##
 A simple Python project prototype developed as a final requirement for the Discrete Structure 1 subject. This project aims to provide users with a way to manage and track their expenses efficiently.
 
-**Discrete Structures (Group 3)**
-**BSCS 1-3**
-
 
 ## Members: ##
+**Discrete Structures (Group 3)**
+**BSCS 1-3**
 - Escueta, Jeferson
 - Mateo, Joshua
 - Orlanda, Jovielette
