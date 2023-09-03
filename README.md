@@ -1,4 +1,8 @@
 # **@YourExpense: Expense Tracker App**
+
+## What is @YOUREXPENSE? ##
+A simple Python project prototype developed as a final requirement for the Discrete Structure 1 subject. This project aims to provide users with a way to manage and track their expenses efficiently.
+
 **Discrete Structures (Group 3)**
 **BSCS 1-3**
 
@@ -10,11 +14,6 @@
 - Peroche, John Mark 
 - Soriano, Stephanie Elenn
 - Uy, Lord Allain
-
-
-## What is @YOUREXPENSE? ##
-A simple Python project prototype developed as a final requirement for the Discrete Structure 1 subject. This project aims to provide users with a way to manage and track their expenses efficiently.
-
 
 ## Simple Features ##
 - User Profiles: Store user profiles in an online database, along with corresponding information for each user.
